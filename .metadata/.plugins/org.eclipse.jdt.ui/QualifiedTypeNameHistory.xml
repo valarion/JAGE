@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.valarion.core.GameEngine"/>
+<fullyQualifiedTypeName name="com.valarion.extern.AddOn"/>
+<fullyQualifiedTypeName name="com.valarion.pluginsystem.PluginUtil"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="com.valarion.extern.AddOnInfo"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="com.valarion.extern.GameType"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="java.awt.Rectangle"/>
+<fullyQualifiedTypeName name="java.awt.geom.AffineTransform"/>
+<fullyQualifiedTypeName name="java.awt.image.AffineTransformOp"/>
+<fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
+<fullyQualifiedTypeName name="org.lwjgl.BufferUtils"/>
+<fullyQualifiedTypeName name="org.lwjgl.opengl.GL30"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="com.valarion.coremodule.extern.GameState"/>
+<fullyQualifiedTypeName name="com.valarion.coremodule.extern.Event"/>
+<fullyQualifiedTypeName name="com.valarion.coremodule.extern.ColoredString"/>
+<fullyQualifiedTypeName name="com.valarion.coremodule.extern.Condition"/>
+<fullyQualifiedTypeName name="com.valarion.coremodule.extern.VarLong"/>
+<fullyQualifiedTypeName name="com.valarion.extern.AbstractGameEngine"/>
+<fullyQualifiedTypeName name="java.awt.Image"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="com.valarion.coremodule.extern.util.Util"/>
+<fullyQualifiedTypeName name="javax.imageio.stream.ImageInputStreamImpl"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayOutputStream"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayInputStream"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="org.lwjgl.opengl.GL11"/>
+<fullyQualifiedTypeName name="org.lwjgl.system.MemoryUtil"/>
+<fullyQualifiedTypeName name="org.lwjgl.glfw.GLFW"/>
+<fullyQualifiedTypeName name="java.awt.GraphicsDevice"/>
+<fullyQualifiedTypeName name="java.awt.GraphicsEnvironment"/>
+<fullyQualifiedTypeName name="com.valarion.gameengine.gamestates.InGameState"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+</qualifiedTypeNameHistroy>

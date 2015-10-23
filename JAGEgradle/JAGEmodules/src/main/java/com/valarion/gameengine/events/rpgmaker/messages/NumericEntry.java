@@ -1,0 +1,221 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2015 Rubén Tomás Gracia
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ ******************************************************************************/
+package com.valarion.gameengine.events.rpgmaker.messages;
+
+import java.util.LinkedList;
+
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.valarion.gameengine.core.ColoredString;
+import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.GameCore;
+import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.events.rpgmaker.SubEventClass;
+import com.valarion.gameengine.gamestates.Controls;
+import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.util.WindowImage;
+
+public class NumericEntry extends SubEventClass {
+	public static final int TOP = 0;
+	public static final int MID = 1;
+	public static final int BOT = 2;
+
+	protected int position;
+
+	protected WindowImage window;
+
+	protected boolean showing = false;
+
+	protected Image select;
+
+	protected int length;
+	protected int[] input;
+	protected int selected;
+
+	protected int var;
+
+	protected int charw, charh;
+
+	protected Image image = null;
+	protected Image resized = null;
+
+	@Override
+	public void paralelupdate(GameContainer container, int delta,
+			SubTiledMap map) throws SlickException {
+		if (showing) {
+			window.update(delta);
+			if (container.getInput().isKeyPressed(Controls.accept)) {
+				long result = 0;
+				for (int number : input) {
+					result = 10 * result + number;
+				}
+				InGameState.getInstance().getContext().getGlobalVars()[var] = result;
+				showing = false;
+				InGameState.getInstance().playSound("menuaccept");
+			} else if (container.getInput().isKeyPressed(Controls.moveLeft)) {
+				selected = (selected + length - 1) % length;
+				InGameState.getInstance().playSound("menumove");
+			} else if (container.getInput().isKeyPressed(Controls.moveRight)) {
+				selected = (selected + 1) % length;
+				InGameState.getInstance().playSound("menumove");
+			} else if (container.getInput().isKeyPressed(Controls.moveUp)) {
+				input[selected] = (input[selected] + 1) % 10;
+				InGameState.getInstance().playSound("menumove");
+			} else if (container.getInput().isKeyPressed(Controls.moveDown)) {
+				input[selected] = (input[selected] + 9) % 10;
+				InGameState.getInstance().playSound("menumove");
+			}
+		}
+	}
+
+	@Override
+	public void postrender(GameContainer container, Graphics g, int tilewidth,
+			int tileheight) throws SlickException {
+		if (showing) {
+			window.setShowArrow(false);
+
+			Graphics i = window.getContain().getGraphics();
+			i.clear();
+
+			int x = window.getContain().getWidth() / 20;
+			int y = window.getContain().getHeight() / 6;
+
+			if (image != null) {
+				int h = window.getContain().getHeight() - 2 * y;
+				if (image.getHeight() != h)
+					resized = image.getScaledCopy(
+							(int) (h / (float) image.getHeight() * image
+									.getWidth()), h);
+				else
+					resized = image;
+
+				i.drawImage(resized, x, y);
+
+				x = x + resized.getWidth() + x;
+			}
+
+			for (int index = 0; index < length; index++) {
+				if (index == selected)
+					i.drawImage(select, x - 2, y - 2);
+				i.drawString(Integer.toString(input[index]), x, y);
+				x += charh * 2;
+			}
+
+			switch (position) {
+			case TOP:
+				y = 0;
+				break;
+			case MID:
+				y = container.getHeight() / 2
+						- window.getImage().getHeight() / 2;
+				break;
+			case BOT:
+				y = container.getHeight() - window.getImage().getHeight();
+				break;
+			}
+
+			i.flush();
+			g.drawImage(window.getImage(), 0, y);
+		}
+	}
+
+	@Override
+	public void loadEvent(Element node, Object context) throws SlickException {
+		InGameState instance = InGameState.getInstance();
+		window = instance.getWindowimages().get("dialog");
+
+		String im = node.getAttribute("image");
+
+		if (!im.equals(""))
+			image = InGameState.getInstance().getImages().get(im);
+		else
+			image = null;
+
+		String pos = node.getAttribute("position");
+
+		length = Integer.parseInt(node.getAttribute("length"));
+
+		var = Integer.parseInt(node.getAttribute("var"));
+
+		if ("top".equals(pos)) {
+			position = TOP;
+		} else if ("mid".equals(pos)) {
+			position = MID;
+		} else {
+			position = BOT;
+		}
+	}
+
+	public static LinkedList<ColoredString> getDialog(Element node)
+			throws SlickException {
+		LinkedList<ColoredString> strings = new LinkedList<ColoredString>();
+
+		NodeList childs = node.getChildNodes();
+
+		GameCore game = GameCore.getInstance();
+
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node n = childs.item(i);
+			if (n instanceof Element) {
+				try {
+					ColoredString e = (ColoredString) game.getSets()
+							.get(ColoredString.class).get(n.getNodeName())
+							.newInstance();
+					e.load((Element) n);
+					strings.add(e);
+				} catch (InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return strings;
+	}
+
+	@Override
+	public boolean isWorking() {
+		return showing;
+	}
+
+	@Override
+	public void performAction(GameContainer container, SubTiledMap map, Event e)
+			throws SlickException {
+		if (!showing) {
+			showing = true;
+			input = new int[length];
+			Font font = container.getGraphics().getFont();
+			charw = font.getWidth("0");
+			charh = font.getLineHeight();
+			select = window.getModel().getImage("selection")
+					.getScaledCopy(charw + 6, charh + 4);
+		}
+	}
+}

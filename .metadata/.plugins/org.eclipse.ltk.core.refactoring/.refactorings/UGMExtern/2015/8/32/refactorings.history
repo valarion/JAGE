@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;AbstractWindow.java&apos; to &apos;UnnamedGameEngineOld/src/com.valarion.gameengine.core&apos;&#x0D;&#x0A;- Original project: &apos;UGMExtern&apos;&#x0D;&#x0A;- Destination element: &apos;UnnamedGameEngineOld/src/com.valarion.gameengine.core&apos;&#x0D;&#x0A;- Original element: &apos;com.valarion.extern.AbstractWindow.java&apos;" description="Copy compilation unit" destination="=UnnamedGameEngineOld/src&lt;com.valarion.gameengine.core" element1="/src&lt;com.valarion.extern{AbstractWindow.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1438685895113" units="1" version="1.0"/>
+</session>

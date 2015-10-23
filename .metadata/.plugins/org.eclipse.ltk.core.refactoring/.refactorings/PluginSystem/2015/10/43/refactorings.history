@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;com.valarion.pluginsystem&apos; to &apos;JAGEPluginSystem/src/main/java/(default package)&apos;&#x0D;&#x0A;- Original project: &apos;PluginSystem&apos;&#x0D;&#x0A;- Destination element: &apos;JAGEPluginSystem/src/main/java/(default package)&apos;&#x0D;&#x0A;- Original element: &apos;PluginSystem/src/com.valarion.pluginsystem&apos;" description="Copy package" destination="=JAGEPluginSystem/src\/main\/java&lt;" element1="/src&lt;com.valarion.pluginsystem" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1445528169175" version="1.0"/>
+</session>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;JAGEtest&apos;&#x0D;&#x0A;- Original project: &apos;JustAnotherGameEngineTest&apos;&#x0D;&#x0A;- Destination element: &apos;JAGEtest&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     config.xml&#x0D;&#x0A;     res" description="Copy elements" destination="=JAGEtest" element1="config.xml" element2="res" files="1" flags="589830" folders="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1445532123140" units="0" version="1.0"/>
+</session>

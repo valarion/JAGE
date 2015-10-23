@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<events>
+	<GameEvent id="testid">
+		<page x="5" y="4" layer="player" type="activation" tile="116">
+			<events>
+				<Conditional>
+					<conditions>
+						<InterruptCondition interrupt="5" state="false"></InterruptCondition>
+					</conditions>
+					<true>
+						<Dialog image="testface">
+							<Text>¡Un cartel!</Text>
+						</Dialog>
+						<Interrupt interrupt="5" action="true"></Interrupt>
+					</true>
+					<false>
+						<Dialog image="testface">
+							<Text>Este cartel ya lo había visto...</Text>
+						</Dialog>
+					</false>
+				</Conditional>
+				<Cicle>
+					<Selection>
+						<option>
+							<text>
+								<Text>Texto largo</Text>
+							</text>
+							<events>
+								<Dialog position="bot" apear="true">
+									<Text>Esto es un texto largo para probar si
+										funciona la opción
+										de que vayan
+										apareciendo las letras con el tiempo
+										antes de poder
+										aceptar.
+									</Text>
+								</Dialog>
+							</events>
+						</option>
+						<option>
+							<text>
+								<Text>Ver variable</Text>
+							</text>
+							<events>
+								<Dialog position="bot">
+									<Text>Variable introducida: </Text>
+									<Var var="1"></Var>
+								</Dialog>
+							</events>
+						</option>
+						<option>
+							<text>
+								<Text>Recibir permiso</Text>
+							</text>
+							<events>
+								<Interrupt interrupt="3" action="true"></Interrupt>
+							</events>
+						</option>
+						<option>
+							<text>
+								<Text>Añadir 1</Text>
+							</text>
+							<events>
+								<VarOperation var="1" operation="add">
+									<Constant value="1"></Constant>
+								</VarOperation>
+							</events>
+						</option>
+						<cancel>
+							<BreakCicle></BreakCicle>
+						</cancel>
+					</Selection>
+				</Cicle>
+			</events>
+		</page>
+	</GameEvent>
+	
+	
+
+	<GameEvent>
+		<page x="9" y="1" layer="player" type="touch">
+			<events>
+				<Teleport xDest="9" yDest="16" destMap="inside"
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent id="testid2">
+		<page x="9" y="2" layer="player" direction="down" type="activation" sprite="TestSprite" movement="fixed" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+			<events>
+				<Dialog image="testface">
+					<Text>Necesitas el permiso del jefe para entrar.</Text>
+				</Dialog>
+			</events>
+		</page>
+		<page x="9" y="2" layer="player" direction="down" type="activation" sprite="TestSprite" movement="fixed" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+			<conditions>
+				<InterruptCondition interrupt="3"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog image="testface">
+					<Text>El jefe me ha avisado, puedes pasar.</Text>
+				</Dialog>
+				
+				<MoveEvent objetive="self" ignore="false" loop="false" wait="true">
+					<moveright></moveright>
+					<lookdown></lookdown>
+				</MoveEvent>
+				
+				<Dialog image="testface">
+					<Text>Adelante</Text>
+				</Dialog>
+				<Interrupt interrupt="4" action="true"></Interrupt> 
+			</events>
+		</page>
+		<page x="10" y="2" layer="player" direction="down" type="activation" sprite="TestSprite" movement="fixed" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+			<conditions>
+				<InterruptCondition interrupt="4"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog image="testface">
+					<Text>Adelante</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent id="testid2">
+		<page x="15" y="15" layer="player" type="touch" sprite="TestSprite" period="500" movement="custom" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+			<conditions>
+				
+			</conditions>
+			<route ignore="false" loop="true" >
+				<moveup></moveup>
+				<moveright></moveright>
+				<movedown></movedown>
+				<moveleft></moveleft>
+			</route>
+			<events>
+				<Dialog image="testface">
+					<Text>¡Anda, eres igual que yo!</Text>
+				</Dialog>
+				<Interrupt interrupt="0" action="true"></Interrupt> 
+			</events>
+		</page>
+		<page x="15" y="15" layer="player" type="activation" sprite="TestSprite" period="1000" movement="random" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+			<conditions>
+				<InterruptCondition interrupt="0"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog image="testface">
+					<Text>¡Adios!</Text>
+				</Dialog>
+				<Interrupt interrupt="1" action="true"></Interrupt> 
+				<TempMapDelete></TempMapDelete>
+			</events>
+		</page>
+		<page x="15" y="15" layer="player" type="activation" sprite="TestSprite" period="1000" movement="random" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+			<conditions>
+				<InterruptCondition interrupt="1"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog image="testface">
+					<Text>¡Adios definitivamente!</Text>
+				</Dialog>
+				<Interrupt interrupt="2" action="true"></Interrupt> 
+				<TempMapDelete></TempMapDelete>
+			</events>
+		</page>
+		<page>
+			<conditions>
+				<InterruptCondition interrupt="2"></InterruptCondition>
+			</conditions>
+			<events>
+
+			</events>
+		</page>
+	</GameEvent>
+
+</events>

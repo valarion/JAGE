@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="18" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="name" value="Exterior"/>
+ </properties>
+ <tileset firstgid="1" name="TestTileset" tilewidth="32" tileheight="32">
+  <image source="../tileset/tileset.png" width="512" height="512"/>
+  <terraintypes>
+   <terrain name="water" tile="-1"/>
+  </terraintypes>
+ </tileset>
+ <tileset firstgid="257" name="types" tilewidth="32" tileheight="32">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="walkable"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Bot1" width="20" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NkYGBgHMWjeBSP4lE86DAAyRPTK6AFAAA=
+  </data>
+ </layer>
+ <layer name="Bot2" width="20" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NggIAbQLyVTHyJAQEagbgJiF8A8VEc+CkeORB+hGQOjP4BxFdx4K945ED4ExbzKAWj5o2aN2reqHm4zKMWDQCqeBVcoAUAAA==
+  </data>
+ </layer>
+ <layer name="Bot3" width="20" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwGAEAmhYRqqAFAAA=
+  </data>
+ </layer>
+ <layer name="player" width="20" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwGAEAmhYRqqAFAAA=
+  </data>
+ </layer>
+ <layer name="Top1" width="20" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACytkYGAoYqAcFELNgdGj5o2aN2reqHlDxTxq0dQGAFM5NIqgBQAA
+  </data>
+ </layer>
+ <layer name="types" width="20" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NiZGBgojNmJFMPJXjUvFHzRs0bNY9e5lELAwDQu53KoAUAAA==
+  </data>
+ </layer>
+ <layer name="effects" width="20" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwGAEAmhYRqqAFAAA=
+  </data>
+ </layer>
+</map>

@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
+org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
+org.eclipse.jdt.core.compiler.compliance=1.8
+org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.compiler.source=1.8
+org.eclipse.jdt.core.userLibrary.LWJGL=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="/LWJGL/lib/lwjgl/jar/lwjgl.jar" sourceattachment\="/LWJGL/lib/lwjgl/src.zip">\r\n\t\t<attributes>\r\n\t\t\t<attribute name\="javadoc_location" value\="jar\:platform\:/resource/LWJGL/lib/lwjgl/doc/javadoc.zip\!/"/>\r\n\t\t\t<attribute name\="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value\="LWJGL/lib/lwjgl/native"/>\r\n\t\t</attributes>\r\n\t</archive>\r\n</userlibrary>\r\n
+org.eclipse.jdt.core.userLibrary.slick=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="/SlickLib/slick/lib/lwjgl.jar">\r\n\t\t<attributes>\r\n\t\t\t<attribute name\="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value\="SlickLib/slick"/>\r\n\t\t</attributes>\r\n\t</archive>\r\n\t<archive path\="/SlickLib/slick/lib/slick.jar">\r\n\t\t<attributes>\r\n\t\t\t<attribute name\="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value\="SlickLib/slick"/>\r\n\t\t</attributes>\r\n\t</archive>\r\n\t<archive path\="/SlickLib/slick/lib/jogg-0.0.7.jar"/>\r\n\t<archive path\="/SlickLib/slick/lib/jorbis-0.0.15.jar"/>\r\n\t<archive path\="/SlickLib/slick/lib/lwjgl_util.jar">\r\n\t\t<attributes>\r\n\t\t\t<attribute name\="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value\="SlickLib/slick"/>\r\n\t\t</attributes>\r\n\t</archive>\r\n</userlibrary>\r\n
