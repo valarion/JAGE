@@ -25,6 +25,7 @@ package com.valarion.gameengine.gamestates;
 
 import java.util.Set;
 
+import org.lwjgl.openal.AL11;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -60,13 +61,11 @@ public class StartState extends SubState {
 		try {
 			background = instance
 					.getImages()
-					.get(instance.getTitleBackground())
-					.getScaledCopy(GameCore.getInstance().getApp().getWidth(),
-							GameCore.getInstance().getApp().getHeight());
+					.get(instance.getTitleBackground());
 		} catch (Exception e) {
 		}
 
-		instance.playMusic(instance.getTitleMusic());
+		instance.loopMusic(instance.getTitleMusic());
 
 		activeEvents = Util.getset();
 
@@ -84,7 +83,8 @@ public class StartState extends SubState {
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
-		g.drawImage(background, 0, 0);
+		g.drawImage(background, 0, 0, GameCore.getInstance().getApp().getWidth(),
+				GameCore.getInstance().getApp().getHeight(), 0, 0, background.getWidth(), background.getHeight());
 		for (Event e : activeEvents) {
 			e.postrender(container, g, 0, 0);
 		}

@@ -40,6 +40,7 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
 public class Dialog extends SubEventClass {
@@ -72,19 +73,24 @@ public class Dialog extends SubEventClass {
 		if (showing) {
 			window.update(delta);
 			if (apear && apearing) {
-				if (container.getInput().isKeyDown(Controls.accept))
+				if (container.getInput().isKeyDown(Controls.accept)) {
 					updatecount += 2 * delta;
-				else if (container.getInput().isKeyPressed(Controls.cancel)) {
+				}else if (container.getInput().isKeyPressed(Controls.cancel)) {
 					apearing = false;
 					InGameState.getInstance().stopSound("writting");
 					InGameState.getInstance().playSound("menucancel");
-				} else
+				} else {
 					updatecount += delta;
+				}
 				apearcount += updatecount / apearlimit;
 				updatecount %= apearlimit;
-			} else if (container.getInput().isKeyPressed(Controls.accept)) {
-				showing = false;
-				InGameState.getInstance().playSound("menuaccept");
+			}
+			else {
+				InGameState.getInstance().stopSound("writting");
+				if (container.getInput().isKeyPressed(Controls.accept)) {
+					showing = false;
+					InGameState.getInstance().playSound("menuaccept");
+				}
 			}
 		}
 	}
@@ -104,7 +110,7 @@ public class Dialog extends SubEventClass {
 			if (image != null) {
 				int h = window.getContain().getHeight() - 2 * y;
 				if (image.getHeight() != h)
-					resized = image.getScaledCopy(
+					resized = Util.getScaled(image,
 							(int) (h / (float) image.getHeight() * image
 									.getWidth()), h);
 				else
@@ -126,9 +132,8 @@ public class Dialog extends SubEventClass {
 			if (apearing && apearcount >= output.length()) {
 				apearing = false;
 				container.getInput().clearKeyPressedRecord();
-				InGameState.getInstance().playSound("writting");
 			}
-			if (!apearing | !apear)
+			if (!apearing || !apear)
 				apearcount = output.length();
 
 			for (ColoredString s : strings) {
@@ -235,7 +240,7 @@ public class Dialog extends SubEventClass {
 				apearing = true;
 				updatecount = 0;
 				apearcount = 0;
-				InGameState.getInstance().playSound("writting");
+				InGameState.getInstance().loopSound("writting");
 			}
 		}
 	}

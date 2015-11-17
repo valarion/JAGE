@@ -28,8 +28,20 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 public class Util {
 	public static <T> Set<T> getset() {
 		return Collections.newSetFromMap(new ConcurrentHashMap<T, Boolean>());
+	}
+	
+	public static Image getScaled(Image input, int w, int h) throws SlickException {
+		Image im = new Image(w,h);
+		Graphics g = im.getGraphics();
+		g.drawImage(input, 0, 0, im.getWidth(), im.getHeight(), 0, 0, input.getWidth(), input.getHeight());
+		g.flush();
+		return im;
 	}
 }

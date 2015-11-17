@@ -96,7 +96,7 @@ public class Window {
 
 		int twcovered, lhcovered, bwcovered, rhcovered;
 
-		Image background2 = background.getScaledCopy(background.getWidth(), h);
+		Image background2 = Util.getScaled(background,background.getWidth(), h);
 
 		// Draw background
 		for (int i = 0; i < w; i += background.getWidth()) {

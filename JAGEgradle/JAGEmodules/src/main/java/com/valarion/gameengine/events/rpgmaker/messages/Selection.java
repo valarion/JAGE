@@ -42,6 +42,7 @@ import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
 public class Selection extends FlowEventClass {
@@ -138,7 +139,7 @@ public class Selection extends FlowEventClass {
 			if (image != null) {
 				int h = window.getContain().getHeight() - 2 * y;
 				if (image.getHeight() != h)
-					resized = image.getScaledCopy(
+					resized = Util.getScaled(image,
 							(int) (h / (float) image.getHeight() * image
 									.getWidth()), h);
 				else

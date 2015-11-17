@@ -41,6 +41,7 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
 public class NumericEntry extends SubEventClass {
@@ -111,7 +112,7 @@ public class NumericEntry extends SubEventClass {
 			if (image != null) {
 				int h = window.getContain().getHeight() - 2 * y;
 				if (image.getHeight() != h)
-					resized = image.getScaledCopy(
+					resized = Util.getScaled(image,
 							(int) (h / (float) image.getHeight() * image
 									.getWidth()), h);
 				else
@@ -214,8 +215,7 @@ public class NumericEntry extends SubEventClass {
 			Font font = container.getGraphics().getFont();
 			charw = font.getWidth("0");
 			charh = font.getLineHeight();
-			select = window.getModel().getImage("selection")
-					.getScaledCopy(charw + 6, charh + 4);
+			select = Util.getScaled(window.getModel().getImage("selection"),charw + 6, charh + 4);
 		}
 	}
 }

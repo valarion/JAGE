@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<events>
+<mapevents>
 	<GameEvent id="testid">
 		<page x="5" y="4" layer="player" type="activation" tile="116">
 			<events>
@@ -58,9 +58,10 @@
 						</option>
 						<option>
 							<text>
-								<Text>Añadir 1</Text>
+								<Text>Añadir</Text>
 							</text>
 							<events>
+								<NumericEntry position="bot" length="3" var="10" ></NumericEntry>
 								<VarOperation var="1" operation="add">
 									<Constant value="1"></Constant>
 								</VarOperation>
@@ -178,4 +179,4 @@
 		</page>
 	</GameEvent>
 
-</events>
+</mapevents>
