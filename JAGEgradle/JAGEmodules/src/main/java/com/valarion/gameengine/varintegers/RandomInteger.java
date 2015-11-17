@@ -40,7 +40,7 @@ public class RandomInteger implements VarLong {
 	}
 	
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
 		start = Long.parseLong(node.getAttribute("start"));
 		end = Long.parseLong(node.getAttribute("end"));
 	}

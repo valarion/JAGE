@@ -167,5 +167,4 @@ public abstract class SubEventClass implements Event {
 		// Not needed
 		return null;
 	}
-
 }

@@ -28,7 +28,7 @@ import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.ColoredString;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
 public class Var implements ColoredString {
 	String text;
@@ -43,7 +43,7 @@ public class Var implements ColoredString {
 
 	@Override
 	public String getString() {
-		text = Long.toString((long) InGameState.getInstance().getContext()
+		text = Long.toString((long) Database.instance().getContext()
 				.getGlobalVars()[var]);
 		return text;
 	}
@@ -54,7 +54,7 @@ public class Var implements ColoredString {
 	}
 
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
 		try {
 			color = new Color(Integer.parseInt(node.getAttribute("r")),
 					Integer.parseInt(node.getAttribute("g")),

@@ -49,7 +49,7 @@ public class Text implements ColoredString {
 	}
 
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
 		try {
 			color = new Color(Integer.parseInt(node.getAttribute("r")),
 					Integer.parseInt(node.getAttribute("g")),

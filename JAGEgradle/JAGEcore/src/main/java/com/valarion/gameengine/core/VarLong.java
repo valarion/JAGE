@@ -29,5 +29,5 @@ import org.w3c.dom.Element;
 public interface VarLong {
 	public long getLong();
 	
-	public void load(Element node) throws SlickException;
+	public void load(Element node, Object context) throws SlickException;
 }

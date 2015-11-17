@@ -38,9 +38,10 @@ import com.valarion.gameengine.core.ColoredString;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Controls;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
@@ -78,21 +79,21 @@ public class NumericEntry extends SubEventClass {
 				for (int number : input) {
 					result = 10 * result + number;
 				}
-				InGameState.getInstance().getContext().getGlobalVars()[var] = result;
+				Database.instance().getContext().getGlobalVars()[var] = result;
 				showing = false;
-				InGameState.getInstance().playSound("menuaccept");
+				Database.instance().playSound("menuaccept");
 			} else if (container.getInput().isKeyPressed(Controls.moveLeft)) {
 				selected = (selected + length - 1) % length;
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			} else if (container.getInput().isKeyPressed(Controls.moveRight)) {
 				selected = (selected + 1) % length;
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			} else if (container.getInput().isKeyPressed(Controls.moveUp)) {
 				input[selected] = (input[selected] + 1) % 10;
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			} else if (container.getInput().isKeyPressed(Controls.moveDown)) {
 				input[selected] = (input[selected] + 9) % 10;
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			}
 		}
 	}
@@ -150,13 +151,13 @@ public class NumericEntry extends SubEventClass {
 
 	@Override
 	public void loadEvent(Element node, Object context) throws SlickException {
-		InGameState instance = InGameState.getInstance();
+		Database instance = Database.instance();
 		window = instance.getWindowimages().get("dialog");
 
 		String im = node.getAttribute("image");
 
 		if (!im.equals(""))
-			image = InGameState.getInstance().getImages().get(im);
+			image = instance.getImages().get(im);
 		else
 			image = null;
 
@@ -175,7 +176,7 @@ public class NumericEntry extends SubEventClass {
 		}
 	}
 
-	public static LinkedList<ColoredString> getDialog(Element node)
+	public static LinkedList<ColoredString> getDialog(Element node, FlowEventInterface event)
 			throws SlickException {
 		LinkedList<ColoredString> strings = new LinkedList<ColoredString>();
 
@@ -190,7 +191,7 @@ public class NumericEntry extends SubEventClass {
 					ColoredString e = (ColoredString) game.getSets()
 							.get(ColoredString.class).get(n.getNodeName())
 							.newInstance();
-					e.load((Element) n);
+					e.load((Element) n, event);
 					strings.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();

@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
 public class Timer extends SubEventClass implements Serializable {
 	/**
@@ -61,7 +61,7 @@ public class Timer extends SubEventClass implements Serializable {
 	@Override
 	public void performAction(GameContainer container, SubTiledMap map, Event e)
 			throws SlickException {
-		com.valarion.gameengine.util.Timer t = InGameState.getInstance().getContext().getTimer();
+		com.valarion.gameengine.util.Timer t = Database.instance().getContext().getTimer();
 
 		if (start) {
 			t.start();

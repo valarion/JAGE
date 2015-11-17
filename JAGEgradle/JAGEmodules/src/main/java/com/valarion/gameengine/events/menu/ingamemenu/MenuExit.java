@@ -30,14 +30,14 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.StartState;
 
 public class MenuExit extends FlowEventClass {
 	@Override
 	public void paralelupdate(GameContainer container, int delta,
 			SubTiledMap map) throws SlickException {
-		InGameState.getInstance().getActiveEvents().remove(this);
+		getState().getActiveEvents().remove(this);
 		GameCore.getInstance()
 				.setActive(
 						new StartState());
@@ -56,6 +56,6 @@ public class MenuExit extends FlowEventClass {
 
 	@Override
 	public boolean isWorking() {
-		return InGameState.getInstance().getContext().isSaveEnabled();
+		return Database.instance().getContext().isSaveEnabled();
 	}
 }

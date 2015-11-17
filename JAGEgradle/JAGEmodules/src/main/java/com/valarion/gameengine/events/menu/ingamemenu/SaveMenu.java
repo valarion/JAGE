@@ -49,8 +49,8 @@ import org.newdawn.slick.util.Log;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.Controls;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
-import com.valarion.gameengine.gamestates.InGameState;
 import com.valarion.gameengine.util.Keyboard;
 import com.valarion.gameengine.util.WindowImage;
 
@@ -115,17 +115,17 @@ public class SaveMenu extends FlowEventClass {
 				} else {
 					editname = saves.get(selection).getSavename();
 				}
-				InGameState.getInstance().playSound("menuaccept");
+				Database.instance().playSound("menuaccept");
 			} else if (input.isKeyPressed(Controls.cancel)) {
-				InGameState.getInstance().getActiveEvents().add(parent);
-				InGameState.getInstance().getActiveEvents().remove(this);
-				InGameState.getInstance().playSound("menucancel");
+				getState().getActiveEvents().add(parent);
+				getState().getActiveEvents().remove(this);
+				Database.instance().playSound("menucancel");
 			} else if (input.isKeyPressed(Controls.moveDown)) {
 				selection += 1;
 				if (selection >= saves.size()) {
 					selection = saves.size() - 1;
 				} else
-					InGameState.getInstance().playSound("menumove");
+					Database.instance().playSound("menumove");
 				if (selection >= (showing + limit))
 					showing++;
 			} else if (input.isKeyPressed(Controls.moveUp)) {
@@ -133,7 +133,7 @@ public class SaveMenu extends FlowEventClass {
 				if (selection < -1) {
 					selection = -1;
 				} else
-					InGameState.getInstance().playSound("menumove");
+					Database.instance().playSound("menumove");
 				if (selection < showing)
 					showing--;
 			}
@@ -146,7 +146,7 @@ public class SaveMenu extends FlowEventClass {
 
 			if (input.isKeyPressed(Controls.cancel)) {
 				editing = false;
-				InGameState.getInstance().playSound("menucancel");
+				Database.instance().playSound("menucancel");
 			} else if (input.isKeyPressed(Controls.accept)) {
 				String filename = null;
 
@@ -157,16 +157,16 @@ public class SaveMenu extends FlowEventClass {
 
 				save(filename, editname);
 
-				InGameState.getInstance().getActiveEvents().remove(this);
-				InGameState.getInstance().playSound("menuaccept");
+				getState().getActiveEvents().remove(this);
+				Database.instance().playSound("menuaccept");
 			} else if (input.isKeyPressed(Input.KEY_BACK)) {
 				if (editname.length() > 0)
 					editname = editname.substring(0, editname.length() - 1);
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			} else {
 				String ch = Keyboard.getChar(input);
 				if (!"".equals(ch)) {
-					InGameState.getInstance().playSound("menumove");
+					Database.instance().playSound("menumove");
 					if (editname.length() <= 30)
 						editname += ch;
 				}
@@ -183,7 +183,7 @@ public class SaveMenu extends FlowEventClass {
 
 	private void rendertop(GameContainer container, Graphics g)
 			throws SlickException {
-		WindowImage window = InGameState.getInstance().getWindowimages()
+		WindowImage window = Database.instance().getWindowimages()
 				.get("loadtop");
 
 		window.setShowArrow(false);
@@ -204,9 +204,9 @@ public class SaveMenu extends FlowEventClass {
 
 	private void rendergames(GameContainer container, Graphics g)
 			throws SlickException {
-		WindowImage window = InGameState.getInstance().getWindowimages()
+		WindowImage window = Database.instance().getWindowimages()
 				.get("loadpart");
-		WindowImage top = InGameState.getInstance().getWindowimages()
+		WindowImage top = Database.instance().getWindowimages()
 				.get("loadtop");
 
 		window.setShowArrow(false);
@@ -260,12 +260,12 @@ public class SaveMenu extends FlowEventClass {
 
 	@Override
 	public boolean isWorking() {
-		return InGameState.getInstance().getContext().isSaveEnabled();
+		return Database.instance().getContext().isSaveEnabled();
 	}
 
 	protected void save(String filename, String savename) {
 		try {
-			GameContext context = InGameState.getInstance().getContext();
+			GameContext context = Database.instance().getContext();
 
 			context.setSavetime();
 			context.setSavename(savename);

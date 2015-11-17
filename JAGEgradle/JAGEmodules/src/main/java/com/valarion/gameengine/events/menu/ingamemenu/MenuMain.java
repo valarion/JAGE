@@ -25,12 +25,12 @@ package com.valarion.gameengine.events.menu.ingamemenu;
 
 import com.valarion.gameengine.events.menu.OptionsMenu;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.SubState;
 
 public class MenuMain extends OptionsMenu {
 
-	public MenuMain() {
-		super(true, InGameState.getInstance(), OptionsMenu.right,
+	public MenuMain(SubState instance) {
+		super(true, instance, OptionsMenu.right,
 				OptionsMenu.top, new FlowEventInterface[] { new SaveMenu(),
 						new MenuExit() });
 	}

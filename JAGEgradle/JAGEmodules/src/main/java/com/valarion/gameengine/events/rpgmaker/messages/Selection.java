@@ -35,13 +35,12 @@ import org.w3c.dom.NodeList;
 
 import com.valarion.gameengine.core.ColoredString;
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
 import com.valarion.gameengine.gamestates.Controls;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
@@ -87,20 +86,20 @@ public class Selection extends FlowEventClass {
 				showing = false;
 				active = ways[selected];
 				active.performAction(container, map, activator);
-				InGameState.getInstance().playSound("menuaccept");
+				Database.instance().playSound("menuaccept");
 			} else if (container.getInput().isKeyPressed(Controls.moveUp)) {
 				selected = (selected + limit - 1) % limit;
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			} else if (container.getInput().isKeyPressed(Controls.moveDown)) {
 				selected = (selected + 1) % limit;
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			} else if (container.getInput().isKeyPressed(Controls.cancel)) {
 				showing = false;
 				active = ways[4];
 				if (active != null) {
 					active.performAction(container, map, activator);
 				}
-				InGameState.getInstance().playSound("menucancel");
+				Database.instance().playSound("menucancel");
 			}
 		} else if (active != null) {
 			if (active.isWorking())
@@ -208,13 +207,13 @@ public class Selection extends FlowEventClass {
 	public void loadEvent(Element node, Object context) throws SlickException {
 		super.loadEvent(node, context);
 
-		InGameState instance = InGameState.getInstance();
+		Database instance = Database.instance();
 		window = instance.getWindowimages().get("dialog");
 
 		String im = node.getAttribute("image");
 
 		if (!im.equals(""))
-			image = InGameState.getInstance().getImages().get(im);
+			image = instance.getImages().get(im);
 		else
 			image = null;
 
@@ -251,7 +250,7 @@ public class Selection extends FlowEventClass {
 								ways[limit] = new RPGMakerEvent();
 								ways[limit].loadEvent(e2, this);
 							} else if ("text".equals(e2.getNodeName())) {
-								options[limit] = Dialog.getDialog(e2);
+								options[limit] = Dialog.getDialog(e2, this);
 							}
 						}
 					}
@@ -277,7 +276,7 @@ public class Selection extends FlowEventClass {
 		}
 	}
 
-	protected LinkedList<ColoredString> getDialog(Element node)
+	/*protected LinkedList<ColoredString> getDialog(Element node)
 			throws SlickException {
 		LinkedList<ColoredString> strings = new LinkedList<ColoredString>();
 
@@ -292,7 +291,7 @@ public class Selection extends FlowEventClass {
 					ColoredString e = (ColoredString) game.getSets()
 							.get(ColoredString.class).get(n.getNodeName())
 							.newInstance();
-					e.load((Element) n);
+					e.load((Element) n, event);
 					strings.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
@@ -301,7 +300,7 @@ public class Selection extends FlowEventClass {
 		}
 
 		return strings;
-	}
+	}*/
 
 	@Override
 	public boolean isWorking() {

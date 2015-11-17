@@ -30,6 +30,7 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
 import com.valarion.gameengine.gamestates.InGameState;
 
@@ -43,11 +44,12 @@ public class NewGame extends FlowEventClass {
 	public void paralelupdate(GameContainer container, int delta,
 			SubTiledMap map) throws SlickException {
 		try {
-			InGameState.getInstance().setContext(new GameContext());
-			InGameState.getInstance().init(container);
+			Database.instance().setContext(new GameContext());
+			InGameState state = new InGameState();
+			state.init(container);
 			GameCore.getInstance()
-					.setActive(InGameState.getInstance());
-			InGameState.getInstance().stopMusic(InGameState.getInstance().getTitleMusic());
+					.setActive(state);
+			Database.instance().stopMusic(Database.instance().getTitleMusic());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException();

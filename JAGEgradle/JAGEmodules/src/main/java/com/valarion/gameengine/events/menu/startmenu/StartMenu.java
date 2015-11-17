@@ -25,13 +25,13 @@ package com.valarion.gameengine.events.menu.startmenu;
 
 import com.valarion.gameengine.events.menu.OptionsMenu;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
-import com.valarion.gameengine.gamestates.StartState;
+import com.valarion.gameengine.gamestates.SubState;
 
 public class StartMenu extends OptionsMenu {
 
-	public StartMenu() {
-		super(false, StartState.getInstance(), OptionsMenu.center,
+	public StartMenu(SubState instance) {
+		super(false, instance, OptionsMenu.center,
 				OptionsMenu.mid, new FlowEventInterface[] { new NewGame(),
-						new LoadGame(), new ExitGame() });
+						new LoadGame(instance), new ExitGame() });
 	}
 }

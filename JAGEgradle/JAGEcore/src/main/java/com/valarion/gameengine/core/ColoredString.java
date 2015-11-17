@@ -34,5 +34,5 @@ public interface ColoredString {
 
 	public int length();
 
-	public void load(Element node) throws SlickException;
+	public void load(Element node, Object context) throws SlickException;
 }

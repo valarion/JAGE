@@ -74,7 +74,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	protected boolean mustupdate;
 
 	@SuppressWarnings("unchecked")
-	public SubTiledMap(String ref, GameCore game) throws SlickException {
+	public SubTiledMap(String ref, GameCore game, Object additional) throws SlickException {
 		super(ref);
 
 		this.game = game;
@@ -127,10 +127,10 @@ public class SubTiledMap extends TiledMap implements Updatable {
 				}
 			}
 
-		loadEvents(ref.substring(0, ref.length() - 3) + "xml");
+		loadEvents(ref.substring(0, ref.length() - 3) + "xml", additional);
 	}
 
-	public void loadEvents(String filename) throws SlickException {
+	public void loadEvents(String filename, Object additional) throws SlickException {
 		try {
 			File fXmlFile = new File(filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
@@ -148,7 +148,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 						Map<String, Class<?>> map = game.getSets().get(Event.class);
 						Class<?> c = map.get(n.getNodeName());
 						Event e = (Event) c.newInstance();
-						e.loadEvent((Element) n, game);
+						e.loadEvent((Element) n, additional);
 						add(e);
 					} catch (InstantiationException | IllegalAccessException e) {
 						e.printStackTrace();

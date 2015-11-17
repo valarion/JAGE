@@ -28,7 +28,7 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
 public class VarCondition implements Condition {
 	
@@ -37,11 +37,11 @@ public class VarCondition implements Condition {
 
 	@Override
 	public boolean eval(Event e) {
-		return InGameState.getInstance().getContext().getGlobalVars()[var] >= comparation;
+		return Database.instance().getContext().getGlobalVars()[var] >= comparation;
 	}
 
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
 		var = Integer.parseInt(node.getAttribute("var"));
 		comparation = Long.parseLong(node.getAttribute("greaterorequal"));
 	}

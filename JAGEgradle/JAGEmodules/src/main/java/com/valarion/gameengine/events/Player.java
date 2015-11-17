@@ -37,8 +37,8 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.gamestates.Controls;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
-import com.valarion.gameengine.gamestates.InGameState;
 import com.valarion.gameengine.util.GameSprite;
 
 public class Player implements Event, Serializable {
@@ -169,7 +169,7 @@ public class Player implements Event, Serializable {
 				}
 
 				if (moving == false) {
-					GameContext c = InGameState.getInstance().getContext();
+					GameContext c = Database.instance().getContext();
 					c.setStat("steps", c.getStat("steps")+1);
 					sprite.setStopped();
 					for (Event e : map.getEvents(xPos, yPos)) {
@@ -353,12 +353,11 @@ public class Player implements Event, Serializable {
 
 	@Override
 	public void loadEvent(Element node, Object context) throws SlickException {
-		InGameState instance = InGameState.getInstance();
 		xPos = Integer.parseInt(node.getAttribute("x"));
 		yPos = Integer.parseInt(node.getAttribute("y"));
 		spritespeed = Float.parseFloat(node.getAttribute("spritespeed"));
 		movingspeed = Float.parseFloat(node.getAttribute("movingspeed"));
-		sprite = instance.getSprites().get(node.getAttribute("sprite"))
+		sprite = Database.instance().getSprites().get(node.getAttribute("sprite"))
 				.createSprite(spritespeed, movingspeed);
 	}
 
@@ -438,7 +437,7 @@ public class Player implements Event, Serializable {
 	private void readObject(ObjectInputStream stream) throws IOException,
 			ClassNotFoundException {
 		stream.defaultReadObject();
-		sprite = InGameState.getInstance().getSprites()
+		sprite = Database.instance().getSprites()
 				.get((String) (stream.readObject()))
 				.createSprite(stream.readFloat(), stream.readFloat());
 		sprite.setDirection(stream.readInt());

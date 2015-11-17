@@ -29,7 +29,7 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
 public class TempMapDelete extends FlowEventClass {
 
@@ -38,9 +38,9 @@ public class TempMapDelete extends FlowEventClass {
 			throws SlickException {
 		try {
 			if (parent != null)
-				InGameState.getInstance().getContext().getDeletedEvents()
+				Database.instance().getContext().getDeletedEvents()
 						.add(getId());
-				InGameState.getInstance().getActive().tempDelete(getEvent());
+			getState().getActive().tempDelete(getEvent());
 		} catch (Exception ex) {
 		}
 	}

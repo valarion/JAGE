@@ -34,7 +34,7 @@ import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.core.VarLong;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
 public class VarOperation extends SubEventClass {
 	public static final byte SET = 0;
@@ -89,7 +89,7 @@ public class VarOperation extends SubEventClass {
 				try {
 					value = (VarLong) game.getSets().get(VarLong.class)
 							.get(n.getNodeName()).newInstance();
-					value.load((Element) n);
+					value.load((Element) n, null);
 				} catch (InstantiationException e) {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
@@ -108,28 +108,32 @@ public class VarOperation extends SubEventClass {
 	public void performAction(GameContainer container, SubTiledMap map, Event e)
 			throws SlickException {
 		long val = value.getLong();
-
+		
+		
 		for (int i = from; i <= to; i++) {
+			long var = Database.instance().getContext().getGlobalVars()[i];
 			switch (operation) {
 			case SET:
-				InGameState.getInstance().getContext().getGlobalVars()[i] = val;
+				var = val;
 				break;
 			case ADD:
-				InGameState.getInstance().getContext().getGlobalVars()[i] += val;
+				var += val;
 				break;
 			case SUB:
-				InGameState.getInstance().getContext().getGlobalVars()[i] -= val;
+				var -= val;
 				break;
 			case MUL:
-				InGameState.getInstance().getContext().getGlobalVars()[i] *= val;
+				var *= val;
 				break;
 			case DIV:
-				InGameState.getInstance().getContext().getGlobalVars()[i] /= val;
+				var /= val;
 				break;
 			case REM:
-				InGameState.getInstance().getContext().getGlobalVars()[i] %= val;
+				var %= val;
 				break;
 			}
+			Database.instance().getContext().getGlobalVars()[i] = var;
 		}
+		
 	}
 }

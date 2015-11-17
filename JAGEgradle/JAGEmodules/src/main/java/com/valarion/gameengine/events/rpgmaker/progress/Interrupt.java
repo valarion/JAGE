@@ -30,7 +30,7 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
 public class Interrupt extends SubEventClass {
 	
@@ -64,7 +64,7 @@ public class Interrupt extends SubEventClass {
 	public void performAction(GameContainer container, SubTiledMap map, Event e)
 			throws SlickException {
 		for(int i=from;i<=to;i++) {
-			InGameState.getInstance().getContext().getGlobalInterrupts()[i] = action;
+			Database.instance().getContext().getGlobalInterrupts()[i] = action;
 		}
 	}
 

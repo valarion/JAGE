@@ -28,9 +28,9 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
-public class InterruptCondition implements Condition {
+public class InterruptCondition implements Condition{
 	
 	protected int interrupt;
 	
@@ -38,11 +38,11 @@ public class InterruptCondition implements Condition {
 
 	@Override
 	public boolean eval(Event e) {
-		return InGameState.getInstance().getContext().getGlobalInterrupts()[interrupt] == state;
+		return Database.instance().getContext().getGlobalInterrupts()[interrupt] == state;
 	}
 
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
 		interrupt = Integer.parseInt(node.getAttribute("interrupt"));
 		
 		if(node.hasAttribute("state")) {

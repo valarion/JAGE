@@ -28,6 +28,7 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.events.Route;
+import com.valarion.gameengine.gamestates.InGameState;
 
 public interface FlowEventInterface extends Event {
 	public void loadEvent(Element node, Object context) throws SlickException;
@@ -53,4 +54,6 @@ public interface FlowEventInterface extends Event {
 	public void setRoute(Route route);
 	
 	public Route getRoute();
+	
+	public InGameState getState();
 }

@@ -25,7 +25,6 @@ package com.valarion.gameengine.gamestates;
 
 import java.util.Set;
 
-import org.lwjgl.openal.AL11;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -41,35 +40,27 @@ public class StartState extends SubState {
 
 	protected WindowImage window;
 
-	InGameState instance;
-
 	protected Set<Event> activeEvents;
 
 	protected Image background;
 
-	protected static StartState startinstance;
-
 	public StartState() {
-		startinstance = this;
+		Database.createInstance();
 
-		instance = InGameState.getInstance();
-		if (instance == null)
-			instance = InGameState.createInstance();
-
-		window = instance.getWindowimages().get("startmenu");
+		window = Database.instance().getWindowimages().get("startmenu");
 
 		try {
-			background = instance
+			background = Database.instance()
 					.getImages()
-					.get(instance.getTitleBackground());
+					.get(Database.instance().getTitleBackground());
 		} catch (Exception e) {
 		}
 
-		instance.loopMusic(instance.getTitleMusic());
+		Database.instance().loopMusic(Database.instance().getTitleMusic());
 
 		activeEvents = Util.getset();
 
-		activeEvents.add(new StartMenu());
+		activeEvents.add(new StartMenu(this));
 	}
 
 	@Override
@@ -99,8 +90,8 @@ public class StartState extends SubState {
 		return activeEvents;
 	}
 
-	public static StartState getInstance() {
+	/*public static StartState getInstance() {
 		return startinstance;
-	}
+	}*/
 
 }

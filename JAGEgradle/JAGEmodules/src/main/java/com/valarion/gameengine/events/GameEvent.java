@@ -35,6 +35,7 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
+import com.valarion.gameengine.gamestates.InGameState;
 
 public class GameEvent implements FlowEventInterface {
 
@@ -43,6 +44,7 @@ public class GameEvent implements FlowEventInterface {
 	protected String id;
 	
 	protected SubTiledMap map;
+	protected InGameState state;
 
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map)
@@ -248,6 +250,10 @@ public class GameEvent implements FlowEventInterface {
 			id = null;
 
 		NodeList pagelist = node.getElementsByTagName("page");
+		
+		if(context instanceof InGameState) {
+			state = (InGameState) context;
+		}
 
 		for (int i = 0; i < pagelist.getLength(); i++) {
 			RPGMakerEvent event = new RPGMakerEvent();
@@ -349,6 +355,11 @@ public class GameEvent implements FlowEventInterface {
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public InGameState getState() {
+		return state;
 	}
 	
 	

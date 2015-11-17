@@ -27,7 +27,7 @@ import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.VarLong;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 
 public class VarValue implements VarLong {
 	int var = 0;
@@ -35,11 +35,11 @@ public class VarValue implements VarLong {
 	
 	@Override
 	public long getLong() {
-		return InGameState.getInstance().getContext().getGlobalVars()[var];
+		return Database.instance().getContext().getGlobalVars()[var];
 	}
 
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
 		var = Integer.parseInt(node.getAttribute("var"));
 	}
 

@@ -44,7 +44,7 @@ import com.valarion.gameengine.events.GameEvent;
 import com.valarion.gameengine.events.Moving;
 import com.valarion.gameengine.events.Player;
 import com.valarion.gameengine.events.Route;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.GameSprite;
 
 public class RPGMakerEvent extends FlowEventClass {
@@ -292,7 +292,7 @@ public class RPGMakerEvent extends FlowEventClass {
 		}
 		
 		try {
-			sprite = InGameState.getInstance().getSprites().get(node.getAttribute("sprite")).createSprite(movingspeed, spritespeed);
+			sprite = Database.instance().getSprites().get(node.getAttribute("sprite")).createSprite(movingspeed, spritespeed);
 		}
 		catch(Exception e) {
 			sprite = null;
@@ -345,6 +345,7 @@ public class RPGMakerEvent extends FlowEventClass {
 	}
 	
 	protected void loadEvents(Element node, Object context) throws SlickException {
+		super.loadEvent(node, context);
 		NodeList childs = node.getChildNodes();
 
 		GameCore game = GameCore.getInstance();
@@ -375,7 +376,7 @@ public class RPGMakerEvent extends FlowEventClass {
 				try {
 					Condition e = (Condition) game.getSets().get(Condition.class)
 							.get(n.getNodeName()).newInstance();
-					e.load((Element) n);
+					e.load((Element) n, null);
 					conditions.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
@@ -395,9 +396,9 @@ public class RPGMakerEvent extends FlowEventClass {
 		working = true;
 		activator = e;
 		map.setMustupdate(false);
-		InGameState.getInstance().getActiveEvents().add(this);
+		getState().getActiveEvents().add(this);
 		
-		Player player = InGameState.getInstance().getPlayer();
+		Player player = getState().getPlayer();
 		
 		if(type != ONSTART && type != PARALEL) {
 			prevdirection = getDirection();
@@ -425,10 +426,10 @@ public class RPGMakerEvent extends FlowEventClass {
 			prevdirection = -1;
 		}
 		try{
-			InGameState.getInstance().getActive().setMustupdate(true);
+			getState().getActive().setMustupdate(true);
 		}
 		catch (Exception e) {}
-		InGameState.getInstance().getActiveEvents().remove(this);
+		getState().getActiveEvents().remove(this);
 	}
 	
 	@Override
@@ -548,7 +549,7 @@ public class RPGMakerEvent extends FlowEventClass {
 	}
 	
 	protected void startmove(GameContainer container, int delta, SubTiledMap map)  throws SlickException{
-		Player player = InGameState.getInstance().getPlayer();
+		Player player = getState().getPlayer();
 		
 		switch(nextmove) {
 		case Moving.LOOKUP:
@@ -703,7 +704,7 @@ public class RPGMakerEvent extends FlowEventClass {
 					movementfirst = true;
 					movementiterator = null;
 					if(!working)
-						InGameState.getInstance().getActiveEvents().remove(getEvent());
+						getState().getActiveEvents().remove(getEvent());
 				}
 				else {
 					nextmove = movementiterator.next();
@@ -723,7 +724,7 @@ public class RPGMakerEvent extends FlowEventClass {
 					nextmove = r.nextInt(4)+Moving.MOVEUP;
 				}
 				else if(movement == TOPLAYER) {
-					Player p = InGameState.getInstance().getPlayer();
+					Player p = getState().getPlayer();
 					
 					int xDif = p.getXPos()-getXPos();
 					int yDif = p.getYPos()-getYPos();

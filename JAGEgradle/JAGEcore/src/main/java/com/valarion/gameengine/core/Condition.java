@@ -26,8 +26,8 @@ package com.valarion.gameengine.core;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
-public interface Condition {
+public interface Condition{
 	public boolean eval(Event e);
 
-	public void load(Element node) throws SlickException;
+	public void load(Element node, Object context) throws SlickException;
 }

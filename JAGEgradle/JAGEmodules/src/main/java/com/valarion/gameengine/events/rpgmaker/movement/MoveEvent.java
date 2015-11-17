@@ -32,7 +32,6 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
-import com.valarion.gameengine.gamestates.InGameState;
 
 public class MoveEvent extends FlowEventClass {
 	protected Route route = null;
@@ -69,7 +68,7 @@ public class MoveEvent extends FlowEventClass {
 				event = getEvent();
 			}
 			else {
-				event = (FlowEventInterface) InGameState.getInstance().getPlayer();
+				event = (FlowEventInterface) getState().getPlayer();
 			}
 		}
 		catch(Exception ex) {

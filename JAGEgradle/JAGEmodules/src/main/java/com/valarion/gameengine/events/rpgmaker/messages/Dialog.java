@@ -37,13 +37,14 @@ import com.valarion.gameengine.core.ColoredString;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
-import com.valarion.gameengine.events.rpgmaker.SubEventClass;
+import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
+import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.Controls;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
-public class Dialog extends SubEventClass {
+public class Dialog extends FlowEventClass {
 	public static final int TOP = 0;
 	public static final int MID = 1;
 	public static final int BOT = 2;
@@ -77,8 +78,8 @@ public class Dialog extends SubEventClass {
 					updatecount += 2 * delta;
 				}else if (container.getInput().isKeyPressed(Controls.cancel)) {
 					apearing = false;
-					InGameState.getInstance().stopSound("writting");
-					InGameState.getInstance().playSound("menucancel");
+					Database.instance().stopSound("writting");
+					Database.instance().playSound("menucancel");
 				} else {
 					updatecount += delta;
 				}
@@ -86,10 +87,10 @@ public class Dialog extends SubEventClass {
 				updatecount %= apearlimit;
 			}
 			else {
-				InGameState.getInstance().stopSound("writting");
+				Database.instance().stopSound("writting");
 				if (container.getInput().isKeyPressed(Controls.accept)) {
 					showing = false;
-					InGameState.getInstance().playSound("menuaccept");
+					Database.instance().playSound("menuaccept");
 				}
 			}
 		}
@@ -172,7 +173,7 @@ public class Dialog extends SubEventClass {
 
 	@Override
 	public void loadEvent(Element node, Object context) throws SlickException {
-		InGameState instance = InGameState.getInstance();
+		Database instance = Database.instance();
 		window = instance.getWindowimages().get("dialog");
 
 		String pos = node.getAttribute("position");
@@ -180,7 +181,7 @@ public class Dialog extends SubEventClass {
 		String im = node.getAttribute("image");
 
 		if (!im.equals(""))
-			image = InGameState.getInstance().getImages().get(im);
+			image = instance.getImages().get(im);
 		else
 			image = null;
 
@@ -197,10 +198,10 @@ public class Dialog extends SubEventClass {
 		if ("true".equals(ap))
 			apear = true;
 
-		strings = getDialog(node);
+		strings = getDialog(node, this);
 	}
 
-	public static LinkedList<ColoredString> getDialog(Element node)
+	public static LinkedList<ColoredString> getDialog(Element node, FlowEventInterface event)
 			throws SlickException {
 		LinkedList<ColoredString> strings = new LinkedList<ColoredString>();
 
@@ -215,7 +216,7 @@ public class Dialog extends SubEventClass {
 					ColoredString e = (ColoredString) game.getSets()
 							.get(ColoredString.class).get(n.getNodeName())
 							.newInstance();
-					e.load((Element) n);
+					e.load((Element) n, event);
 					strings.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
@@ -240,7 +241,7 @@ public class Dialog extends SubEventClass {
 				apearing = true;
 				updatecount = 0;
 				apearcount = 0;
-				InGameState.getInstance().loopSound("writting");
+				Database.instance().loopSound("writting");
 			}
 		}
 	}

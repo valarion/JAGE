@@ -34,7 +34,7 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.Controls;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.SubState;
 import com.valarion.gameengine.util.WindowImage;
 
@@ -88,31 +88,31 @@ public class OptionsMenu extends FlowEventClass {
 			menu.loadEvent(null, this);
 			instance.getActiveEvents().add(menu);
 			instance.getActiveEvents().remove(this);
-			InGameState.getInstance().playSound("menuaccept");
+			Database.instance().playSound("menuaccept");
 		} else if (input.isKeyPressed(Controls.cancel)) {
 			if (closeoncancel) {
 				instance.getActiveEvents().remove(this);
 			}
-			InGameState.getInstance().playSound("menucancel");
+			Database.instance().playSound("menucancel");
 		} else if (input.isKeyPressed(Controls.moveDown)) {
 			selected = (selected + 1) % options.length;
 			while (!options[selected].isWorking()) {
 				selected = (selected + 1) % options.length;
 			}
-			InGameState.getInstance().playSound("menumove");
+			Database.instance().playSound("menumove");
 		} else if (input.isKeyPressed(Controls.moveUp)) {
 			selected = (selected + options.length - 1) % options.length;
 			while (!options[selected].isWorking()) {
 				selected = (selected + options.length - 1) % options.length;
 			}
-			InGameState.getInstance().playSound("menumove");
+			Database.instance().playSound("menumove");
 		}
 	}
 
 	@Override
 	public void postrender(GameContainer container, Graphics g, int tilewidth,
 			int tileheight) throws SlickException {
-		window = InGameState.getInstance().getWindowimages()
+		window = Database.instance().getWindowimages()
 				.get(Integer.toString(options.length));
 		window.setShowArrow(false);
 		Graphics i = window.getContain().getGraphics();

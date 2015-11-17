@@ -41,9 +41,10 @@ import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.Controls;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
 import com.valarion.gameengine.gamestates.InGameState;
-import com.valarion.gameengine.gamestates.StartState;
+import com.valarion.gameengine.gamestates.SubState;
 import com.valarion.gameengine.util.WindowImage;
 
 public class LoadGame extends FlowEventClass {
@@ -53,8 +54,11 @@ public class LoadGame extends FlowEventClass {
 	protected int selection = 0;
 	protected int showing = 0;
 	protected int limit = 4;
+	
+	SubState state;
 
-	public LoadGame() {
+	public LoadGame(SubState instance) {
+		state = instance;
 		File savesdir = new File("saves");
 		if(!savesdir.exists()) {
 			savesdir.mkdirs();
@@ -85,28 +89,29 @@ public class LoadGame extends FlowEventClass {
 
 		if (input.isKeyPressed(Controls.accept)) {
 			try {
-				InGameState.getInstance().setContext(saves.get(selection));
-				InGameState.getInstance().init(container);
+				Database.instance().setContext(saves.get(selection));
+				InGameState state = new InGameState();
+				state.init(container);
 				GameCore.getInstance()
-						.setActive(InGameState.getInstance());
-				StartState.getInstance().getActiveEvents().remove(this);
-				InGameState.getInstance().playSound("menuaccept");
-				InGameState.getInstance().playSound(InGameState.getInstance().getTitleMusic());
+						.setActive(state);
+				state.getActiveEvents().remove(this);
+				Database.instance().playSound("menuaccept");
+				Database.instance().playSound(Database.instance().getTitleMusic());
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException();
 			}
 
 		} else if (input.isKeyPressed(Controls.cancel)) {
-			StartState.getInstance().getActiveEvents().add(parent);
-			StartState.getInstance().getActiveEvents().remove(this);
-			InGameState.getInstance().playSound("menucancel");
+			state.getActiveEvents().add(parent);
+			state.getActiveEvents().remove(this);
+			Database.instance().playSound("menucancel");
 		} else if (input.isKeyPressed(Controls.moveDown)) {
 			selection += 1;
 			if (selection >= saves.size()) {
 				selection = saves.size() - 1;
 			} else
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			if (selection >= (showing + limit))
 				showing++;
 
@@ -115,7 +120,7 @@ public class LoadGame extends FlowEventClass {
 			if (selection < 0) {
 				selection = 0;
 			} else
-				InGameState.getInstance().playSound("menumove");
+				Database.instance().playSound("menumove");
 			if (selection < showing)
 				showing--;
 		}
@@ -130,7 +135,7 @@ public class LoadGame extends FlowEventClass {
 
 	protected void rendertop(GameContainer container, Graphics g)
 			throws SlickException {
-		WindowImage window = InGameState.getInstance().getWindowimages()
+		WindowImage window = Database.instance().getWindowimages()
 				.get("loadtop");
 
 		window.setShowArrow(false);
@@ -151,9 +156,9 @@ public class LoadGame extends FlowEventClass {
 
 	protected void rendergames(GameContainer container, Graphics g)
 			throws SlickException {
-		WindowImage window = InGameState.getInstance().getWindowimages()
+		WindowImage window = Database.instance().getWindowimages()
 				.get("loadpart");
-		WindowImage top = InGameState.getInstance().getWindowimages()
+		WindowImage top = Database.instance().getWindowimages()
 				.get("loadtop");
 
 		window.setShowArrow(false);

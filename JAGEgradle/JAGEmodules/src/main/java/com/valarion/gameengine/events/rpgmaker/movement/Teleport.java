@@ -32,11 +32,11 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.Player;
-import com.valarion.gameengine.events.rpgmaker.SubEventClass;
+import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.InGameState;
 import com.valarion.gameengine.util.GameSprite;
 
-public class Teleport extends SubEventClass {
+public class Teleport extends FlowEventClass {
 
 	protected int x;
 	protected int y;
@@ -62,7 +62,7 @@ public class Teleport extends SubEventClass {
 				if (alpha == 255) {
 					shading = false;
 
-					InGameState gameinstance = InGameState.getInstance();
+					InGameState gameinstance = getState();
 					Event player = gameinstance.getPlayer();
 
 					map.getEvents(player.getXPos(), player.getYPos()).remove(

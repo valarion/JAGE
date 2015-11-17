@@ -37,7 +37,7 @@ public class Constant implements VarLong {
 	}
 
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
 		value = Long.parseLong(node.getAttribute("value"));
 	}
 

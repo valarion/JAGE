@@ -28,11 +28,13 @@ import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.ColoredString;
-import com.valarion.gameengine.gamestates.InGameState;
+import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 
 public class MapName implements ColoredString {
 	protected Color color;
 	protected String name;
+	
+	protected FlowEventInterface parent;
 
 	@Override
 	public Color getColor() {
@@ -41,8 +43,7 @@ public class MapName implements ColoredString {
 
 	@Override
 	public String getString() {
-		name = InGameState.getInstance().getActive()
-				.getMapProperty("name", "");
+		name = parent.getState().getActive().getMapProperty("name", "");
 		return name;
 	}
 
@@ -52,7 +53,10 @@ public class MapName implements ColoredString {
 	}
 
 	@Override
-	public void load(Element node) throws SlickException {
+	public void load(Element node, Object context) throws SlickException {
+		if(context instanceof FlowEventInterface) {
+			parent = (FlowEventInterface) context;
+		}
 		try {
 			color = new Color(Integer.parseInt(node.getAttribute("r")),
 					Integer.parseInt(node.getAttribute("g")),

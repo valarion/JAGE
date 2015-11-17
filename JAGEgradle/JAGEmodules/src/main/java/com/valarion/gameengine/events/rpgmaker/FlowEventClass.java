@@ -33,10 +33,13 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.Route;
+import com.valarion.gameengine.gamestates.InGameState;
 
 public abstract class FlowEventClass extends SubEventClass implements
 		FlowEventInterface {
 	protected FlowEventInterface parent;
+	
+	protected InGameState state;
 
 	protected Event activator;
 
@@ -46,6 +49,8 @@ public abstract class FlowEventClass extends SubEventClass implements
 	public void loadEvent(Element node, Object context) throws SlickException {
 		if (context instanceof FlowEventInterface)
 			parent = (FlowEventInterface) context;
+		else if(context instanceof InGameState)
+			state = (InGameState) context;
 	}
 
 	public String getId() {
@@ -248,6 +253,15 @@ public abstract class FlowEventClass extends SubEventClass implements
 		}
 		else {
 			return null;
+		}
+	}
+	
+	public InGameState getState() {
+		if(parent != null) {
+			return parent.getState();
+		}
+		else {
+			return state;
 		}
 	}
 }
