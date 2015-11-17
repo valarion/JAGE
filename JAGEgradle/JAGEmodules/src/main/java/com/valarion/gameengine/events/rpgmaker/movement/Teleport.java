@@ -108,6 +108,7 @@ public class Teleport extends FlowEventClass {
 
 	@Override
 	public void loadEvent(Element node, Object context) throws SlickException {
+		super.loadEvent(node, context);
 		this.destX = Integer.parseInt(node.getAttribute("xDest"));
 		this.destY = Integer.parseInt(node.getAttribute("yDest"));
 		this.destMap = node.getAttribute("destMap");

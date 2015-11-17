@@ -23,15 +23,18 @@
  ******************************************************************************/
 package com.valarion.gameengine.events.menu.ingamemenu;
 
+import org.newdawn.slick.SlickException;
+
 import com.valarion.gameengine.events.menu.OptionsMenu;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.SubState;
 
 public class MenuMain extends OptionsMenu {
 
-	public MenuMain(SubState instance) {
+	public MenuMain(SubState instance) throws SlickException {
 		super(true, instance, OptionsMenu.right,
 				OptionsMenu.top, new FlowEventInterface[] { new SaveMenu(),
 						new MenuExit() });
+		loadEvent(null,instance);
 	}
 }
