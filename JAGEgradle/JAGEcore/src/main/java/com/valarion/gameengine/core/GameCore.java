@@ -71,11 +71,8 @@ public class GameCore extends BasicGame {
 	}
 
 	public static void main(String[] arguments) {
-		if(!"true".equalsIgnoreCase(System.getProperty("runingInEclipse"))){
-			System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
-		}
-		//GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		//(instance = new GameCore("game","StartState",gd.getDisplayMode().getWidth(),gd.getDisplayMode().getHeight(),true)).start();
+		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
+
 		(instance = new GameCore("game","StartState",800,600,false)).start();
 	}
 

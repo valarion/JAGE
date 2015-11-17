@@ -44,11 +44,11 @@ run {
 
 natives {
     jars = [
-        'lwjgl-platform-2.9.0-natives-windows.jar',
+        'lwjgl-platform-2.9.1-natives-windows.jar',
         'jinput-platform-2.0.5-natives-windows.jar',
-        'lwjgl-platform-2.9.0-natives-linux.jar',
+        'lwjgl-platform-2.9.1-natives-linux.jar',
         'jinput-platform-2.0.5-natives-linux.jar',
-        'lwjgl-platform-2.9.0-natives-osx.jar',
+        'lwjgl-platform-2.9.1-natives-osx.jar',
         'jinput-platform-2.0.5-natives-osx.jar'
     ]
 }

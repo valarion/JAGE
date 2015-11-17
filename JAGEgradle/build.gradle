@@ -12,6 +12,10 @@ repositories {
     jcenter()
 }
 
+dependencies {
+    runtime 'org.slick2d:slick2d-core:1.0.1'
+}
+
 project(':JAGEmodules') {
 	apply plugin: 'java'
 	dependencies {
@@ -46,10 +50,60 @@ task debug(dependsOn:":JAGEcore:run") {
 
 }
 
+task release() {
+
+}
+
 gradle.taskGraph.whenReady {taskGraph ->
     if (taskGraph.hasTask(debug)) {
-        project(':JAGEcore').applicationDefaultJvmArgs = ["-DruningInEclipse=true","-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
-    } else {
-        project(':JAGEcore').applicationDefaultJvmArgs = ["-DruningInEclipse=true"]
+        project(':JAGEcore').applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
+    }
+    else {
+    	project(':JAGEcore').applicationDefaultJvmArgs = ["-Djava.library.path=./natives"]
     }
 }
+
+task copyModules(type: Copy, dependsOn: ":JAGEmodules:jar") {
+	from project(":JAGEmodules").jar
+	into("build/bin/modules")
+	include('JAGEmodules.jar')
+}
+	
+task copyTest(type: Copy) {
+	from project(":JAGEtest").projectDir.path + "/resources"
+	into("build/bin")
+}
+
+task copyNatives2(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
+	from project(":JAGEcore").projectDir.path + "/build/natives/windows"
+	from project(":JAGEcore").projectDir.path + "/build/natives/linux"
+	from project(":JAGEcore").projectDir.path + "/build/natives/osx"
+	include("*jinput*")
+	into("build/bin/")
+}
+
+task copyNatives(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
+	from project(":JAGEcore").projectDir.path + "/build/natives/windows"
+	from project(":JAGEcore").projectDir.path + "/build/natives/linux"
+	from project(":JAGEcore").projectDir.path + "/build/natives/osx"
+	//exclude("*jinput*")
+	into("build/bin/natives")
+}
+
+/*task copyCore(type: Copy, dependsOn: ":JAGEcore:jar") {
+	from project(":JAGEcore").jar
+	into("build/bin")
+	include('JAGEcore.jar')
+}*/
+
+task copyCoreLibs(type: Copy, dependsOn: ":JAGEcore:installDist") {
+	from project(":JAGEcore").projectDir.path + "/build/install/JAGEcore"
+	into("build")
+}
+
+release.dependsOn copyModules
+release.dependsOn copyTest
+release.dependsOn copyNatives
+//release.dependsOn copyNatives2
+//release.dependsOn copyCore
+release.dependsOn copyCoreLibs
