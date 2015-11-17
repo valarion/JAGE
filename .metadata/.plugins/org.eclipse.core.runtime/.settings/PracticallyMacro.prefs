@@ -1,2 +1,0 @@
-Preference_UserMacroDefinitions=<EditorMacros>\r\n<Macro id\="run UGE" lastUsed\="1436914748439" name\="run UGE" runAsCompound\="true">\r\n<description/>\r\n<Command commandID\="org.eclipse.ui.file.export" type\="EclipseCommand"/>\r\n<Command commandID\="org.eclipse.ui.file.export" type\="EclipseCommand"/>\r\n</Macro>\r\n</EditorMacros>\r\n
-eclipse.preferences.version=1

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;MainWindows&apos; to &apos;MainWindow&apos;&#x0D;&#x0A;- Original project: &apos;SwingTest&apos;&#x0D;&#x0A;- Original element: &apos;MainWindows&apos;&#x0D;&#x0A;- Renamed element: &apos;MainWindow&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;MainWindows&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{MainWindows.java[MainWindows" matchStrategy="1" name="MainWindow" qualified="false" references="true" similarDeclarations="false" stamp="1436196698652" textual="false" version="1.0"/>
-</session>
