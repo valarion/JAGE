@@ -25,6 +25,17 @@ package com.valarion.gameengine.core;
 
 import org.newdawn.slick.GameContainer;
 
+/**
+ * A game state defines a behavior.
+ * Typical uses are having a game state for start menu, load screen and the actual game
+ * @author Rubén Tomás Gracia
+ *
+ */
 public abstract class GameState implements Updatable, Renderable {
+	/**
+	 * Init game state.
+	 * @param container
+	 * @throws Exception
+	 */
 	public abstract void init(GameContainer container) throws Exception;
 }

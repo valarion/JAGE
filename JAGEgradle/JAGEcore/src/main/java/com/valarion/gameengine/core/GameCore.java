@@ -43,7 +43,7 @@ import com.valarion.pluginsystem.PluginUtil;
  * Main game class. Starts an application, loads the plugins, searchs for an
  * Instance called "StartInstance" and loads it.
  * 
- * @author Valarionch <valarionch@gmail.com>
+ * @author Rubén Tomás Gracia
  */
 public class GameCore extends BasicGame {
 	protected String startState;
@@ -76,12 +76,18 @@ public class GameCore extends BasicGame {
 		(instance = new GameCore("game","StartState",800,600,false)).start();
 	}
 
+	/**
+	 * Singleton method.
+	 * @return Singleton instance.
+	 */
 	public static GameCore getInstance() {
 		return instance;
 	}
 
+	/**
+	 * Starts the engine.
+	 */
 	public void start() {
-
 		try {
 			app = new AppGameContainer(this);
 			app.setDisplayMode(screenwidth, screenheight, fullscreen);
@@ -129,23 +135,40 @@ public class GameCore extends BasicGame {
 		active.update(container, delta);
 	}
 
+	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
 		active.render(container, g);
 	}
 
+	/**
+	 * Get the app container.
+	 * @return 
+	 */
 	public AppGameContainer getApp() {
 		return app;
 	}
 
+	/**
+	 * Get active game state.
+	 * @return
+	 */
 	public GameState getActive() {
 		return active;
 	}
 
+	/**
+	 * Set active game state.
+	 * @param active
+	 */
 	public void setActive(GameState active) {
 		this.active = active;
 	}
 
+	/**
+	 * Get the loaded plugin classes.
+	 * @return
+	 */
 	public Map<Class<?>, Map<String, Class<?>>> getSets() {
 		return sets;
 	}

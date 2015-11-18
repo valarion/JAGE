@@ -26,7 +26,18 @@ package com.valarion.gameengine.core;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
+/**
+ * Updatable object.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public interface Updatable {
+	/**
+	 * Update the object by delta milliseconds.
+	 * @param container
+	 * @param delta
+	 * @throws SlickException
+	 */
 	public abstract void update(GameContainer container, int delta)
 			throws SlickException;
 }

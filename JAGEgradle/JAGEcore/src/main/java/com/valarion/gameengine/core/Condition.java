@@ -26,8 +26,25 @@ package com.valarion.gameengine.core;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
+/**
+ * 
+ * @author Ruben Tomás Gracia
+ * A class that evaluates a condition.
+ *
+ */
 public interface Condition{
+	/**
+	 * Evaluate condition
+	 * @param e Event in to which evaluate the condition.
+	 * @return true Tf condition checks, false otherwise.
+	 */
 	public boolean eval(Event e);
 
+	/**
+	 * Load the condition from an xml node.
+	 * @param node Node to load.
+	 * @param context Object of context. Usually the parent event.
+	 * @throws SlickException
+	 */
 	public void load(Element node, Object context) throws SlickException;
 }

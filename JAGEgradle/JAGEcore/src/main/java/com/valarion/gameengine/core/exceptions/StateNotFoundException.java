@@ -23,14 +23,18 @@
  ******************************************************************************/
 package com.valarion.gameengine.core.exceptions;
 
+/**
+ * Exception for when a start state hasn't been found.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class StateNotFoundException extends Exception {
-
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3002375650471791876L;
 
+	/**
+	 * Default constructor.
+	 * @param instanceName
+	 */
 	public StateNotFoundException(String instanceName) {
 		super(instanceName);
 	}

@@ -46,12 +46,10 @@ import org.xml.sax.SAXException;
 
 import com.valarion.gameengine.util.Util;
 
-/**
- * 
- */
 
 /**
- * @author Rubén
+ * Manages a tiled editor map loading.
+ * @author Rubén Tomás Gracia
  * 
  */
 public class SubTiledMap extends TiledMap implements Updatable {
@@ -130,6 +128,12 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		loadEvents(ref.substring(0, ref.length() - 3) + "xml", additional);
 	}
 
+	/**
+	 * Load events in the map
+	 * @param filename Map filename.
+	 * @param additional Additional object to pass to the events load method.
+	 * @throws SlickException
+	 */
 	public void loadEvents(String filename, Object additional) throws SlickException {
 		try {
 			File fXmlFile = new File(filename);
@@ -161,10 +165,21 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 
+	/**
+	 * Get the name of a layer by index.
+	 * @param index
+	 * @return
+	 */
 	public String getLayerName(int index) {
 		return ((Layer) layers.get(index)).name;
 	}
 
+	/**
+	 * create type if doesn't exist and return the id.
+	 * @param type
+	 * @param prevId
+	 * @return
+	 */
 	protected int getTypeId(String type, int prevId) {
 		Integer ret = typesmap.get(type);
 
@@ -176,6 +191,12 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 
+	/**
+	 * Check if a tile is blocked.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public boolean isBlocked(int x, int y) {
 		if (x < 0 || x >= blocked.length || y < 0 || y >= blocked[0].length) {
 			return true;
@@ -191,14 +212,31 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		return eventblocked || blocked[x][y];
 	}
 
+	/**
+	 * Set if a tile is blocked.
+	 * @param x
+	 * @param y
+	 * @param state
+	 */
 	public void setBlocked(int x, int y, boolean state) {
 		blocked[x][y] = state;
 	}
 
+	/**
+	 * Set a tile to the default state.
+	 * @param x
+	 * @param y
+	 */
 	public void setToDefault(int x, int y) {
 		blocked[x][y] = blockedtypes.get(types[x][y]);
 	}
 
+	/**
+	 * Prerendering, for backgrounds.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	public void prerender(GameContainer container, Graphics g)
 			throws SlickException {
 		for (Event event : events) {
@@ -206,6 +244,13 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 
+	/**
+	 * Actual rendering of game.
+	 * @param container
+	 * @param g
+	 * @param common
+	 * @throws SlickException
+	 */
 	public void render(GameContainer container, Graphics g, Set<Event> common)
 			throws SlickException {
 
@@ -230,6 +275,12 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 
+	/**
+	 * Postrendering, for GUIs.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	public void postrender(GameContainer container, Graphics g)
 			throws SlickException {
 
@@ -238,6 +289,10 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 
+	/**
+	 * Add event to the map.
+	 * @param event
+	 */
 	public void add(Event event) {
 		Set<Event> eventslayer = eventsByLayer.get(event.getLayerName());
 
@@ -262,6 +317,10 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		events.add(event);
 	}
 
+	/**
+	 * Remove event from the map.
+	 * @param event
+	 */
 	public void remove(Event event) {
 		Set<Event> eventslayer = eventsByLayer.get(event.getLayerName());
 
@@ -277,6 +336,11 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		events.remove(event);
 	}
 	
+	/**
+	 * Temporary delete an event.
+	 * Event will be present next time map is loaded.
+	 * @param e
+	 */
 	public void tempDelete(Event e) {
 		if(events.contains(e)) {
 			remove(e);
@@ -284,6 +348,9 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 	
+	/**
+	 * Add temporary deleted events to the map again.
+	 */
 	public void addDeleteds() {
 		for(Event e : tempdeleteds) {
 			add(e);
@@ -305,10 +372,21 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 
+	/**
+	 * Get events in a layer.
+	 * @param layer
+	 * @return
+	 */
 	public Set<Event> getEvents(String layer) {
 		return eventsByLayer.get(layer);
 	}
 
+	/**
+	 * Get events in a tile.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public Set<Event> getEvents(int x, int y) {
 		try {
 			return eventsByTile[x][y];
@@ -317,22 +395,42 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 	}
 
+	/**
+	 * Get all the events.
+	 * @return
+	 */
 	public Set<Event> getEvents() {
 		return events;
 	}
 
+	/**
+	 * check if the map must be updated.
+	 * @return
+	 */
 	public boolean isMustupdate() {
 		return mustupdate;
 	}
 
+	/**
+	 * Set if the map must be updated.
+	 * @param mustupdate
+	 */
 	public void setMustupdate(boolean mustupdate) {
 		this.mustupdate = mustupdate;
 	}
 
+	/**
+	 * Get game core instance.
+	 * @return
+	 */
 	public GameCore getGame() {
 		return game;
 	}
 
+	/**
+	 * Get map containing events referenced by id.
+	 * @return
+	 */
 	public Map<String, Event> getEventsById() {
 		return eventsById;
 	}

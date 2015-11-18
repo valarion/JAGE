@@ -27,7 +27,18 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+/**
+ * Renderable on a graphics.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public interface Renderable {
+	/**
+	 * Render this component to a graphics object.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	public void render(GameContainer container, Graphics g)
 			throws SlickException;
 }

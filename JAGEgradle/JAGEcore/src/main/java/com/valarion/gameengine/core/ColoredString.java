@@ -27,12 +27,35 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
+/**
+ * A class that saves a string along with the color to print it.
+ * @author Rubén Tomás Gracia
+ * 
+ */
 public interface ColoredString {
+	/**
+	 * Get the color of the string.
+	 * @return Color of the string.
+	 */
 	public Color getColor();
 
+	/**
+	 * Get the string.
+	 * @return String.
+	 */
 	public String getString();
 
+	/**
+	 * Get the length of the string.
+	 * @return Length of the string.
+	 */
 	public int length();
-
+	
+	/**
+	 * Load the string and color from an xml node.
+	 * @param node Node to load.
+	 * @param context Object of context. Usually the parent event.
+	 * @throws SlickException
+	 */
 	public void load(Element node, Object context) throws SlickException;
 }

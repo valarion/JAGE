@@ -26,6 +26,11 @@ package com.valarion.gameengine.core;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
+/**
+ * Class containing the mechanics of accessing to a long value.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public interface VarLong {
 	public long getLong();
 	

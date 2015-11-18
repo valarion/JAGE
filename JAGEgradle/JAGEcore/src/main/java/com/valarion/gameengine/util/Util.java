@@ -32,11 +32,31 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+/**
+ * Class containing different utilities.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Util {
+	/**
+	 * Get a concurrent hash set.
+	 * It needs to be created from a hash map, due to the jre missing a concurrent hash set.
+	 * @return
+	 */
 	public static <T> Set<T> getset() {
 		return Collections.newSetFromMap(new ConcurrentHashMap<T, Boolean>());
 	}
 	
+	/**
+	 * Get a scaled copy of an image.
+	 * Differs from Image.getScaledCopy in that this scales the texture.
+	 * This avoids the use of long versions of Graphics.drawImage to set the resize correctly.
+	 * @param input
+	 * @param w
+	 * @param h
+	 * @return
+	 * @throws SlickException
+	 */
 	public static Image getScaled(Image input, int w, int h) throws SlickException {
 		Image im = new Image(w,h);
 		Graphics g = im.getGraphics();

@@ -28,6 +28,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
+/**
+ * Class that contains all the methods needed for an event based game.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public interface Event {
 	/**
 	 * Updates the event if updates are active.
@@ -41,7 +46,7 @@ public interface Event {
 			throws SlickException;
 
 	/**
-	 * Updates the event even when updates aren't active
+	 * Updates the event even when updates aren't active.
 	 * 
 	 * @param container
 	 * @param delta
@@ -52,7 +57,7 @@ public interface Event {
 			SubTiledMap map) throws SlickException;
 
 	/**
-	 * Prerendering, for bakgrounds
+	 * Prerendering, for backgrounds.
 	 * 
 	 * @param container
 	 * @param g
@@ -64,7 +69,7 @@ public interface Event {
 			int tileheight) throws SlickException;
 
 	/**
-	 * Actual rendering of game
+	 * Actual rendering of game.
 	 * 
 	 * @param container
 	 * @param g
@@ -76,7 +81,7 @@ public interface Event {
 			int tileheight) throws SlickException;
 
 	/**
-	 * Postrendering, for GUIs
+	 * Postrendering, for GUIs.
 	 * 
 	 * @param container
 	 * @param g
