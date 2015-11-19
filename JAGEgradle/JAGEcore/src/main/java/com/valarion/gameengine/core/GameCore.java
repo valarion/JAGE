@@ -72,8 +72,19 @@ public class GameCore extends BasicGame {
 
 	public static void main(String[] arguments) {
 		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
+		
+		int w = 800;
+		int h = 600;
+		boolean fs = false;
+		
+		try {
+			w = Integer.parseInt(arguments[0]);
+			h = Integer.parseInt(arguments[1]);
+			fs = Boolean.parseBoolean(arguments[2]);
+		}
+		catch(Exception e) {}
 
-		(instance = new GameCore("game","StartState",800,600,false)).start();
+		(instance = new GameCore("game","StartState",w,h,fs)).start();
 	}
 
 	/**

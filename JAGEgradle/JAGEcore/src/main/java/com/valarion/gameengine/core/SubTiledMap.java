@@ -139,6 +139,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 			File fXmlFile = new File(filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
+			dbFactory.setIgnoringComments(true);
 			DocumentBuilder dBuilder;
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);

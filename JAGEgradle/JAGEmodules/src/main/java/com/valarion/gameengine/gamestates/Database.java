@@ -69,6 +69,7 @@ public class Database {
 		try {
 			File fXmlFile = new File("config.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			dbFactory.setIgnoringComments(true);
 			DocumentBuilder dBuilder;
 			dBuilder = dbFactory.newDocumentBuilder();
 
@@ -88,6 +89,7 @@ public class Database {
 	public void loadDatabase() throws Exception {
 		File fXmlFile = new File("res/database.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		dbFactory.setIgnoringComments(true);
 		DocumentBuilder dBuilder;
 		dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(fXmlFile);
