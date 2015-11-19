@@ -34,6 +34,11 @@ import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
 import com.valarion.gameengine.gamestates.InGameState;
 
+/**
+ * New game option of the start menu.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class NewGame extends FlowEventClass {
 
 	public NewGame() {

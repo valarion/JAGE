@@ -27,8 +27,16 @@ import com.valarion.gameengine.events.menu.OptionsMenu;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.SubState;
 
+/**
+ * Start menu
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class StartMenu extends OptionsMenu {
-
+	/**
+	 * Creates menu.
+	 * @param instance State in which this menu is working.
+	 */
 	public StartMenu(SubState instance) {
 		super(false, instance, OptionsMenu.center,
 				OptionsMenu.mid, new FlowEventInterface[] { new NewGame(),

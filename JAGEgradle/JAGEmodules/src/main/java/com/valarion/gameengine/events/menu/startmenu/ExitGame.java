@@ -30,6 +30,11 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 
+/**
+ * Exit option of the start menu.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class ExitGame extends FlowEventClass {
 
 	public ExitGame() {

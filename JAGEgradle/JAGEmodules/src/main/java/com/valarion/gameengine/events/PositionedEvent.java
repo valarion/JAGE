@@ -28,6 +28,11 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
 
+/**
+ * Abstract class that describes an event in a position.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public abstract class PositionedEvent implements Event {
 	protected int x = -1, y = -1;
 

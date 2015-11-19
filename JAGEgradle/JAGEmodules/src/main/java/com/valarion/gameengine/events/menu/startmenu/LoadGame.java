@@ -47,6 +47,11 @@ import com.valarion.gameengine.gamestates.InGameState;
 import com.valarion.gameengine.gamestates.SubState;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * Load game option of the start menu.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class LoadGame extends FlowEventClass {
 
 	protected LinkedList<GameContext> saves = new LinkedList<GameContext>();
@@ -57,6 +62,10 @@ public class LoadGame extends FlowEventClass {
 	
 	SubState state;
 
+	/**
+	 * Reads saved games from disk.
+	 * @param instance State in which this menu is working.
+	 */
 	public LoadGame(SubState instance) {
 		state = instance;
 		File savesdir = new File("saves");
@@ -133,6 +142,12 @@ public class LoadGame extends FlowEventClass {
 		rendergames(container, g);
 	}
 
+	/**
+	 * Render the top of the menu.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	protected void rendertop(GameContainer container, Graphics g)
 			throws SlickException {
 		WindowImage window = Database.instance().getWindowimages()
@@ -154,6 +169,12 @@ public class LoadGame extends FlowEventClass {
 		g.drawImage(window.getImage(), 0, 0);
 	}
 
+	/**
+	 * Render the saved games part of the menu.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	protected void rendergames(GameContainer container, Graphics g)
 			throws SlickException {
 		WindowImage window = Database.instance().getWindowimages()

@@ -38,6 +38,11 @@ import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.SubState;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * Describes the functioning of an options menu.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class OptionsMenu extends FlowEventClass {
 
 	public static final int top = 0;

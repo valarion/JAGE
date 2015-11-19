@@ -40,7 +40,6 @@ import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
-import com.valarion.gameengine.events.GameEvent;
 import com.valarion.gameengine.events.Moving;
 import com.valarion.gameengine.events.Player;
 import com.valarion.gameengine.events.Route;

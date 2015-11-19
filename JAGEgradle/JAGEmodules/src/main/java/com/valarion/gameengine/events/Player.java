@@ -41,6 +41,11 @@ import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
 import com.valarion.gameengine.util.GameSprite;
 
+/**
+ * Class representing the player and all it's mechanics.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Player implements Event, Serializable {
 
 	/**
@@ -60,11 +65,6 @@ public class Player implements Event, Serializable {
 	protected float movingspeed = 0.1f;
 	protected float spritespeed = 1.0f;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see Event#update(org.newdawn.slick.GameContainer, int, SubTiledMap)
-	 */
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map)
 			throws SlickException {
@@ -426,6 +426,11 @@ public class Player implements Event, Serializable {
 		return null;
 	}
 
+	/**
+	 * Method for serializing the object.
+	 * @param stream
+	 * @throws IOException
+	 */
 	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
 		stream.writeObject(sprite.getName());
@@ -434,6 +439,12 @@ public class Player implements Event, Serializable {
 		stream.writeInt(sprite.getDirection());
 	}
 
+	/**
+	 * MEthod for deserializing the object.
+	 * @param stream
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	private void readObject(ObjectInputStream stream) throws IOException,
 			ClassNotFoundException {
 		stream.defaultReadObject();
@@ -443,6 +454,10 @@ public class Player implements Event, Serializable {
 		sprite.setDirection(stream.readInt());
 	}
 
+	/**
+	 * Returns true if the player is moving.
+	 * @return
+	 */
 	public boolean isMoving() {
 		return moving;
 	}

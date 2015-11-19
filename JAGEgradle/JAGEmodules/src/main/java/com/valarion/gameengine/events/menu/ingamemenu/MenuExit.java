@@ -33,6 +33,11 @@ import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.StartState;
 
+/**
+ * Exit option of the ingame menu.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class MenuExit extends FlowEventClass {
 	@Override
 	public void paralelupdate(GameContainer container, int delta,

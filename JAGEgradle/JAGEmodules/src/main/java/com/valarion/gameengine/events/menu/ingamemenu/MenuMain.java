@@ -29,6 +29,11 @@ import com.valarion.gameengine.events.menu.OptionsMenu;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.SubState;
 
+/**
+ * Ingame menu.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class MenuMain extends OptionsMenu {
 
 	public MenuMain(SubState instance) throws SlickException {

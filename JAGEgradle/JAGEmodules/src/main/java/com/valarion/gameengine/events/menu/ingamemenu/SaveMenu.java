@@ -53,7 +53,12 @@ import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
 import com.valarion.gameengine.util.Keyboard;
 import com.valarion.gameengine.util.WindowImage;
-
+/**
+ * Save option of the ingame menu.
+ * Also, save menu.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class SaveMenu extends FlowEventClass {
 
 	protected LinkedList<GameContext> saves = new LinkedList<GameContext>();
@@ -181,6 +186,12 @@ public class SaveMenu extends FlowEventClass {
 		rendergames(container, g);
 	}
 
+	/**
+	 * Render the top part of the menu.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	private void rendertop(GameContainer container, Graphics g)
 			throws SlickException {
 		WindowImage window = Database.instance().getWindowimages()
@@ -202,6 +213,12 @@ public class SaveMenu extends FlowEventClass {
 		g.drawImage(window.getImage(), 0, 0);
 	}
 
+	/**
+	 * Render the saved games part of the menu.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	private void rendergames(GameContainer container, Graphics g)
 			throws SlickException {
 		WindowImage window = Database.instance().getWindowimages()
@@ -263,6 +280,11 @@ public class SaveMenu extends FlowEventClass {
 		return Database.instance().getContext().isSaveEnabled();
 	}
 
+	/**
+	 * Save game.
+	 * @param filename
+	 * @param savename
+	 */
 	protected void save(String filename, String savename) {
 		try {
 			GameContext context = Database.instance().getContext();

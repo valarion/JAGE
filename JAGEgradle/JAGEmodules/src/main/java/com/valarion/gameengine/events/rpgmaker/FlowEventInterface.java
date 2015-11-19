@@ -23,18 +23,11 @@
  ******************************************************************************/
 package com.valarion.gameengine.events.rpgmaker;
 
-import org.newdawn.slick.SlickException;
-import org.w3c.dom.Element;
-
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.InGameState;
 
 public interface FlowEventInterface extends Event {
-	public void loadEvent(Element node, Object context) throws SlickException;
-
-	public String getId();
-
 	public void breakCicle();
 
 	public void stop();

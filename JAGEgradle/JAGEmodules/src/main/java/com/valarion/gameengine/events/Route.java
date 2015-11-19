@@ -29,6 +29,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Class that saves a moving route.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Route {
 	protected LinkedList<Integer> route = new LinkedList<Integer>();
 	
@@ -37,7 +42,13 @@ public class Route {
 	protected boolean canactivate = true;
 	protected boolean wait = true;
 	
+	/**
+	 * Loads the route form an XML node.
+	 * @param node XML node.
+	 * @param canactivate Whether this object can activate other events "on touch".
+	 */
 	public Route(Element node, boolean canactivate) {
+		this.canactivate = canactivate;
 		if(node == null)
 			return;
 		
@@ -80,22 +91,42 @@ public class Route {
 		}
 	}
 	
+	/**
+	 * Gets whether to ignore impossible movements or not.
+	 * @return
+	 */
 	public boolean isMustignore() {
 		return mustignore;
 	}
 	
+	/**
+	 * Gets whether to loop the movement or not.
+	 * @return
+	 */
 	public boolean isLoop() {
 		return loop;
 	}
 
+	/**
+	 * Gets whether this object can activate other events "on touch".
+	 * @return
+	 */
 	public boolean isCanactivate() {
 		return canactivate;
 	}
 
+	/**
+	 * Returns whether the event must wait to this route to end before continuing.
+	 * @return
+	 */
 	public boolean isWait() {
 		return wait;
 	}
 
+	/**
+	 * Get the route.
+	 * @return
+	 */
 	public LinkedList<Integer> getRoute() {
 		return new LinkedList<Integer>(route);
 	}

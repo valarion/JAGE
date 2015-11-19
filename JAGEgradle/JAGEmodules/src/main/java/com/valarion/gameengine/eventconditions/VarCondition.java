@@ -30,6 +30,11 @@ import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Condition of a variable being greater than or equal that a given value.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class VarCondition implements Condition {
 	
 	int var;

@@ -23,6 +23,11 @@
  ******************************************************************************/
 package com.valarion.gameengine.events;
 
+/**
+ * Class that enumerates all possible movements.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public abstract class Moving {
 	
 	public static final int NOTHING = -1;

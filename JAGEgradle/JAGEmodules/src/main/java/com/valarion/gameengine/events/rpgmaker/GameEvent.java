@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.events;
+package com.valarion.gameengine.events.rpgmaker;
 
 import java.util.LinkedList;
 
@@ -33,8 +33,7 @@ import org.w3c.dom.NodeList;
 
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
-import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
-import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
+import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.InGameState;
 
 public class GameEvent implements FlowEventInterface {

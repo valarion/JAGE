@@ -30,6 +30,11 @@ import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Condition of a global interrupt being in the given state.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class InterruptCondition implements Condition{
 	
 	protected int interrupt;
