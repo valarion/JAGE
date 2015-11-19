@@ -104,6 +104,7 @@ public class LoadGame extends FlowEventClass {
 				GameCore.getInstance()
 						.setActive(state);
 				state.getActiveEvents().remove(this);
+				Database.instance().stopMusic(Database.instance().getTitleMusic());
 				Database.instance().playSound("menuaccept");
 				Database.instance().playSound(Database.instance().getTitleMusic());
 			} catch (Exception e) {

@@ -2,9 +2,12 @@ package com.valarion.gameengine.core;
 
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
+
+import java.awt.Dimension;
 import java.awt.DisplayMode;
 
 import javax.swing.JCheckBox;
@@ -18,7 +21,7 @@ import java.awt.event.ActionEvent;
 
 public class GameSwingWindow {
 
-	private JFrame frame;
+	private JFrame frmJustanothergameengine;
 
 	/**
 	 * Launch the application.
@@ -28,7 +31,7 @@ public class GameSwingWindow {
 			public void run() {
 				try {
 					GameSwingWindow window = new GameSwingWindow();
-					window.frame.setVisible(true);
+					window.frmJustanothergameengine.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,14 +50,19 @@ public class GameSwingWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmJustanothergameengine = new JFrame();
+		frmJustanothergameengine.setTitle("JustAnotherGameEngine");
+		frmJustanothergameengine.setBounds(100, 100, 450, 300);
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - frmJustanothergameengine.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - frmJustanothergameengine.getHeight()) / 2);
+	    frmJustanothergameengine.setLocation(x, y);
+		frmJustanothergameengine.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmJustanothergameengine.getContentPane().setLayout(null);
 		
 		final JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(12, 115, 408, 22);
-		frame.getContentPane().add(comboBox);
+		frmJustanothergameengine.getContentPane().add(comboBox);
 		
 		String lastresolution = null;
 		List<DisplayMode> displaymodes = Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayModes());
@@ -71,7 +79,7 @@ public class GameSwingWindow {
 		final JCheckBox chckbxFullScreen = new JCheckBox("FullScreen");
 		chckbxFullScreen.setSelected(true);
 		chckbxFullScreen.setBounds(12, 51, 113, 25);
-		frame.getContentPane().add(chckbxFullScreen);
+		frmJustanothergameengine.getContentPane().add(chckbxFullScreen);
 		
 		JButton btnOk = new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
@@ -79,20 +87,20 @@ public class GameSwingWindow {
 				String fs = Boolean.toString(chckbxFullScreen.isSelected());
 				String res[] = ((String) comboBox.getSelectedItem()).split("x");
 				
-				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+				frmJustanothergameengine.dispatchEvent(new WindowEvent(frmJustanothergameengine, WindowEvent.WINDOW_CLOSING));
 				GameCore.main(new String[]{res[0],res[1],fs});
 			}
 		});
 		btnOk.setBounds(12, 215, 97, 25);
-		frame.getContentPane().add(btnOk);
+		frmJustanothergameengine.getContentPane().add(btnOk);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+				frmJustanothergameengine.dispatchEvent(new WindowEvent(frmJustanothergameengine, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		btnCancel.setBounds(323, 215, 97, 25);
-		frame.getContentPane().add(btnCancel);
+		frmJustanothergameengine.getContentPane().add(btnCancel);
 	}
 }
