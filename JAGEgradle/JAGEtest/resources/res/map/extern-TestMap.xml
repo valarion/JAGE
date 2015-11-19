@@ -28,11 +28,9 @@
 							<events>
 								<Dialog position="bot" apear="true">
 									<Text>Esto es un texto largo para probar si
-										funciona la opción
-										de que vayan
+										funciona la opción de que vayan
 										apareciendo las letras con el tiempo
-										antes de poder
-										aceptar.
+										antes de poder aceptar.
 									</Text>
 								</Dialog>
 							</events>
@@ -63,7 +61,7 @@
 							<events>
 								<NumericEntry position="bot" length="3" var="10" ></NumericEntry>
 								<VarOperation var="1" operation="add">
-									<Constant value="1"></Constant>
+									<VarValue var="10"></VarValue>
 								</VarOperation>
 							</events>
 						</option>
