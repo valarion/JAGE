@@ -1,12 +1,10 @@
 package com.valarion.gameengine.core;
 
 import java.awt.EventQueue;
-import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
-import java.awt.BorderLayout;
 import java.awt.DisplayMode;
 
 import javax.swing.JCheckBox;
