@@ -41,6 +41,11 @@ import com.valarion.gameengine.events.Player;
 import com.valarion.gameengine.util.Timer;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * Class containing everything that defines a single gameplay.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class GameContext implements Serializable, Comparable<GameContext> {
 
 	protected long globalVars[] = new long[100];
@@ -72,22 +77,43 @@ public class GameContext implements Serializable, Comparable<GameContext> {
 	 */
 	private static final long serialVersionUID = -4687670843701849294L;
 
+	/**
+	 * Get global variables.
+	 * @return
+	 */
 	public long[] getGlobalVars() {
 		return globalVars;
 	}
 
+	/**
+	 * Get global interrupts.
+	 * @return
+	 */
 	public boolean[] getGlobalInterrupts() {
 		return globalInterrupts;
 	}
 
+	/**
+	 * Get global objects.
+	 * @return
+	 */
 	public Map<String, Object> getGlobalObjects() {
 		return globalObjects;
 	}
 
+	/**
+	 * Get deleted events.
+	 * @return
+	 */
 	public Set<String> getDeletedEvents() {
 		return deletedEvents;
 	}
 
+	/**
+	 * Get local interrupts of an event id.
+	 * @param eventId
+	 * @return
+	 */
 	public Boolean[] getInterrupts(String eventId) {
 		Boolean[] ret = eventInterrupts.get(eventId);
 
@@ -99,42 +125,81 @@ public class GameContext implements Serializable, Comparable<GameContext> {
 		return ret;
 	}
 
+	/**
+	 * Get active map.
+	 * @return
+	 */
 	public String getActivemap() {
 		return activemap;
 	}
 
+	/**
+	 * Set active map.
+	 * @param activemap
+	 */
 	public void setActivemap(String activemap) {
 		this.activemap = activemap;
 	}
 
+	/**
+	 * Get player.
+	 * @return
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Set player.
+	 * @param player
+	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
+	/**
+	 * Return whether save menu is enabled.
+	 * @return
+	 */
 	public boolean isSaveEnabled() {
 		return saveEnabled;
 	}
 
+	/**
+	 * Set whether save menu is enabled.
+	 * @param saveEnabled
+	 */
 	public void setSaveEnabled(boolean saveEnabled) {
 		this.saveEnabled = saveEnabled;
 	}
 
+	/**
+	 * Get the time this context was saved.
+	 * @return
+	 */
 	public Date getSavetime() {
 		return savetime;
 	}
 
+	/**
+	 * Set the time this context is being saved.
+	 */
 	public void setSavetime() {
 		savetime = Calendar.getInstance().getTime();
 	}
 
+	/**
+	 * Get save name.
+	 * @return
+	 */
 	public String getSavename() {
 		return savename;
 	}
 
+	/**
+	 * Set save name.
+	 * @param savename
+	 */
 	public void setSavename(String savename) {
 		this.savename = savename;
 	}
@@ -144,6 +209,11 @@ public class GameContext implements Serializable, Comparable<GameContext> {
 		return gc.savetime.compareTo(savetime);
 	}
 	
+	/**
+	 * Get statistic.
+	 * @param name
+	 * @return
+	 */
 	public long getStat(String name) {
 		Long ret = stats.get(name);
 		if(ret == null)
@@ -152,14 +222,30 @@ public class GameContext implements Serializable, Comparable<GameContext> {
 			return ret.longValue();
 	}
 	
+	/**
+	 * Set statistic.
+	 * @param name
+	 * @param value
+	 */
 	public void setStat(String name, long value) {
 		stats.put(name, new Long(value));
 	}
 
+	/**
+	 * Get global timer.
+	 * @return
+	 */
 	public Timer getTimer() {
 		return timer;
 	}
 	
+	/**
+	 * Draw game context. used on save and load menu.
+	 * @param window
+	 * @param name
+	 * @param selected
+	 * @throws SlickException
+	 */
 	public void draw(WindowImage window, String name, boolean selected) throws SlickException {
 		window.setShowArrow(false);
 		Image contain = window.getContain();

@@ -30,6 +30,11 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.ColoredString;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Wrapper class for a variable.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Var implements ColoredString {
 	String text;
 	Color color;

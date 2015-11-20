@@ -37,8 +37,8 @@ import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
 /**
- * Operate with a variable and save the result in the same variable.
- * works like +=, *=, etc.
+ * Operate with a variable/s and save the result in the same variable/s.
+ * works like =, +=, -=, *=, /= and %=
  * @author Rubén Tomás Gracia
  *
  */

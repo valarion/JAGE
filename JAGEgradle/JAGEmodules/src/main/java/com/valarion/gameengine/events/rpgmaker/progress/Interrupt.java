@@ -33,7 +33,7 @@ import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
 /**
- * Class that sets an interrupt or a group of ones.
+ * Class that sets an interrupt/s.
  * @author Rubén Tomás Gracia
  *
  */
@@ -51,7 +51,7 @@ public class Interrupt extends SubEventClass {
 	public void loadEvent(Element node, Object context) throws SlickException {
 		from = Integer.parseInt(node.getAttribute("interrupt"));
 		try {
-			to = Integer.parseInt(node.getAttribute("interrupt"));
+			to = Integer.parseInt(node.getAttribute("to"));
 		}
 		catch(Exception e) {
 			to = from;

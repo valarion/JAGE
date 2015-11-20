@@ -25,6 +25,11 @@ package com.valarion.gameengine.gamestates;
 
 import org.newdawn.slick.Input;
 
+/**
+ * Class containing key definitions.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Controls {
 	public static int moveUp = Input.KEY_UP;
 	public static int moveDown = Input.KEY_DOWN;

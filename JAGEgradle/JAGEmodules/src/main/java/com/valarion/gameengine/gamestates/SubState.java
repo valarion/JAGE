@@ -28,7 +28,15 @@ import java.util.Set;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameState;
 
+/**
+ * Class adding events to a state.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public abstract class SubState extends GameState {
+	/**
+	 * Get active events.
+	 */
 	public abstract Set<Event> getActiveEvents();
 
 }

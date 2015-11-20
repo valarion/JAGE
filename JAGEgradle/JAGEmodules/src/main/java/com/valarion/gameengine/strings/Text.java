@@ -29,6 +29,11 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.ColoredString;
 
+/**
+ * Class containing a string of a determined color.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Text implements ColoredString {
 	String text;
 	Color color;

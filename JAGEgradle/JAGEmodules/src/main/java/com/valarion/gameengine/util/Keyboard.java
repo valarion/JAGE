@@ -25,7 +25,17 @@ package com.valarion.gameengine.util;
 
 import org.newdawn.slick.Input;
 
+/**
+ * Class containing keyboard mappings to characters.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Keyboard {
+	/**
+	 * Get character as string from input.
+	 * @param input
+	 * @return
+	 */
 	public static String getChar(Input input) {
 		String ret = "";
 		if (input.isKeyPressed(Input.KEY_A))

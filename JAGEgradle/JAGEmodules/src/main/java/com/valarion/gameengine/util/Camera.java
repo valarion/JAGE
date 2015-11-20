@@ -32,12 +32,23 @@ import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.Renderable;
 import com.valarion.gameengine.gamestates.InGameState;
 
+/**
+ * Class containing the mechanics of a camera.
+ * This class changes translation matrix to show what's defined to show.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Camera implements Renderable {
 	protected Event center;
 	protected float x, y;
 	protected GameCore game;
 	protected InGameState instance;
 
+	/**
+	 * Create camera.
+	 * @param game
+	 * @param instance
+	 */
 	public Camera(GameCore game, InGameState instance) {
 		this.game = game;
 		this.instance = instance;
@@ -46,11 +57,22 @@ public class Camera implements Renderable {
 		y = 0.0f;
 	}
 
+	/**
+	 * Focus camera at event.
+	 * @param center
+	 * @return
+	 */
 	public Camera focusAt(Event center) {
 		this.center = center;
 		return this;
 	}
 
+	/**
+	 * Focus camera at position.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public Camera focusAt(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -77,10 +99,18 @@ public class Camera implements Renderable {
 		}
 	}
 
+	/**
+	 * Get camera x position.
+	 * @return
+	 */
 	public float getX() {
 		return x;
 	}
 
+	/**
+	 * Get camera y position.
+	 * @return
+	 */
 	public float getY() {
 		return y;
 	}

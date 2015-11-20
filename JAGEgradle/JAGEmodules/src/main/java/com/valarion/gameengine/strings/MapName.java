@@ -30,6 +30,11 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.ColoredString;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 
+/**
+ * Wrapper class for map name string.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class MapName implements ColoredString {
 	protected Color color;
 	protected String name;

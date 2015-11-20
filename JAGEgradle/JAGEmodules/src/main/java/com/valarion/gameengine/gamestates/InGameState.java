@@ -48,6 +48,11 @@ import com.valarion.gameengine.events.menu.ingamemenu.MenuMain;
 import com.valarion.gameengine.util.Camera;
 import com.valarion.gameengine.util.Util;
 
+/**
+ * State containing all the mechanics of the actual game.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class InGameState extends SubState {
 
 	protected Set<Event> activeEvents;
@@ -61,17 +66,6 @@ public class InGameState extends SubState {
 	protected Player player;
 
 	protected Camera camera;
-	
-	/*
-	protected static InGameState instance;
-	
-	public static InGameState getInstance() {
-		return instance;
-	}
-	
-	public InGameState() {
-		instance = this;
-	}*/
 
 	@Override
 	public void init(GameContainer container) throws Exception {
@@ -188,21 +182,38 @@ public class InGameState extends SubState {
 		}
 	}
 
+	/**
+	 * Get camera.
+	 * @return
+	 */
 	public Camera getCamera() {
 		return camera;
 	}
 
-	public void removeLoadedMaps() {
+	/**
+	 * Remove all loaded maps.
+	 */
+	protected void removeLoadedMaps() {
 		loadedmaps.clear();
 	}
 
-	public void removeLoadedGroup(String group) {
+	/**
+	 * Remove a loaded map group.
+	 * @param group
+	 */
+	protected void removeLoadedGroup(String group) {
 		for (String entry : groups.get(group)) {
 			loadedmaps.remove(entry);
 		}
 	}
 
-	public void loadGroup(GameContainer container, String group)
+	/**
+	 * Load a group.
+	 * @param container
+	 * @param group
+	 * @throws SlickException
+	 */
+	protected void loadGroup(GameContainer container, String group)
 			throws SlickException {
 		Set<String> maps = groups.get(group);
 		if (maps != null)
@@ -211,7 +222,14 @@ public class InGameState extends SubState {
 			}
 	}
 
-	private SubTiledMap loadMap(GameContainer container, String mapname)
+	/**
+	 * Load a map.
+	 * @param container
+	 * @param mapname
+	 * @return
+	 * @throws SlickException
+	 */
+	protected SubTiledMap loadMap(GameContainer container, String mapname)
 			throws SlickException {
 		SubTiledMap map = new SubTiledMap(mapfiles.get(mapname)
 				.getAbsolutePath(), GameCore.getInstance(), this);
@@ -234,6 +252,13 @@ public class InGameState extends SubState {
 		return map;
 	}
 
+	/**
+	 * Set a map as active.
+	 * Loads it if it's necessary.
+	 * @param container
+	 * @param mapname
+	 * @throws SlickException
+	 */
 	public void setAsActive(GameContainer container, String mapname)
 			throws SlickException {
 		SubTiledMap prev = active;
@@ -272,16 +297,23 @@ public class InGameState extends SubState {
 		Database.instance().getContext().setActivemap(mapname);
 	}
 
+	/**
+	 * Get player.
+	 * @return
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Get active map.
+	 * @return
+	 */
 	public SubTiledMap getActive() {
 		return active;
 	}
 
-	
-
+	@Override
 	public Set<Event> getActiveEvents() {
 		return activeEvents;
 	}

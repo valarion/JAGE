@@ -20,6 +20,11 @@ import com.valarion.gameengine.util.SpriteInfo;
 import com.valarion.gameengine.util.Window;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * Singleton class containing everything that may be used in the game.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Database {
 	protected GameContext context;
 
@@ -40,6 +45,11 @@ public class Database {
 	
 	protected static Database instance = new Database();
 	
+	/**
+	 * Create singleton instance of the database.
+	 * Only creates the instance on the first call.
+	 * @return
+	 */
 	public static Database createInstance() {
 		synchronized(instance) {
 			if(!instance.initialized) {
@@ -50,14 +60,24 @@ public class Database {
 		return instance;
 	}
 	
+	/**
+	 * Get singleton instance.
+	 * @return
+	 */
 	public static Database instance() {
 		return instance;
 	}
 
+	/**
+	 * Creates the database as not initialized.
+	 */
 	protected Database() {
 		initialized = false;
 	}
 	
+	/**
+	 * Initializes the database and loads everything.
+	 */
 	protected void init() {
 		sprites = new HashMap<String, SpriteInfo>();
 		musics = new HashMap<String, Music>();
@@ -86,6 +106,10 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Loads the database.
+	 * @throws Exception
+	 */
 	public void loadDatabase() throws Exception {
 		File fXmlFile = new File("res/database.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -174,40 +198,75 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Get loaded sprites.
+	 * @return
+	 */
 	public Map<String, SpriteInfo> getSprites() {
 		return sprites;
 	}
 	
+	/**
+	 * Get loaded windows.
+	 * @return
+	 */
 	public Map<String, Window> getWindows() {
 		return windows;
 	}
 
+	/**
+	 * Get loaded window images.
+	 * @return
+	 */
 	public Map<String, WindowImage> getWindowimages() {
 		return windowimages;
 	}
 
+	/**
+	 * Get game context.
+	 * @return
+	 */
 	public GameContext getContext() {
 		return context;
 	}
 	
+	/**
+	 * Set game context.
+	 * @param context
+	 */
 	public void setContext(GameContext context) {
 		this.context = context;
 	}
 
+	/**
+	 * Get loaded images.
+	 * @return
+	 */
 	public Map<String, Image> getImages() {
 		return images;
 	}
 
+	/**
+	 * Get title background.
+	 * @return
+	 */
 	public String getTitleBackground() {
 		return titleBackground;
 	}
 
+	/**
+	 * Get title music.
+	 * @return
+	 */
 	public String getTitleMusic() {
 		return titleMusic;
 	}
 
-	// TODO music and sound control
-
+	/**
+	 * Play music once.
+	 * @param name
+	 * @return
+	 */
 	public boolean playMusic(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -218,6 +277,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Play music once at a given volume and pitch.
+	 * @param name
+	 * @param volume
+	 * @param pitch
+	 * @return
+	 */
 	public boolean playMusic(String name, int volume, int pitch) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -228,6 +294,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Loop music.
+	 * @param name
+	 * @return
+	 */
 	public boolean loopMusic(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -238,6 +309,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Loop music at a given volume and pitch.
+	 * @param name
+	 * @param volume
+	 * @param pitch
+	 * @return
+	 */
 	public boolean loopMusic(String name, float volume, float pitch) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -248,6 +326,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Stop music.
+	 * @param name
+	 * @return
+	 */
 	public boolean stopMusic(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -258,6 +341,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Pause music.
+	 * @param name
+	 * @return
+	 */
 	public boolean pauseMusic(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -268,6 +356,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Resume music.
+	 * @param name
+	 * @return
+	 */
 	public boolean resumeMusic(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -278,6 +371,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Fade music.
+	 * @param name
+	 * @param duration
+	 * @param endVolume
+	 * @param stopAfterFade
+	 * @return
+	 */
 	public boolean fadeMusic(String name, int duration, float endVolume, boolean stopAfterFade) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -288,6 +389,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Set music volume.
+	 * @param name
+	 * @param volume
+	 * @return
+	 */
 	public boolean setMusicVolume(String name, float volume) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -298,6 +405,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Get music volume.
+	 * @param name
+	 * @return
+	 */
 	public float getMusicVolume(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -307,6 +419,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Set music position.
+	 * @param name
+	 * @param position
+	 * @return
+	 */
 	public boolean setMusicPosition(String name, float position) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -317,6 +435,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Get music position.
+	 * @param name
+	 * @return
+	 */
 	public float getMusicPosition(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -326,6 +449,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Check if a music is playing.
+	 * @param name
+	 * @return
+	 */
 	public boolean isMusicPlaying(String name) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -335,6 +463,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Add listener to a music.
+	 * @param name
+	 * @param listener
+	 * @return
+	 */
 	public boolean addMusicListener(String name, MusicListener listener) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -345,6 +479,12 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Remove listener from a music.
+	 * @param name
+	 * @param listener
+	 * @return
+	 */
 	public boolean removeMusicListener(String name, MusicListener listener) {
 		Music m = musics.get(name);
 		if (m != null) {
@@ -355,8 +495,11 @@ public class Database {
 		}
 	}
 
-	// sound control
-
+	/**
+	 * Play sound once.
+	 * @param name
+	 * @return
+	 */
 	public boolean playSound(String name) {
 		Sound s = sounds.get(name);
 		if (s != null) {
@@ -367,6 +510,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Play sound once at a given volume and pitch.
+	 * @param name
+	 * @param volume
+	 * @param pitch
+	 * @return
+	 */
 	public boolean playSound(String name, int volume, int pitch) {
 		Sound s = sounds.get(name);
 		if (s != null) {
@@ -377,6 +527,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Loop sound.
+	 * @param name
+	 * @return
+	 */
 	public boolean loopSound(String name) {
 		Sound s = sounds.get(name);
 		if (s != null) {
@@ -387,6 +542,13 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Loop sound at a given volume and speech.
+	 * @param name
+	 * @param volume
+	 * @param pitch
+	 * @return
+	 */
 	public boolean loopSound(String name, float volume, float pitch) {
 		Sound s = sounds.get(name);
 		if (s != null) {
@@ -397,6 +559,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Stop sound.
+	 * @param name
+	 * @return
+	 */
 	public boolean stopSound(String name) {
 		Sound s = sounds.get(name);
 		if (s != null) {
@@ -407,6 +574,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Check if sound is playing.
+	 * @param name
+	 * @return
+	 */
 	public boolean isSoundPlaying(String name) {
 		Sound s = sounds.get(name);
 		if (s != null) {

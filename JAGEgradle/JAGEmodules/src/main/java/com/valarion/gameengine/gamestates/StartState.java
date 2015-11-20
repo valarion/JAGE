@@ -36,6 +36,11 @@ import com.valarion.gameengine.events.menu.startmenu.StartMenu;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * State containing the start menu mechanics.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class StartState extends SubState {
 
 	protected WindowImage window;
@@ -44,6 +49,9 @@ public class StartState extends SubState {
 
 	protected Image background;
 
+	/**
+	 * Creates a start menu.
+	 */
 	public StartState() {
 		Database.createInstance();
 
@@ -86,12 +94,8 @@ public class StartState extends SubState {
 
 	}
 
+	@Override
 	public Set<Event> getActiveEvents() {
 		return activeEvents;
 	}
-
-	/*public static StartState getInstance() {
-		return startinstance;
-	}*/
-
 }

@@ -25,6 +25,11 @@ package com.valarion.gameengine.util;
 
 import org.newdawn.slick.Animation;
 
+/**
+ * Class containing a sprite.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class GameSprite {
 	public static final int UP = 0;
 	public static final int DOWN = 1;
@@ -41,6 +46,16 @@ public class GameSprite {
 
 	protected String name;
 
+	/**
+	 * Create sprite based on its animations.
+	 * @param up
+	 * @param down
+	 * @param left
+	 * @param right
+	 * @param spritespeed
+	 * @param movingspeed
+	 * @param name
+	 */
 	public GameSprite(Animation up, Animation down, Animation left,
 			Animation right, float spritespeed, float movingspeed, String name) {
 		sides = new Animation[4];
@@ -57,11 +72,18 @@ public class GameSprite {
 		direction = UP;
 	}
 
+	/**
+	 * Update sprite.
+	 * @param delta
+	 */
 	public void update(long delta) {
 		sides[direction].setSpeed(spritespeed * multiplier);
 		sides[direction].update(delta);
 	}
 
+	/**
+	 * Stop sprite on a not walking position.
+	 */
 	public void setStopped() {
 		switch (sides[direction].getFrame()) {
 		case 1:
@@ -71,43 +93,84 @@ public class GameSprite {
 		}
 	}
 
+	/**
+	 * Set speed multiplier.
+	 * @param multiplier
+	 */
 	public void setMultiplier(float multiplier) {
 		this.multiplier = multiplier;
 	}
 
+	/**
+	 * Get speed multiplier.
+	 * @return
+	 */
 	public float getMultiplier() {
 		return multiplier;
 	}
 
+	/**
+	 * Get direction of the sprite.
+	 * @return
+	 */
 	public int getDirection() {
 		return direction;
 	}
 
+	/**
+	 * Set direction of the sprite.
+	 * @param direction
+	 */
 	public void setDirection(int direction) {
 		if (direction >= 0 && direction <= 3)
 			this.direction = direction;
 	}
 
+	/**
+	 * Draw sprite at given psotion.
+	 * @param x
+	 * @param y
+	 */
 	public void draw(int x, int y) {
 		sides[direction].draw(x, y);
 	}
 
+	/**
+	 * Get sprite width.
+	 * @return
+	 */
 	public int getWidth() {
 		return sides[direction].getCurrentFrame().getWidth();
 	}
 
+	/**
+	 * Get sprite height.
+	 * @return
+	 */
 	public int getHeight() {
 		return sides[direction].getCurrentFrame().getHeight();
 	}
 
+	/**
+	 * Get sprite name.
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Get sprite moving speed.
+	 * @return
+	 */
 	public float getMovingspeed() {
 		return movingspeed;
 	}
 
+	/**
+	 * Get sprite speed.
+	 * @return
+	 */
 	public float getSpritespeed() {
 		return spritespeed;
 	}
