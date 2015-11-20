@@ -25,6 +25,11 @@ package com.valarion.gameengine.util;
 
 import java.io.Serializable;
 
+/**
+ * Class containing a simple timer.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Timer implements Serializable {
 	/**
 	 * 
@@ -32,20 +37,33 @@ public class Timer implements Serializable {
 	private static final long serialVersionUID = -6008093945017799941L;
 	protected long starttime, endtime;
 	
+	/**
+	 * Create timer.
+	 */
 	public Timer() {
 		starttime=0;
 		endtime=0;
 	}
 	
+	/**
+	 * start timer.
+	 */
 	public void start() {
 		starttime = System.currentTimeMillis();
 		endtime=starttime;
 	}
 	
+	/**
+	 * stop timer.
+	 */
 	public void stop() {
 		endtime = System.currentTimeMillis();
 	}
 	
+	/**
+	 * Return the time recorded in milliseconds.
+	 * @return
+	 */
 	public long getTime() {
 		if(endtime == starttime)
 			return System.currentTimeMillis()-starttime;

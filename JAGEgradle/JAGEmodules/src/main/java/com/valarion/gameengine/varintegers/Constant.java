@@ -28,6 +28,11 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.VarLong;
 
+/**
+ * Class containing a constant.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Constant implements VarLong {
 	protected long value = 0;
 

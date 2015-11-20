@@ -29,6 +29,11 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.VarLong;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Class that gets an statistic value.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Stat implements VarLong {
 	protected String stat;
 	@Override

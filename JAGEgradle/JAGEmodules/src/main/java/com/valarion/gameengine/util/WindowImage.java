@@ -28,6 +28,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+/**
+ * Class containing a ready-to-render window.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class WindowImage {
 	Image window;
 	Image contain;
@@ -38,6 +43,16 @@ public class WindowImage {
 
 	boolean showArrow = true;
 
+	/**
+	 * Create window. Should only be called from window.
+	 * @param window
+	 * @param contain
+	 * @param x
+	 * @param y
+	 * @param arrow
+	 * @param model
+	 * @throws SlickException
+	 */
 	public WindowImage(Image window, Image contain, int x, int y,
 			Animation arrow, Window model) throws SlickException {
 		this.window = window;
@@ -56,14 +71,28 @@ public class WindowImage {
 		getImage();
 	}
 
+	/**
+	 * Get contain image. To draw into the window, you draw into this image.
+	 * @return
+	 */
 	public Image getContain() {
 		return contain;
 	}
 
+	/**
+	 * Get window image.
+	 * This image has the borders and background
+	 * @return
+	 */
 	public Image getWindow() {
 		return window;
 	}
 
+	/**
+	 * Get image of window and contain already merged.
+	 * @return
+	 * @throws SlickException
+	 */
 	public Image getImage() throws SlickException {
 		Graphics g = merged.getGraphics();
 
@@ -82,19 +111,36 @@ public class WindowImage {
 		return merged;
 	}
 
+	/**
+	 * Update window.
+	 * Only updates the arrow.
+	 * @param delta
+	 */
 	public void update(long delta) {
 		if (arrow != null)
 			arrow.update(delta);
 	}
 
+	/**
+	 * Get model of the window.
+	 * @return
+	 */
 	public Window getModel() {
 		return model;
 	}
 
+	/**
+	 * Check whether the arrow is shown.
+	 * @return
+	 */
 	public boolean isShowArrow() {
 		return showArrow;
 	}
 
+	/**
+	 * Set whether the arrow is shown.
+	 * @param showArrow
+	 */
 	public void setShowArrow(boolean showArrow) {
 		this.showArrow = showArrow;
 	}

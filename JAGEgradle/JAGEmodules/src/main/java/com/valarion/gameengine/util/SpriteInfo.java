@@ -31,6 +31,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Class containing the info of a sprite.
+ * Game sprites should cbe created with this helper.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class SpriteInfo {
 	SpriteSheet spritesheet;
 
@@ -41,6 +47,11 @@ public class SpriteInfo {
 
 	String name;
 
+	/**
+	 * Load sprite info from XML node.
+	 * @param node
+	 * @throws SlickException
+	 */
 	public SpriteInfo(Element node) throws SlickException {
 		NodeList tiles = node.getChildNodes();
 
@@ -68,6 +79,12 @@ public class SpriteInfo {
 		}
 	}
 
+	/**
+	 * Create sprite with the given info.
+	 * @param spritespeed
+	 * @param movingspeed
+	 * @return
+	 */
 	public GameSprite createSprite(float spritespeed, float movingspeed) {
 
 		int verticalsingleduration = (int) (up[0].getHeight() / movingspeed / 2);
@@ -88,6 +105,11 @@ public class SpriteInfo {
 				name);
 	}
 
+	/**
+	 * Create sub image of a spritesheet given an XML node.
+	 * @param node
+	 * @return
+	 */
 	protected Image[] createImage(Node node) {
 		Image[] ret = new Image[4];
 
@@ -111,6 +133,10 @@ public class SpriteInfo {
 		return ret;
 	}
 
+	/**
+	 * Get name of the sprite.
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}

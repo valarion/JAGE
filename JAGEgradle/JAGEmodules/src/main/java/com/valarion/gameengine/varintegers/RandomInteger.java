@@ -30,6 +30,11 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.VarLong;
 
+/**
+ * Class that generates a random integer between two numbers.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class RandomInteger implements VarLong {
 	protected long start = 0,end = 0;
 	protected Random ran = new Random();

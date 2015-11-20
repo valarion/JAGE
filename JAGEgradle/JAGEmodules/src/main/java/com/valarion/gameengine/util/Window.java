@@ -34,6 +34,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Class containing a window info.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Window {
 
 	protected String name;
@@ -42,6 +47,11 @@ public class Window {
 
 	int border;
 
+	/**
+	 * Load window info from XML node.
+	 * @param node
+	 * @throws SlickException
+	 */
 	public Window(Element node) throws SlickException {
 		NodeList nodes = node.getChildNodes();
 
@@ -70,6 +80,16 @@ public class Window {
 		}
 	}
 
+	/**
+	 * If fix is true, create window of the given w and h.
+	 * If fix is false, crate window of the closest smaller than WxH size possible given the
+	 * window definition.
+	 * @param w
+	 * @param h
+	 * @param fix
+	 * @return
+	 * @throws SlickException
+	 */
 	public WindowImage createWindow(int w, int h, boolean fix)
 			throws SlickException {
 		Image ret = new Image(w, h);
@@ -161,7 +181,7 @@ public class Window {
 			ret = ret.getSubImage(0, 0, twcovered, lhcovered);
 
 			if (fix) {
-				ret = ret.getScaledCopy(w, h);
+				ret = Util.getScaled(ret, w, h);
 			}
 		}
 
@@ -176,10 +196,19 @@ public class Window {
 				arrowanim, this);
 	}
 
+	/**
+	 * Get an image of this window.
+	 * @param name
+	 * @return
+	 */
 	public Image getImage(String name) {
 		return images.get(name);
 	}
 
+	/**
+	 * Get the name of this window.
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}

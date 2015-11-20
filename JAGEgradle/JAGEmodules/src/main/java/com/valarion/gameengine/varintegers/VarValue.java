@@ -29,6 +29,11 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.VarLong;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Class that gets a global variable value.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class VarValue implements VarLong {
 	int var = 0;
 	

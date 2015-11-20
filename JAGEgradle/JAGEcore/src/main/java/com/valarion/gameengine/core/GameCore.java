@@ -36,7 +36,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
-import com.valarion.gameengine.core.exceptions.*;
+import com.valarion.gameengine.core.exceptions.StateNotFoundException;
 import com.valarion.pluginsystem.PluginUtil;
 
 /**
