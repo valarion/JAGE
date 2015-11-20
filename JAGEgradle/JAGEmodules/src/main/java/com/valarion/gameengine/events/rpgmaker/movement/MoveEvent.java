@@ -33,6 +33,11 @@ import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 
+/**
+ * Set the event route.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class MoveEvent extends FlowEventClass {
 	protected Route route = null;
 	protected String id = null;

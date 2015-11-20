@@ -23,28 +23,26 @@
  ******************************************************************************/
 package com.valarion.gameengine.events.rpgmaker.messages;
 
-import java.util.LinkedList;
-
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import com.valarion.gameengine.core.ColoredString;
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
-import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * Class that gives an input as a dialog for a numeric value.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class NumericEntry extends SubEventClass {
 	public static final int TOP = 0;
 	public static final int MID = 1;
@@ -174,32 +172,6 @@ public class NumericEntry extends SubEventClass {
 		} else {
 			position = BOT;
 		}
-	}
-
-	public static LinkedList<ColoredString> getDialog(Element node, FlowEventInterface event)
-			throws SlickException {
-		LinkedList<ColoredString> strings = new LinkedList<ColoredString>();
-
-		NodeList childs = node.getChildNodes();
-
-		GameCore game = GameCore.getInstance();
-
-		for (int i = 0; i < childs.getLength(); i++) {
-			Node n = childs.item(i);
-			if (n instanceof Element) {
-				try {
-					ColoredString e = (ColoredString) game.getSets()
-							.get(ColoredString.class).get(n.getNodeName())
-							.newInstance();
-					e.load((Element) n, event);
-					strings.add(e);
-				} catch (InstantiationException | IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		return strings;
 	}
 
 	@Override

@@ -44,6 +44,11 @@ import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * Class that shows a simple dialog.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Dialog extends FlowEventClass {
 	public static final int TOP = 0;
 	public static final int MID = 1;
@@ -201,6 +206,13 @@ public class Dialog extends FlowEventClass {
 		strings = getDialog(node, this);
 	}
 
+	/**
+	 * Get the text of a dialog given a XML node.
+	 * @param node
+	 * @param event
+	 * @return
+	 * @throws SlickException
+	 */
 	public static LinkedList<ColoredString> getDialog(Element node, FlowEventInterface event)
 			throws SlickException {
 		LinkedList<ColoredString> strings = new LinkedList<ColoredString>();

@@ -36,6 +36,12 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.InGameState;
 
+/**
+ * Event that describes an actual game event.
+ * This class has been designed to be the top-most parent of every event in the game.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class GameEvent implements FlowEventInterface {
 
 	protected LinkedList<RPGMakerEvent> pages = new LinkedList<RPGMakerEvent>();
@@ -314,7 +320,10 @@ public class GameEvent implements FlowEventInterface {
 	public boolean hasLabel(String label) {
 		return false;
 	}
-	
+
+	/**
+	 * Set this event active page.
+	 */
 	protected void setActive() {
 		if (active == null || !active.isWorking()) {
 			for (RPGMakerEvent page : pages) {

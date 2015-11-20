@@ -34,6 +34,11 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Start or stop the timer of the game.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Timer extends SubEventClass implements Serializable {
 	/**
 	 * 
@@ -62,7 +67,7 @@ public class Timer extends SubEventClass implements Serializable {
 	public void performAction(GameContainer container, SubTiledMap map, Event e)
 			throws SlickException {
 		com.valarion.gameengine.util.Timer t = Database.instance().getContext().getTimer();
-
+		
 		if (start) {
 			t.start();
 		}

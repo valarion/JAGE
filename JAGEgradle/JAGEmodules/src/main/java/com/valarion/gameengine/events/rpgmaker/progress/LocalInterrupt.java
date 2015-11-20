@@ -32,6 +32,11 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Class that sets an interrupt local to the event.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class LocalInterrupt extends SubEventClass {
 	protected int interrupt = -1;
 	protected boolean action;

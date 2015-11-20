@@ -27,26 +27,74 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.InGameState;
 
+/**
+ * Interface that adds methods to control the flow of an event.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public interface FlowEventInterface extends Event {
+	/**
+	 * Breaks the first loop found in the parents.
+	 */
 	public void breakCicle();
-
+	
+	/**
+	 * Stops the event execution.
+	 */
 	public void stop();
 
+	/**
+	 * Restart the event execution.
+	 */
 	public void restart();
 
+	/**
+	 * Add a label. Works like GOTO labels.
+	 * @param label
+	 * @param child
+	 */
 	public void addLabel(String label, FlowEventInterface child);
 
+	/**
+	 * GOTO instruction.
+	 * @param label
+	 */
 	public void goToLabel(String label);
 
+	/**
+	 * Check if label exists.
+	 * @param label
+	 * @return
+	 */
 	public boolean hasLabel(String label);
 	
+	/**
+	 * Get parent event. 
+	 * @return
+	 */
 	public FlowEventInterface getParent();
 	
+	/**
+	 * Get top-most parent event. This should call recursively.
+	 * @return
+	 */
 	public FlowEventInterface getEvent();
 	
+	/**
+	 * Set top-most event route.
+	 * @param route
+	 */
 	public void setRoute(Route route);
 	
+	/**
+	 * Get top-most parent route.
+	 * @return
+	 */
 	public Route getRoute();
 	
+	/**
+	 * Get InGameSate containing this event.
+	 * @return
+	 */
 	public InGameState getState();
 }

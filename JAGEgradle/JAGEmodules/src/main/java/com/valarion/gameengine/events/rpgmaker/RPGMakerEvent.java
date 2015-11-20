@@ -46,6 +46,11 @@ import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.GameSprite;
 
+/**
+ * Class that describes a page in a game event.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class RPGMakerEvent extends FlowEventClass {
 	
 	public static final int ONACTIVATION = 0;

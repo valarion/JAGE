@@ -36,6 +36,12 @@ import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.InGameState;
 import com.valarion.gameengine.util.GameSprite;
 
+/**
+ * Teleport player to a destination.
+ * This is the way to change maps.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Teleport extends FlowEventClass {
 
 	protected int x;

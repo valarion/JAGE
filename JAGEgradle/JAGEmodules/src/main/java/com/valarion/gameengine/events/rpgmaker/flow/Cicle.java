@@ -33,6 +33,12 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
 
+/**
+ * Class that describes a constant loop.
+ * To break it it's necessary to use a conditional with a break cicle event.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Cicle extends FlowEventClass {
 	boolean working;
 	RPGMakerEvent events;
@@ -49,19 +55,13 @@ public class Cicle extends FlowEventClass {
 		}
 	}
 
+	@Override
 	public void prerender(GameContainer container, Graphics g, int tilewidth,
 			int tileheight) throws SlickException {
 		if (working)
 			events.prerender(container, g, tilewidth, tileheight);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.valarion.gameengine.events.rpgmaker.RPGMakerInterface#render(org.
-	 * newdawn.slick.GameContainer, org.newdawn.slick.Graphics, int, int)
-	 */
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth,
 			int tileheight) throws SlickException {
@@ -69,13 +69,6 @@ public class Cicle extends FlowEventClass {
 			events.render(container, g, tilewidth, tileheight);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.valarion.gameengine.events.rpgmaker.RPGMakerInterface#postrender(
-	 * org.newdawn.slick.GameContainer, org.newdawn.slick.Graphics, int, int)
-	 */
 	@Override
 	public void postrender(GameContainer container, Graphics g, int tilewidth,
 			int tileheight) throws SlickException {

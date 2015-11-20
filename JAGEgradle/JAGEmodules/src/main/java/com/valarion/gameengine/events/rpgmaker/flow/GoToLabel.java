@@ -31,6 +31,11 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 
+/**
+ * Class that goes to a defined label in an event.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class GoToLabel extends FlowEventClass {
 
 	String labelname;

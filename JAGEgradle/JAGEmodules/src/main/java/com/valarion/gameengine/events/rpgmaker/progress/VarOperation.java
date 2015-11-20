@@ -36,6 +36,12 @@ import com.valarion.gameengine.core.VarLong;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Operate with a variable and save the result in the same variable.
+ * works like +=, *=, etc.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class VarOperation extends SubEventClass {
 	public static final byte SET = 0;
 	public static final byte ADD = 1;

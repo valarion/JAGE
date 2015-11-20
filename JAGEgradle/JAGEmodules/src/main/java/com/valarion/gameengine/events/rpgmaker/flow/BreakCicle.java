@@ -30,6 +30,11 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 
+/**
+ * Class that breaks the first loop found in the parents.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class BreakCicle extends FlowEventClass {
 
 	@Override

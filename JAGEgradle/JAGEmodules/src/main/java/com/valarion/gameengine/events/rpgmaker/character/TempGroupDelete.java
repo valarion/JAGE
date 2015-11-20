@@ -31,6 +31,11 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Temporary delete the event from the map group.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class TempGroupDelete extends FlowEventClass {
 
 	@Override

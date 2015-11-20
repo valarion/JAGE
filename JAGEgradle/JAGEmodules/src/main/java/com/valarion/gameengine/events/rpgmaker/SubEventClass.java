@@ -30,6 +30,11 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
 
+/**
+ * Abstract class that removes most of the unnecesary methods of the events.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public abstract class SubEventClass implements Event {
 
 	@Override

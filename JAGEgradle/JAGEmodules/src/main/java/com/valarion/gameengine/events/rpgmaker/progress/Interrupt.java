@@ -32,6 +32,11 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Class that sets an interrupt or a group of ones.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Interrupt extends SubEventClass {
 	
 	int from, to;

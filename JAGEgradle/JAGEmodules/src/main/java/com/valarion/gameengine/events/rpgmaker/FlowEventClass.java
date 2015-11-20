@@ -35,6 +35,11 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.InGameState;
 
+/**
+ * Class that defines most of the methods used by an event to control the flow.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public abstract class FlowEventClass extends SubEventClass implements
 		FlowEventInterface {
 	protected FlowEventInterface parent;
@@ -53,12 +58,14 @@ public abstract class FlowEventClass extends SubEventClass implements
 			state = (InGameState) context;
 	}
 
+	@Override
 	public String getId() {
 		if (parent != null)
 			return parent.getId();
 		return null;
 	}
 
+	@Override
 	public void breakCicle() {
 		if (parent != null)
 			parent.breakCicle();
@@ -66,6 +73,7 @@ public abstract class FlowEventClass extends SubEventClass implements
 		restart();
 	}
 
+	@Override
 	public void stop() {
 		if (parent != null)
 			parent.stop();
@@ -108,6 +116,10 @@ public abstract class FlowEventClass extends SubEventClass implements
 		}
 	}
 
+	/**
+	 * Search for a label and activate it.
+	 * @param label
+	 */
 	protected void searchAndActiveLabel(String label) {
 
 	}
@@ -227,11 +239,13 @@ public abstract class FlowEventClass extends SubEventClass implements
 			return false;
 		}
 	}
-	
+
+	@Override
 	public FlowEventInterface getParent(){
 		return parent;
 	}
-	
+
+	@Override
 	public FlowEventInterface getEvent() {
 		if(parent != null) {
 			return parent.getEvent();
@@ -240,13 +254,15 @@ public abstract class FlowEventClass extends SubEventClass implements
 			return this;
 		}
 	}
-	
+
+	@Override
 	public void setRoute(Route route) {
 		if(parent != null) {
 			parent.setRoute(route);
 		}
 	}
-	
+
+	@Override
 	public Route getRoute() {
 		if(parent != null) {
 			return parent.getRoute();
@@ -255,7 +271,8 @@ public abstract class FlowEventClass extends SubEventClass implements
 			return null;
 		}
 	}
-	
+
+	@Override
 	public InGameState getState() {
 		if(parent != null) {
 			return parent.getState();

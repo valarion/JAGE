@@ -40,6 +40,11 @@ import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
 
+/**
+ * Class that describes a condition.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Conditional extends FlowEventClass {
 	protected FlowEventInterface active;
 	
@@ -53,7 +58,8 @@ public class Conditional extends FlowEventClass {
 		if (active != null)
 			active.update(container, delta, map);
 	}
-	
+
+	@Override
 	public void paralelupdate(GameContainer container, int delta,
 			SubTiledMap map) throws SlickException {
 		if (active != null) {

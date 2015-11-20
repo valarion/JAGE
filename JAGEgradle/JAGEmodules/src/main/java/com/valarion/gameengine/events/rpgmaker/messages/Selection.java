@@ -44,6 +44,11 @@ import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
+/**
+ * Class that gives an input as a dialog for a selection between at max 4 inputs and a cancel.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Selection extends FlowEventClass {
 	public static final int TOP = 0;
 	public static final int MID = 1;
