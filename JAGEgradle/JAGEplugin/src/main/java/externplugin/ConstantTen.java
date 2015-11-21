@@ -36,13 +36,11 @@ public class ConstantTen implements VarLong {
 
 	@Override
 	public long getLong() {
-		// TODO Auto-generated method stub
 		return 10;
 	}
 
 	@Override
 	public void load(Element node, Object context) throws SlickException {
-		// TODO Auto-generated method stub
 		
 	}
 

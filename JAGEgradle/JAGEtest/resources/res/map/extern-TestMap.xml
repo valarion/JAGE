@@ -63,6 +63,11 @@
 								<VarOperation var="1" operation="add">
 									<VarValue var="10"></VarValue>
 								</VarOperation>
+								<Comment>
+									<VarOperation var="1" operation="add">
+											<ConstantTen></ConstantTen>
+									</VarOperation>
+								</Comment>
 							</events>
 						</option>
 						<cancel>
