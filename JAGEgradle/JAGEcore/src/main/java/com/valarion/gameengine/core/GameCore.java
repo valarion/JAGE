@@ -57,6 +57,10 @@ public class GameCore extends BasicGame {
 	protected Map<Class<?>, Map<String, Class<?>>> sets;
 
 	protected static GameCore instance;
+	
+	public static final String modulesDir = "./modules";
+	public static final Class<?>[] classes = new Class<?>[] { GameState.class, Event.class,
+		ColoredString.class, Condition.class, VarLong.class };
 
 	protected GameCore(String gameName, String startState, int screenwidth,
 			int screenheight, boolean fullscreen) {
@@ -114,10 +118,6 @@ public class GameCore extends BasicGame {
 	@Override
 	public void init(GameContainer container) {
 		try {
-			Class<?>[] classes = new Class<?>[] { GameState.class, Event.class,
-					ColoredString.class, Condition.class, VarLong.class };
-			String modulesDir = "./modules";
-
 			sets = PluginUtil.loadPlugins(true, modulesDir, classes);
 
 			for (Class<?> instanceClass : sets.get(GameState.class).values()) {

@@ -4,7 +4,7 @@
   <property name="type" value="com.valarion.tileengine.defaultengine.MapContainer"/>
  </properties>
  <tileset firstgid="1" name="TestTileset" tilewidth="32" tileheight="32">
-  <image source="../../GameLoader/games/game1/res/tileset/tileset.png" width="512" height="512"/>
+  <image source="../tileset/tileset.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="257" name="types" tilewidth="32" tileheight="32">
   <image source="../tileset/types.png" width="96" height="32"/>

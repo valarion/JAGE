@@ -58,20 +58,74 @@ project(':JAGEcore') {
 	run.dependsOn copyTest
 }
 
-task debug(dependsOn:":JAGEcore:run") {
+project(':JAGEeditor') {
+	apply plugin: 'java'
+	apply plugin: 'application'
+	dependencies {
+		compile project(':JAGEPluginSystem')
+		compile project(':JAGEcore')
+	}
+	
+	task copyModules(type: Copy) {
+	    from project(":JAGEmodules").jar
+	    from project(":JAGEplugin").jar
+	    into("build/modules")
+	}
+	
+	copyModules.dependsOn ":JAGEmodules:jar"
+	copyModules.dependsOn ":JAGEplugin:jar"
+	
+	run.dependsOn copyModules
+	
+	/*
+	task copyTest(type: Copy) {
+	    from project(":JAGEtest").projectDir.path + "/resources"
+	    into("build/")
+	}
+	
+	run.dependsOn copyTest
+	*/
+}
+
+task runeditor(dependsOn: ":JAGEeditor:run") {
 
 }
 
-task release() {
+task debugeditor(dependsOn:":JAGEeditor:run") {
 
 }
+
+task releaseeditor() {
+
+}
+
+task runplayer(dependsOn:":JAGEcore:run") {
+
+}
+
+task debugplayer(dependsOn:":JAGEcore:run") {
+
+}
+
+task releaseplayer() {
+
+}
+
+
 
 gradle.taskGraph.whenReady {taskGraph ->
-    if (taskGraph.hasTask(debug)) {
+    if (taskGraph.hasTask(debugplayer)) {
         project(':JAGEcore').applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
     }
     else {
     	project(':JAGEcore').applicationDefaultJvmArgs = ["-Djava.library.path=./natives"]
+    }
+    
+    if (taskGraph.hasTask(debugeditor)) {
+        project(':JAGEeditor').applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
+    }
+    else {
+    	project(':JAGEeditor').applicationDefaultJvmArgs = ["-Djava.library.path=./natives"]
     }
 }
 
@@ -93,20 +147,12 @@ task copyNatives(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
 	into("build/bin/natives")
 }
 
-/*task copyCore(type: Copy, dependsOn: ":JAGEcore:jar") {
-	from project(":JAGEcore").jar
-	into("build/bin")
-	include('JAGEcore.jar')
-}*/
-
 task copyCoreLibs(type: Copy, dependsOn: ":JAGEcore:installDist") {
 	from project(":JAGEcore").projectDir.path + "/build/install/JAGEcore"
 	into("build")
 }
 
-release.dependsOn copyModules
-release.dependsOn copyTest
-release.dependsOn copyNatives
-//release.dependsOn copyNatives2
-//release.dependsOn copyCore
-release.dependsOn copyCoreLibs
+releaseplayer.dependsOn copyModules
+releaseplayer.dependsOn copyTest
+releaseplayer.dependsOn copyNatives
+releaseplayer.dependsOn copyCoreLibs
