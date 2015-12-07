@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <database>
-	<spritesheet name="TestSprite" image="Actor1.png"
+	<spritesheet name="TestSprite" image="witch.png"
 		tilewidth="32" tileheight="32">
 		<up>
 			<tile x="1" y="3"></tile>
@@ -57,8 +57,8 @@
 		<sub name="sleft" x="64" y="64" w="2" h="28"></sub>
 		<sub name="sright" x="64" y="64" w="2" h="28"></sub>
 	</window>
-	<image name="testface" src="face/Actor1.png" x="0" y="0" w="96" h="96"></image>
-	<image name="title" src="image/Title.png"></image>
+	<image name="testface" src="face/witch.png" x="0" y="0" w="96" h="96"></image>
+	<image name="title" src="image/scene01.jpg"></image>
 	<sound name="menumove" src="Decision1.ogg"></sound>
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>

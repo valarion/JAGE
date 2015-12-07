@@ -50,7 +50,7 @@ project(':JAGEcore') {
 	copyModules.dependsOn ":JAGEplugin:jar"
 	
 	task copyTest(type: Copy) {
-	    from project(":JAGEtest").projectDir.path + "/resources"
+	    from project(":JAGEtetris").projectDir.path + "/resources"
 	    into("build/")
 	}
 	

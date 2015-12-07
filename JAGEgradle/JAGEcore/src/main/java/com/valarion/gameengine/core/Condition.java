@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.valarion.gameengine.core;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
@@ -36,9 +37,9 @@ public interface Condition{
 	/**
 	 * Evaluate condition
 	 * @param e Event in to which evaluate the condition.
-	 * @return true Tf condition checks, false otherwise.
+	 * @return true if condition checks, false otherwise.
 	 */
-	public boolean eval(Event e);
+	public boolean eval(Event e, GameContainer container, SubTiledMap map);
 
 	/**
 	 * Load the condition from an xml node.

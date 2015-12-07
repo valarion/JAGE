@@ -64,6 +64,8 @@ public class Player implements Event, Serializable {
 
 	protected float movingspeed = 0.1f;
 	protected float spritespeed = 1.0f;
+	
+	public Player(){}
 
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map)

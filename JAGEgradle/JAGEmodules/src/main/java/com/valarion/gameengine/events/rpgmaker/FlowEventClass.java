@@ -281,4 +281,11 @@ public abstract class FlowEventClass extends SubEventClass implements
 			return state;
 		}
 	}
+	
+	@Override
+	public void setBlocking(boolean blocking) {
+		if(parent != null) {
+			parent.setBlocking(blocking);
+		}
+	}
 }

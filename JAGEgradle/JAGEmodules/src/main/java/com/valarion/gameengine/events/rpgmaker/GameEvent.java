@@ -62,7 +62,7 @@ public class GameEvent implements FlowEventInterface {
 	@Override
 	public void paralelupdate(GameContainer container, int delta,
 			SubTiledMap map) throws SlickException {
-		setActive();
+		setActive(container,map);
 		
 		if (active != null) {
 			active.paralelupdate(container, delta, map);
@@ -203,7 +203,7 @@ public class GameEvent implements FlowEventInterface {
 	public void onMapLoad(GameContainer container, SubTiledMap map)
 			throws SlickException {
 		this.map = map;
-		setActive();
+		setActive(container,map);
 	}
 
 	@Override
@@ -215,12 +215,19 @@ public class GameEvent implements FlowEventInterface {
 	@Override
 	public void onMapSetAsActive(GameContainer container, SubTiledMap map)
 			throws SlickException {
-		if(active != null) {
+		for(RPGMakerEvent page : pages) {
+			if(page.isWorking()){
+				map.setMustupdate(false);
+			}
+			page.onMapSetAsActive(container, map);
+		}
+		
+		/*if(active != null) {
 			if(active.isWorking()){
 				map.setMustupdate(false);
 			}
 			active.onMapSetAsActive(container, map);
-		}
+		}*/
 	}
 
 	@Override
@@ -324,17 +331,22 @@ public class GameEvent implements FlowEventInterface {
 	/**
 	 * Set this event active page.
 	 */
-	protected void setActive() {
+	protected void setActive(GameContainer container, SubTiledMap map) {
 		if (active == null || !active.isWorking()) {
+			boolean found = false;
 			for (RPGMakerEvent page : pages) {
-				if (page.isActive(this)) {
+				if (page.isActive(this, container, map)) {
 					/*if(active != null) {
 						map.remove(this);
 					}*/
 					active = page;
+					found = true;
 					map.add(this);
 					break;
 				}
+			}
+			if(!found) {
+				active = null;
 			}
 		}
 	}
@@ -368,6 +380,13 @@ public class GameEvent implements FlowEventInterface {
 	@Override
 	public InGameState getState() {
 		return state;
+	}
+
+	@Override
+	public void setBlocking(boolean blocking) {
+		if(active != null) {
+			active.setBlocking(blocking);
+		}
 	}
 	
 	

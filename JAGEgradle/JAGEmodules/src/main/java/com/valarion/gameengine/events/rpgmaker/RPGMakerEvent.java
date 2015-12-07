@@ -188,6 +188,9 @@ public class RPGMakerEvent extends FlowEventClass {
 	@Override
 	public void onMapSetAsActive(GameContainer container, SubTiledMap map)
 			throws SlickException {
+		if(this.map == null) {
+			this.map = map;
+		}
 		if(tileId>=0) {
 			TileSet tileset = map.getTileSetByGID(tileId);
 			tile = tileset.tiles.getSubImage(tileset.getTileX(tileId), tileset.getTileY(tileId));
@@ -380,7 +383,7 @@ public class RPGMakerEvent extends FlowEventClass {
 				try {
 					Condition e = (Condition) game.getSets().get(Condition.class)
 							.get(n.getNodeName()).newInstance();
-					e.load((Element) n, null);
+					e.load((Element) n, context);
 					conditions.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
@@ -400,7 +403,7 @@ public class RPGMakerEvent extends FlowEventClass {
 		working = true;
 		activator = e;
 		map.setMustupdate(false);
-		getState().getActiveEvents().add(this);
+		//getState().getActiveEvents().add(this);
 		
 		Player player = getState().getPlayer();
 		
@@ -433,7 +436,7 @@ public class RPGMakerEvent extends FlowEventClass {
 			getState().getActive().setMustupdate(true);
 		}
 		catch (Exception e) {}
-		getState().getActiveEvents().remove(this);
+		//getState().getActiveEvents().remove(this);
 	}
 	
 	@Override
@@ -458,11 +461,11 @@ public class RPGMakerEvent extends FlowEventClass {
 		}
 	}
 	
-	public boolean isActive(Event eval) {
+	public boolean isActive(Event eval, GameContainer container, SubTiledMap map) {
 		boolean ret = true;
 		
 		for(Condition c : conditions){
-			ret = ret && c.eval(eval);
+			ret = ret && c.eval(eval, container,map);
 		}
 		
 		return ret;
@@ -707,8 +710,8 @@ public class RPGMakerEvent extends FlowEventClass {
 					ignored = prevignored;
 					movementfirst = true;
 					movementiterator = null;
-					if(!working)
-						getState().getActiveEvents().remove(getEvent());
+					//if(!working)
+						//getState().getActiveEvents().remove(getEvent());
 				}
 				else {
 					nextmove = movementiterator.next();
@@ -804,12 +807,21 @@ public class RPGMakerEvent extends FlowEventClass {
 
 	@Override
 	public void setXPos(int newPos) {
+		map.getEvents(x, y).remove(getEvent());
 		x = newPos;
+		map.getEvents(x, y).add(getEvent());
 	}
 
 	@Override
 	public void setYPos(int newPos) {
+		map.getEvents(x, y).remove(getEvent());
 		y = newPos;
+		map.getEvents(x, y).add(getEvent());
+	}
+	
+	@Override
+	public void setBlocking(boolean blocking) {
+		ghost = !blocking;
 	}
 }
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="85">
+  <image source="../tileset/tiles.png" width="550" height="178"/>
+ </tileset>
+ <tileset firstgid="86" name="types" tilewidth="32" tileheight="32" tilecount="3">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="map" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBRQCzDiwEJEYlz60TEt7CVGDTZ7yTFr1N5RewervQOVj0btHbV31N5Re0ftJd1eauORCgD4fzGLEA4AAA==
+  </data>
+ </layer>
+ <layer name="types" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3NIQEAAAgDsKeE/k2ogAE1Mb1O0vCslrxer9fr9Xq9Xu4MTsM5XBAOAAA=
+  </data>
+ </layer>
+ <layer name="pieces" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAA8Gh7blyXEA4AAA==
+  </data>
+ </layer>
+</map>

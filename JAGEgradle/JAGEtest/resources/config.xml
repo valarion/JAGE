@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config start="TestMap" loadall="false" window="defaultwindow"
+<config start="bigmap" loadall="false" window="defaultwindow"
 	layer="player" x="5" y="5" sprite="TestSprite" movingspeed="0.1"
 	spritespeed="1" background="title" music="title">
 </config>

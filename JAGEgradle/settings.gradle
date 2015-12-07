@@ -22,5 +22,6 @@ include 'JAGEmodules'
 include 'JAGEtest'
 include 'JAGEplugin'
 include 'JAGEeditor'
+include 'JAGEtetris'
 
 rootProject.name = 'JAGEgradle'

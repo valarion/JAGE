@@ -23,11 +23,13 @@
  ******************************************************************************/
 package com.valarion.gameengine.eventconditions;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.gamestates.Database;
 
 /**
@@ -41,7 +43,7 @@ public class VarCondition implements Condition {
 	long comparation;
 
 	@Override
-	public boolean eval(Event e) {
+	public boolean eval(Event e, GameContainer container, SubTiledMap map) {
 		return Database.instance().getContext().getGlobalVars()[var] >= comparation;
 	}
 

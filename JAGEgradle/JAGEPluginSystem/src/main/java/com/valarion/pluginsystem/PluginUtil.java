@@ -2,6 +2,8 @@ package com.valarion.pluginsystem;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -54,11 +56,24 @@ public class PluginUtil {
 					String name = (shortname?c2.getSimpleName():c2.getName());
 					Map<String, Class<?>> dummy = sets.get(c1);
 					if(dummy.containsKey(name)) {
-						throw new NameConflictException(name);
+						//throw new NameConflictException(name);
+						try {
+							Method methods[] = c2.getMethods();
+							
+							for(Method m : methods) {
+								if(Modifier.isStatic(m.getModifiers()) && m.isAnnotationPresent(ClassOverrider.class) && m.getParameterTypes().length == 1 && m.getParameterTypes()[0].equals(Class.class) && m.getReturnType().equals(Class.class)) {
+									c2 = (Class<?>) m.invoke(null, dummy.get(name));
+									dummy.put(name, c2);
+									break;
+								}
+							}
+						}
+						catch(Exception e){}
 					}
 					else {
-						sets.get(c1).put(c2.getSimpleName(), c2);
+						dummy.put(name, c2);
 					}
+					
 				}
 			}
 		}

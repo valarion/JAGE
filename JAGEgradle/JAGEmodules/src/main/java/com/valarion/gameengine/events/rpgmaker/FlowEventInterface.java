@@ -97,4 +97,11 @@ public interface FlowEventInterface extends Event {
 	 * @return
 	 */
 	public InGameState getState();
+	
+	/**
+	 * Set blocking property.
+	 * @param blocking
+	 */
+	public void setBlocking(boolean blocking);
+
 }

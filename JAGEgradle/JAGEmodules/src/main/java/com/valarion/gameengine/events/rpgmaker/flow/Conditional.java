@@ -128,7 +128,7 @@ public class Conditional extends FlowEventClass {
 				try {
 					Condition e = (Condition) game.getSets().get(Condition.class)
 							.get(n.getNodeName()).newInstance();
-					e.load((Element) n, null);
+					e.load((Element) n, context);
 					conditions.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
@@ -148,7 +148,7 @@ public class Conditional extends FlowEventClass {
 		boolean result = true;
 		
 		for(Condition c : conditions) {
-			result = result && c.eval(getEvent());
+			result = result && c.eval(getEvent(),container,map);
 		}
 		
 		if(result) {

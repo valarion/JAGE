@@ -113,7 +113,7 @@ public class InGameState extends SubState {
 		}
 
 		if (Database.instance().getContext().getPlayer() == null) {
-			player = new Player();
+			player = (Player) GameCore.getInstance().getSets().get(Event.class).get("Player").newInstance();
 			player.loadEvent(((Element) doc.getFirstChild()), this);
 		} else {
 			player = Database.instance().getContext().getPlayer();
