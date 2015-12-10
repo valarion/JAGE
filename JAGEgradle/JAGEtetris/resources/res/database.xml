@@ -34,4 +34,5 @@
 	<sound name="menumove" src="Decision1.ogg"></sound>
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>
+	<music name="tetris" src="tetris.ogg"></music>
 </database>

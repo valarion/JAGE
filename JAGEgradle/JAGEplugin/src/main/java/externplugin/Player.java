@@ -56,6 +56,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 	Map<String,Boolean> pressed = new ConcurrentHashMap<String,Boolean>();
 	
 	public Player() {
+		
 		Database.instance().getContext().getGlobalVars()[stateregister] = 7;
 		
 		Random rng = new Random();
@@ -305,6 +306,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 	@Override
 	public void onMapSetAsActive(GameContainer container, SubTiledMap map) {
+		Database.instance().loopMusic("tetris");
 	}
 
 	@Override
@@ -372,7 +374,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 	@Override
 	public void onMapSetAsInactive(GameContainer container, SubTiledMap map)
 			throws SlickException {
-
+		Database.instance().stopMusic("tetris");
 	}
 
 	@Override
