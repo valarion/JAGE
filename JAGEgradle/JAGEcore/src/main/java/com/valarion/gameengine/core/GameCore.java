@@ -77,8 +77,8 @@ public class GameCore extends BasicGame {
 	public static void main(String[] arguments) {
 		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
 		
-		int w = 800;
-		int h = 600;
+		int w = 1024;
+		int h = 768;
 		boolean fs = false;
 		
 		try {

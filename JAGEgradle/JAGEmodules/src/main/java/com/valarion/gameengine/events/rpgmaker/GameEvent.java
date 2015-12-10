@@ -29,6 +29,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.valarion.gameengine.core.Event;
@@ -261,17 +262,28 @@ public class GameEvent implements FlowEventInterface {
 		if ("".equals(id))
 			id = null;
 
-		NodeList pagelist = node.getElementsByTagName("page");
-		
 		if(context instanceof InGameState) {
 			state = (InGameState) context;
 		}
+		
+		NodeList childs = node.getChildNodes();
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node n = childs.item(i);
+			if ((n instanceof Element) && (n.getNodeName() != null) && "page".equals(((Element)n).getTagName())) {
+				RPGMakerEvent event = new RPGMakerEvent();
+				event.loadEvent((Element) (n), this);
+				pages.addFirst(event);
+			}
+		}
+		
+		/*
+		NodeList pagelist = node.getElementsByTagName("page");
 
 		for (int i = 0; i < pagelist.getLength(); i++) {
 			RPGMakerEvent event = new RPGMakerEvent();
 			event.loadEvent((Element) (pagelist.item(i)), this);
 			pages.addFirst(event);
-		}
+		}*/
 	}
 
 	@Override
@@ -336,12 +348,13 @@ public class GameEvent implements FlowEventInterface {
 			boolean found = false;
 			for (RPGMakerEvent page : pages) {
 				if (page.isActive(this, container, map)) {
-					/*if(active != null) {
-						map.remove(this);
-					}*/
+					if(active != null) {
+						map.getEvents(active.getXPos(), active.getYPos()).remove(getEvent());
+					}
 					active = page;
 					found = true;
 					map.add(this);
+					//map.getEvents(active.getXPos(), active.getYPos()).add(getEvent());
 					break;
 				}
 			}

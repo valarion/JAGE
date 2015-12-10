@@ -403,7 +403,9 @@ public class RPGMakerEvent extends FlowEventClass {
 		working = true;
 		activator = e;
 		map.setMustupdate(false);
-		//getState().getActiveEvents().add(this);
+		if(type != PARALEL) {
+			getState().getActiveEvents().add(this);
+		}
 		
 		Player player = getState().getPlayer();
 		
@@ -436,7 +438,7 @@ public class RPGMakerEvent extends FlowEventClass {
 			getState().getActive().setMustupdate(true);
 		}
 		catch (Exception e) {}
-		//getState().getActiveEvents().remove(this);
+		getState().getActiveEvents().remove(this);
 	}
 	
 	@Override
@@ -710,8 +712,8 @@ public class RPGMakerEvent extends FlowEventClass {
 					ignored = prevignored;
 					movementfirst = true;
 					movementiterator = null;
-					//if(!working)
-						//getState().getActiveEvents().remove(getEvent());
+					if(!working)
+						getState().getActiveEvents().remove(getEvent());
 				}
 				else {
 					nextmove = movementiterator.next();
@@ -809,14 +811,14 @@ public class RPGMakerEvent extends FlowEventClass {
 	public void setXPos(int newPos) {
 		map.getEvents(x, y).remove(getEvent());
 		x = newPos;
-		map.getEvents(x, y).add(getEvent());
+		map.add(getEvent());
 	}
 
 	@Override
 	public void setYPos(int newPos) {
 		map.getEvents(x, y).remove(getEvent());
 		y = newPos;
-		map.getEvents(x, y).add(getEvent());
+		map.add(getEvent());
 	}
 	
 	@Override

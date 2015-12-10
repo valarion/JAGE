@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,6 +46,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.valarion.gameengine.util.OrderedLinkedList;
 import com.valarion.gameengine.util.Util;
 
 
@@ -66,11 +68,16 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	protected Map<String, Set<Event>> eventsByLayer;
 	protected Map<String, Event> eventsById;
 	protected Set<Event>[][] eventsByTile;
+	protected Set<Integer> newPriorities;
+	protected OrderedLinkedList priorities;
+	protected Map<Integer, Set<Event>> eventsByPriority;
 	protected Set<Event> events;
 	
 	protected Set<Event> tempdeleteds;
 
 	protected boolean mustupdate;
+	
+	public static final int defaultpriority = 5;
 
 	@SuppressWarnings("unchecked")
 	public SubTiledMap(String ref, GameCore game, Object additional) throws SlickException {
@@ -83,8 +90,11 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		eventsByLayer = new HashMap<String, Set<Event>>();
 		eventsById = new HashMap<String, Event>();
 		eventsByTile = new Set[getWidth()][getHeight()];
-		events = Util.getset();
+		priorities = new OrderedLinkedList();
+		eventsByPriority = new ConcurrentHashMap<Integer,Set<Event>>();
 		tempdeleteds = Util.getset();
+		events = Util.getset();
+		newPriorities = Util.getset();
 		blocked = new boolean[getWidth()][getHeight()];
 		types = new int[getWidth()][getHeight()];
 
@@ -138,6 +148,9 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	public void loadEvents(String filename, Object additional) throws SlickException {
 		try {
 			File fXmlFile = new File(filename);
+			if(!fXmlFile.exists()) {
+				return;
+			}
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
 			dbFactory.setIgnoringComments(true);
@@ -241,8 +254,10 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	 */
 	public void prerender(GameContainer container, Graphics g)
 			throws SlickException {
-		for (Event event : events) {
-			event.prerender(container, g, getTileWidth(), getTileHeight());
+		for (Integer i : priorities.getList()) {
+			for (Event event : eventsByPriority.get(i)) {
+				event.prerender(container, g, getTileWidth(), getTileHeight());
+			}
 		}
 	}
 
@@ -285,17 +300,22 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	 */
 	public void postrender(GameContainer container, Graphics g)
 			throws SlickException {
-
-		for (Event event : events) {
-			event.postrender(container, g, getTileWidth(), getTileHeight());
+		for(Integer i : priorities.getList()) {
+			for (Event event : eventsByPriority.get(i)) {
+				event.postrender(container, g, getTileWidth(), getTileHeight());
+			}
 		}
+	}
+	
+	public void add(Event event) {
+		add(event,defaultpriority);
 	}
 
 	/**
 	 * Add event to the map.
 	 * @param event
 	 */
-	public void add(Event event) {
+	public void add(Event event, int priority) {
 		Set<Event> eventslayer = eventsByLayer.get(event.getLayerName());
 
 		if (eventslayer == null) {
@@ -315,15 +335,33 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 
 		eventslayer.add(event);
+		
+		Set<Event> eventspriority = eventsByPriority.get(priority);
 
+		if (eventspriority == null) {
+			eventspriority = Util.getset();
+			eventsByPriority.put(priority, eventspriority);
+			newPriorities.add(priority);
+		}
+		eventspriority.add(event);
+		
 		events.add(event);
+	}
+	
+	public void remove(Event event) {
+		for (Integer i : priorities.getList()) {
+			if (eventsByPriority.get(i).contains(event)) {
+				remove(event, i);
+				return;
+			}
+		}
 	}
 
 	/**
 	 * Remove event from the map.
 	 * @param event
 	 */
-	public void remove(Event event) {
+	public void remove(Event event, int priority) {
 		Set<Event> eventslayer = eventsByLayer.get(event.getLayerName());
 
 		if (eventslayer != null) {
@@ -335,6 +373,8 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		} catch (IndexOutOfBoundsException e) {
 		}
 
+		eventsByPriority.get(priority).remove(event);
+		
 		events.remove(event);
 	}
 	
@@ -344,9 +384,12 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	 * @param e
 	 */
 	public void tempDelete(Event e) {
-		if(events.contains(e)) {
-			remove(e);
-			tempdeleteds.add(e);
+		for (Integer i : priorities.getList()) {
+			if (eventsByPriority.get(i).contains(e)) {
+				remove(e, i);
+				tempdeleteds.add(e);
+				return;
+			}
 		}
 	}
 	
@@ -363,15 +406,23 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		for (Event event : events) {
-			event.paralelupdate(container, delta, this);
-
-		}
-		if (mustupdate) {
-			for (Event event : events) {
-				event.update(container, delta, this);
+		for (Integer i : priorities.getList()) {
+			for (Event event : eventsByPriority.get(i)) {
+				event.paralelupdate(container, delta, this);
 			}
 		}
+		if (mustupdate) {
+			for (Integer i : priorities.getList()) {
+				for (Event event : eventsByPriority.get(i)) {
+					event.update(container, delta, this);
+				}
+			}
+		}
+		
+		for(Integer i :newPriorities) {
+			priorities.addValue(i);
+		}
+		newPriorities.clear();
 	}
 
 	/**
@@ -435,5 +486,13 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	 */
 	public Map<String, Event> getEventsById() {
 		return eventsById;
+	}
+	
+	/**
+	 * Get map containing events referenced by priority.
+	 * @return
+	 */
+	public Map<Integer, Set<Event>> getEventsByPriority() {
+		return eventsByPriority;
 	}
 }

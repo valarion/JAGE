@@ -27,15 +27,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.gamestates.Controls;
+import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.InGameState;
 import com.valarion.pluginsystem.ClassOverrider;
 
@@ -50,6 +54,40 @@ public class Player extends com.valarion.gameengine.events.Player {
 	InGameState state;
 	
 	Map<String,Boolean> pressed = new ConcurrentHashMap<String,Boolean>();
+	
+	public Player() {
+		Database.instance().getContext().getGlobalVars()[stateregister] = 7;
+		
+		Random rng = new Random();
+		int type = rng.nextInt(10);
+		switch(type) {
+		case 0:
+		case 1:
+			type = 0;
+			break;
+		case 2:
+		case 3:
+			type = 1;
+			break;
+		case 4:
+		case 5:
+			type = 2;
+			break;
+		case 6:
+			type = 3;
+			break;
+		case 7:
+			type = 4;
+			break;
+		case 8:
+			type = 5;
+			break;
+		case 9:
+			type = 6;
+			break;
+		}
+		Database.instance().getContext().getGlobalVars()[Player.nextregister] = type;
+	}
 
 	public Map<String, Boolean> getPressed() {
 		return pressed;
@@ -60,22 +98,163 @@ public class Player extends com.valarion.gameengine.events.Player {
 			throws SlickException {
 		
 	}
+	protected static final int nextregister = 0;
+	protected static final int stateregister = 60;
+	protected static final int movedirectionregister = 61;
+	protected static final int canmoveregister = 62;
+	protected static final int cantmoveregister = 63;
+	protected static final int movedregister = 64;
+	protected static final int piececountregister = 65;
+	protected static final int updatedcountregister = 66;
+	protected static final int deletedlinesregister[] = new int[]{67,68,69,70};
+	
+	protected static final int controlstate = 0;
+	protected static final int movedownstate = 1;
+	protected static final int moveleftrightstate = 2;
+	protected static final int turnstate = 3;
+	protected static final int canmovestate = 4;
+	protected static final int cantmovestate = 5;
+	protected static final int linedeletedstate = 6;
+	protected static final int generatenewpiecestate = 7;
+	
+	protected long timecount;
+	protected long timelimit = 1000;
+	protected long previouslimit;
+	
+	protected static final int startx = 8, endx=17;
 
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map)
 			throws SlickException {
-		/*Input input = container.getInput();
-		for(Field f : Controls.class.getDeclaredFields()) {
-			try {
-				boolean is = input.isKeyPressed(f.getInt(null));
-				if(is) {
-					pressed.put(f.getName(), true);
-				}
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		Input input = container.getInput();
+		switch((int)Database.instance().getContext().getGlobalVars()[stateregister]) {
+		case controlstate:
+			//control
+			if(input.isKeyPressed(Controls.moveLeft)) {
+				Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
+				Database.instance().getContext().getGlobalVars()[movedirectionregister] = -1;
 			}
-		}*/
+			else if(input.isKeyPressed(Controls.moveRight)) {
+				Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
+				Database.instance().getContext().getGlobalVars()[movedirectionregister] = 1;
+			}
+			else if(input.isKeyPressed(Controls.moveUp)) {
+				Database.instance().getContext().getGlobalVars()[stateregister] = turnstate;
+				Database.instance().getContext().getGlobalVars()[movedirectionregister] = 2;
+			}
+			else if(input.isKeyPressed(Controls.moveDown)) {
+				previouslimit = timelimit;
+				timelimit=0;
+			}
+			else {
+				if(timecount>timelimit) {
+					Database.instance().getContext().getGlobalVars()[stateregister] = 1;
+					Database.instance().getContext().getGlobalVars()[movedirectionregister] = 0;
+					timecount=0;
+				}
+				else {
+					timecount += delta;
+				}
+			}
+			Database.instance().getContext().getGlobalVars()[canmoveregister] = 0;
+			break;
+		case movedownstate:
+			//move down
+		case moveleftrightstate:
+			//move left/right
+		case turnstate:
+			//turn
+			if(Database.instance().getContext().getGlobalVars()[canmoveregister] >= 4) {
+				Database.instance().getContext().getGlobalVars()[stateregister] = canmovestate;
+				Database.instance().getContext().getGlobalVars()[movedregister] = 0;
+			}
+			else if(Database.instance().getContext().getGlobalVars()[cantmoveregister] > 0 && Database.instance().getContext().getGlobalVars()[cantmoveregister]+Database.instance().getContext().getGlobalVars()[canmoveregister] >= 4) {
+				if(Database.instance().getContext().getGlobalVars()[stateregister] == movedownstate) {
+					Database.instance().getContext().getGlobalVars()[stateregister] = cantmovestate;
+					Database.instance().getContext().getGlobalVars()[movedregister] = 0;
+				}
+				else {
+					Database.instance().getContext().getGlobalVars()[stateregister] = controlstate;
+				}
+			}
+			break;
+		case canmovestate:
+			//can move
+			if(Database.instance().getContext().getGlobalVars()[movedregister] >= 4) {
+				Database.instance().getContext().getGlobalVars()[stateregister] = controlstate;
+			}
+			break;
+		case cantmovestate:
+			//can't move
+			if(Database.instance().getContext().getGlobalVars()[movedregister] >= 4) {
+				for(int i=0; i<deletedlinesregister.length;i++) {
+					for(int j=i+1; j<deletedlinesregister.length; j++) {
+						if(Database.instance().getContext().getGlobalVars()[deletedlinesregister[i]] == Database.instance().getContext().getGlobalVars()[deletedlinesregister[j]]) {
+							Database.instance().getContext().getGlobalVars()[deletedlinesregister[j]] = 0;
+						}
+					}
+				}
+				
+				for(int i=0; i<deletedlinesregister.length;i++) {
+					if(Database.instance().getContext().getGlobalVars()[deletedlinesregister[i]] > 0) {
+						for(int j=startx; j<=endx; j++) {
+							if(!map.isBlocked(j, (int) Database.instance().getContext().getGlobalVars()[deletedlinesregister[i]])) {
+								Database.instance().getContext().getGlobalVars()[deletedlinesregister[i]] = 0;
+								break;
+							}
+						}
+					}
+				}
+				
+				Database.instance().getContext().getGlobalVars()[updatedcountregister] = 0;
+				Database.instance().getContext().getGlobalVars()[stateregister] = linedeletedstate;
+			}
+			break;
+		case linedeletedstate:
+			//line deleted
+			if(Database.instance().getContext().getGlobalVars()[piececountregister] == Database.instance().getContext().getGlobalVars()[updatedcountregister]) {
+				Database.instance().getContext().getGlobalVars()[stateregister] = generatenewpiecestate;
+			}
+			break;
+		case generatenewpiecestate:
+			//Generate new piece
+			Piece.generatePiece(container, map);
+			Database.instance().getContext().getGlobalVars()[stateregister] = controlstate;
+			timecount=0;
+			if(timelimit < previouslimit) {
+				timelimit=previouslimit;
+			}
+			Random rng = new Random();
+			int type = rng.nextInt(10);
+			switch(type) {
+			case 0:
+			case 1:
+				type = 0;
+				break;
+			case 2:
+			case 3:
+				type = 1;
+				break;
+			case 4:
+			case 5:
+				type = 2;
+				break;
+			case 6:
+				type = 3;
+				break;
+			case 7:
+				type = 4;
+				break;
+			case 8:
+				type = 5;
+				break;
+			case 9:
+				type = 6;
+				break;
+			}
+			Database.instance().getContext().getGlobalVars()[Player.nextregister] = type;
+			break;
+		}
 	}
 
 	@Override
