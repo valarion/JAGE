@@ -38,6 +38,7 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.InGameState;
@@ -91,6 +92,8 @@ public class Player extends com.valarion.gameengine.events.Player {
 	protected static final int cantmovestate = 5;
 	protected static final int linedeletedstate = 6;
 	protected static final int generatenewpiecestate = 7;
+	protected static final int endgamestate = 8;
+	
 	
 	
 	protected static final long maximum = 1000;
@@ -100,7 +103,10 @@ public class Player extends com.valarion.gameengine.events.Player {
 	protected long timelimit = maximum;
 	protected long previouslimit;
 	
-	protected static final int startx = 8, endx=17;
+	protected static final int startx = 9, endx=18;
+	protected static final int starty = 1, endy=22;
+	
+	protected int x,y;
 
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map)
@@ -121,7 +127,11 @@ public class Player extends com.valarion.gameengine.events.Player {
 			}
 			
 			if((int)Database.instance().getContext().getGlobalVars()[endgameregister] != 0) {
-				return;
+				x=startx;
+				y=endy;
+				timecount=0;
+				Database.instance().stopMusic("tetris");
+				Database.instance().getContext().getGlobalVars()[stateregister] = endgamestate;
 			}
 			else if(input.isKeyPressed(Controls.moveLeft)) {
 				Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
@@ -247,6 +257,45 @@ public class Player extends com.valarion.gameengine.events.Player {
 			}
 			generateNextPiece();
 			break;
+		case endgamestate:
+			if(timecount > 100) {
+				timecount = 0;
+				if(y>=starty) {
+					boolean stop = false;
+					while(!stop) {
+						for(Event e : map.getEvents(x, y)) {
+							if(e instanceof FlowEventInterface) {
+								((FlowEventInterface) e).stop();
+								stop = true;
+							}
+						}
+						
+						if(y%2 == 0) {
+							x++;
+							if(x > endx) {
+								x = endx;
+								y--;
+							}
+						}
+						else {
+							x--;
+							if(x < startx) {
+								x = startx;
+								y--;
+							}
+						}
+						
+						if(y<starty) {
+							stop = true;
+						}
+					}
+					Database.instance().playSound("beep");
+				}
+			}
+			else {
+				timecount += delta;
+			}
+			break;
 		}
 	}
 
@@ -304,7 +353,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 		Database.instance().getContext().getGlobalVars()[levelregister] = 0;
 		Database.instance().loopMusic("tetris");
 		Database.instance().getContext().getGlobalVars()[stateregister] = generatenewpiecestate;
-
+		state.getCamera().focusAt(map);
 		generateNextPiece();
 	}
 	

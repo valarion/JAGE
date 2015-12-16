@@ -34,5 +34,6 @@
 	<sound name="menumove" src="Decision1.ogg"></sound>
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>
+	<sound name="beep" src="26777__junggle__btn402.ogg"></sound>
 	<music name="tetris" src="tetris.ogg"></music>
 </database>

@@ -23,6 +23,7 @@
  ******************************************************************************/
 package externplugin;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -53,8 +54,8 @@ public class Piece extends FlowEventClass {
 	protected static int piecesdefinitions[][][][] = new int[][][][]{
 			/*I*/{{{0,-2},{0,-1},{0,0},{0,1}},{{-1,0},{0,0},{1,0},{2,0}}},
 			/*O*/{{{0,0},{0,1},{1,0},{1,1}}},
-			/*Z*/{{{-1,-1},{0,-1},{0,0},{1,0}},{{0,-1},{0,0},{-1,0},{-1,1}}},
-			/*S*/{{{-1,1},{0,1},{0,0},{1,0}},{{0,1},{0,0},{-1,0},{-1,-1}}},
+			/*S*/{{{0,1},{0,0},{1,0},{1,-1}},{{-1,-1},{0,-1},{0,0},{1,0}}},
+			/*Z*/{{{0,-1},{0,0},{1,0},{1,1}},{{-1,1},{0,1},{0,0},{1,0}}},
 			/*T*/{{{1,0},{0,0},{0,1},{0,-1}},{{0,-1},{0,0},{-1,0},{1,0}},{{-1,0},{0,0},{0,-1},{0,1}},{{0,1},{0,0},{1,0},{-1,0}}},
 			/*L*/{{{1,0},{0,0},{0,1},{0,2}},{{0,1},{0,0},{-1,0},{-2,0}},{{-1,0},{0,0},{0,-1},{0,-2}},{{0,-1},{0,0},{1,0},{2,0}}},
 			/*J*/{{{0,-2},{0,-1},{0,0},{1,0}},{{2,0},{1,0},{0,0},{0,1}},{{0,2},{0,1},{0,0},{-1,0}},{{-2,0},{-1,0},{0,0},{0,-1}}},
@@ -166,11 +167,17 @@ public class Piece extends FlowEventClass {
 		}
 
 	}
+	
+	@Override
+	public void stop() {
+		state = 4;
+	}
 
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 		if(tile != null) {
-			g.drawImage(tile, getXDraw(tilewidth), getYDraw(tileheight));
+			Color filter = (state != 4 ? Color.white : Color.darkGray);
+			g.drawImage(tile, getXDraw(tilewidth), getYDraw(tileheight),filter);
 		}
 	}
 
@@ -248,8 +255,8 @@ public class Piece extends FlowEventClass {
 		return "piece"+pieceblock;
 	}
 	
-	public static final int centerx=13;
-	public static final int centery=7;
+	public static final int centerx=14;
+	public static final int centery=3;
 
 	/**
 	 * Create a piece of the type saved in the next piece global variable.

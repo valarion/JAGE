@@ -30,6 +30,7 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.Renderable;
+import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.gamestates.InGameState;
 
 /**
@@ -41,6 +42,9 @@ import com.valarion.gameengine.gamestates.InGameState;
 public class Camera implements Renderable {
 	protected Event center;
 	protected float x, y;
+	
+	protected SubTiledMap map;
+	
 	protected GameCore game;
 	protected InGameState instance;
 
@@ -74,8 +78,22 @@ public class Camera implements Renderable {
 	 * @return
 	 */
 	public Camera focusAt(float x, float y) {
+		this.map = null;
+		this.center = null;
 		this.x = x;
 		this.y = y;
+		return this;
+	}
+	
+	/**
+	 * Focus camera at map and fix it to screen.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public Camera focusAt(SubTiledMap map) {
+		this.map = map;
+		this.center = null;
 		return this;
 	}
 
@@ -94,7 +112,14 @@ public class Camera implements Renderable {
 					+ playerYPos;
 
 			g.translate(mapXOff, mapYOff);
-		} else {
+		} 
+		else if(map != null) {
+			float xscale = (float)container.getWidth()/((float)map.getWidth()*map.getTileWidth());
+			float yscale = (float)container.getHeight()/((float)map.getHeight()*map.getTileHeight());
+			g.scale(xscale,yscale);
+
+		}
+		else {
 			g.translate(x, y);
 		}
 	}

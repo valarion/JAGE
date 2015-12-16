@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapevents>
 	<GameEvent id="punctuation">
-		<page x="20" y="11" layer="pieces" type="paralel">
+		<page x="21" y="7" layer="pieces" type="paralel">
 			<events>
 				<PositionedVarShow pre="Points: " var="73" post=" pts."></PositionedVarShow>
 			</events>
@@ -9,7 +9,7 @@
 	</GameEvent>
 	
 	<GameEvent id="lines">
-		<page x="20" y="16" layer="pieces" type="paralel">
+		<page x="21" y="12" layer="pieces" type="paralel">
 			<events>
 				<PositionedVarShow pre="Cleared lines: " var="72" post=" lines"></PositionedVarShow>
 			</events>
@@ -17,7 +17,7 @@
 	</GameEvent>
 	
 	<GameEvent id="level">
-		<page x="20" y="21" layer="pieces" type="paralel">
+		<page x="21" y="17" layer="pieces" type="paralel">
 			<events>
 				<PositionedVarShow pre="Level " var="74"></PositionedVarShow>
 			</events>
@@ -25,37 +25,37 @@
 	</GameEvent>
 
 	<GameEvent id="next1">
-		<page x="5" y="10" layer="pieces" type="activation" tile="1">
+		<page x="6" y="6" layer="pieces" type="activation" tile="1">
 			<conditions>
 				<VarCondition var="0" greaterorequal="0" />
 			</conditions>
 		</page>
-		<page x="4" y="11" layer="pieces" type="activation" tile="2">
+		<page x="5" y="7" layer="pieces" type="activation" tile="2">
 			<conditions>
 				<VarCondition var="0" greaterorequal="1" />
 			</conditions>
 		</page>
-		<page x="4" y="10" layer="pieces" type="activation" tile="3">
+		<page x="5" y="6" layer="pieces" type="activation" tile="3">
 			<conditions>
 				<VarCondition var="0" greaterorequal="2" />
 			</conditions>
 		</page>
-		<page x="5" y="10" layer="pieces" type="activation" tile="4">
+		<page x="6" y="6" layer="pieces" type="activation" tile="4">
 			<conditions>
 				<VarCondition var="0" greaterorequal="3" />
 			</conditions>
 		</page>
-		<page x="4" y="10" layer="pieces" type="activation" tile="5">
+		<page x="5" y="6" layer="pieces" type="activation" tile="5">
 			<conditions>
 				<VarCondition var="0" greaterorequal="4" />
 			</conditions>
 		</page>
-		<page x="4" y="10" layer="pieces" type="activation" tile="6">
+		<page x="5" y="6" layer="pieces" type="activation" tile="6">
 			<conditions>
 				<VarCondition var="0" greaterorequal="5" />
 			</conditions>
 		</page>
-		<page x="5" y="10" layer="pieces" type="activation" tile="7">
+		<page x="6" y="6" layer="pieces" type="activation" tile="7">
 			<conditions>
 				<VarCondition var="0" greaterorequal="6" />
 			</conditions>
@@ -63,37 +63,37 @@
 	</GameEvent>
 
 	<GameEvent id="next2">
-		<page x="5" y="11" layer="pieces" type="activation" tile="1">
+		<page x="6" y="7" layer="pieces" type="activation" tile="1">
 			<conditions>
 				<VarCondition var="0" greaterorequal="0" />
 			</conditions>
 		</page>
-		<page x="4" y="12" layer="pieces" type="activation" tile="2">
+		<page x="5" y="8" layer="pieces" type="activation" tile="2">
 			<conditions>
 				<VarCondition var="0" greaterorequal="1" />
 			</conditions>
 		</page>
-		<page x="4" y="11" layer="pieces" type="activation" tile="3">
+		<page x="5" y="7" layer="pieces" type="activation" tile="3">
 			<conditions>
 				<VarCondition var="0" greaterorequal="2" />
 			</conditions>
 		</page>
-		<page x="5" y="11" layer="pieces" type="activation" tile="4">
+		<page x="6" y="7" layer="pieces" type="activation" tile="4">
 			<conditions>
 				<VarCondition var="0" greaterorequal="3" />
 			</conditions>
 		</page>
-		<page x="4" y="11" layer="pieces" type="activation" tile="5">
+		<page x="5" y="7" layer="pieces" type="activation" tile="5">
 			<conditions>
 				<VarCondition var="0" greaterorequal="4" />
 			</conditions>
 		</page>
-		<page x="4" y="11" layer="pieces" type="activation" tile="6">
+		<page x="5" y="7" layer="pieces" type="activation" tile="6">
 			<conditions>
 				<VarCondition var="0" greaterorequal="5" />
 			</conditions>
 		</page>
-		<page x="5" y="11" layer="pieces" type="activation" tile="7">
+		<page x="6" y="7" layer="pieces" type="activation" tile="7">
 			<conditions>
 				<VarCondition var="0" greaterorequal="6" />
 			</conditions>
@@ -101,37 +101,37 @@
 	</GameEvent>
 
 	<GameEvent id="next3">
-		<page x="5" y="12" layer="pieces" type="activation" tile="1">
+		<page x="6" y="8" layer="pieces" type="activation" tile="1">
 			<conditions>
 				<VarCondition var="0" greaterorequal="0" />
 			</conditions>
 		</page>
-		<page x="5" y="12" layer="pieces" type="activation" tile="2">
+		<page x="6" y="8" layer="pieces" type="activation" tile="2">
 			<conditions>
 				<VarCondition var="0" greaterorequal="1" />
 			</conditions>
 		</page>
-		<page x="5" y="11" layer="pieces" type="activation" tile="3">
+		<page x="6" y="7" layer="pieces" type="activation" tile="3">
 			<conditions>
 				<VarCondition var="0" greaterorequal="2" />
 			</conditions>
 		</page>
-		<page x="4" y="11" layer="pieces" type="activation" tile="4">
+		<page x="5" y="7" layer="pieces" type="activation" tile="4">
 			<conditions>
 				<VarCondition var="0" greaterorequal="3" />
 			</conditions>
 		</page>
-		<page x="5" y="11" layer="pieces" type="activation" tile="5">
+		<page x="6" y="7" layer="pieces" type="activation" tile="5">
 			<conditions>
 				<VarCondition var="0" greaterorequal="4" />
 			</conditions>
 		</page>
-		<page x="4" y="12" layer="pieces" type="activation" tile="6">
+		<page x="5" y="8" layer="pieces" type="activation" tile="6">
 			<conditions>
 				<VarCondition var="0" greaterorequal="5" />
 			</conditions>
 		</page>
-		<page x="5" y="12" layer="pieces" type="activation" tile="7">
+		<page x="6" y="8" layer="pieces" type="activation" tile="7">
 			<conditions>
 				<VarCondition var="0" greaterorequal="6" />
 			</conditions>
@@ -139,37 +139,37 @@
 	</GameEvent>
 
 	<GameEvent id="next4">
-		<page x="5" y="13" layer="pieces" type="activation" tile="1">
+		<page x="6" y="9" layer="pieces" type="activation" tile="1">
 			<conditions>
 				<VarCondition var="0" greaterorequal="0" />
 			</conditions>
 		</page>
-		<page x="5" y="11" layer="pieces" type="activation" tile="2">
+		<page x="6" y="7" layer="pieces" type="activation" tile="2">
 			<conditions>
 				<VarCondition var="0" greaterorequal="1" />
 			</conditions>
 		</page>
-		<page x="5" y="12" layer="pieces" type="activation" tile="3">
+		<page x="6" y="8" layer="pieces" type="activation" tile="3">
 			<conditions>
 				<VarCondition var="0" greaterorequal="2" />
 			</conditions>
 		</page>
-		<page x="4" y="12" layer="pieces" type="activation" tile="4">
+		<page x="5" y="8" layer="pieces" type="activation" tile="4">
 			<conditions>
 				<VarCondition var="0" greaterorequal="3" />
 			</conditions>
 		</page>
-		<page x="4" y="12" layer="pieces" type="activation" tile="5">
+		<page x="5" y="8" layer="pieces" type="activation" tile="5">
 			<conditions>
 				<VarCondition var="0" greaterorequal="4" />
 			</conditions>
 		</page>
-		<page x="5" y="12" layer="pieces" type="activation" tile="6">
+		<page x="6" y="8" layer="pieces" type="activation" tile="6">
 			<conditions>
 				<VarCondition var="0" greaterorequal="5" />
 			</conditions>
 		</page>
-		<page x="4" y="12" layer="pieces" type="activation" tile="7">
+		<page x="5" y="8" layer="pieces" type="activation" tile="7">
 			<conditions>
 				<VarCondition var="0" greaterorequal="6" />
 			</conditions>
