@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapevents>
+	<GameEvent id="punctuation">
+		<page x="20" y="11" layer="pieces" type="paralel">
+			<events>
+				<PositionedVarShow pre="Points: " var="73" post=" pts."></PositionedVarShow>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent id="lines">
+		<page x="20" y="16" layer="pieces" type="paralel">
+			<events>
+				<PositionedVarShow pre="Cleared lines: " var="72" post=" lines"></PositionedVarShow>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent id="level">
+		<page x="20" y="21" layer="pieces" type="paralel">
+			<events>
+				<PositionedVarShow pre="Level " var="74"></PositionedVarShow>
+			</events>
+		</page>
+	</GameEvent>
+
 	<GameEvent id="next1">
 		<page x="5" y="10" layer="pieces" type="activation" tile="1">
 			<conditions>

@@ -44,7 +44,8 @@ import com.valarion.gameengine.gamestates.InGameState;
 import com.valarion.pluginsystem.ClassOverrider;
 
 /**
- * Class representing the player and all it's mechanics.
+ * Class Overwriting the player class in the modules to have a player that doesn't render and 
+ * that controlls a tetris game.
  * @author Rubén Tomás Gracia
  *
  */
@@ -57,37 +58,6 @@ public class Player extends com.valarion.gameengine.events.Player {
 	
 	public Player() {
 		
-		Database.instance().getContext().getGlobalVars()[stateregister] = 7;
-		
-		Random rng = new Random();
-		int type = rng.nextInt(10);
-		switch(type) {
-		case 0:
-		case 1:
-			type = 0;
-			break;
-		case 2:
-		case 3:
-			type = 1;
-			break;
-		case 4:
-		case 5:
-			type = 2;
-			break;
-		case 6:
-			type = 3;
-			break;
-		case 7:
-			type = 4;
-			break;
-		case 8:
-			type = 5;
-			break;
-		case 9:
-			type = 6;
-			break;
-		}
-		Database.instance().getContext().getGlobalVars()[Player.nextregister] = type;
 	}
 
 	public Map<String, Boolean> getPressed() {
@@ -108,6 +78,10 @@ public class Player extends com.valarion.gameengine.events.Player {
 	protected static final int piececountregister = 65;
 	protected static final int updatedcountregister = 66;
 	protected static final int deletedlinesregister[] = new int[]{67,68,69,70};
+	protected static final int endgameregister = 71;
+	protected static final int clearedlinesregister = 72;
+	protected static final int punctuationregister = 73;
+	protected static final int levelregister = 74;
 	
 	protected static final int controlstate = 0;
 	protected static final int movedownstate = 1;
@@ -118,8 +92,12 @@ public class Player extends com.valarion.gameengine.events.Player {
 	protected static final int linedeletedstate = 6;
 	protected static final int generatenewpiecestate = 7;
 	
+	
+	protected static final long maximum = 1000;
+	protected static final int minimum = 50;
+	
 	protected long timecount;
-	protected long timelimit = 1000;
+	protected long timelimit = maximum;
 	protected long previouslimit;
 	
 	protected static final int startx = 8, endx=17;
@@ -131,7 +109,21 @@ public class Player extends com.valarion.gameengine.events.Player {
 		switch((int)Database.instance().getContext().getGlobalVars()[stateregister]) {
 		case controlstate:
 			//control
-			if(input.isKeyPressed(Controls.moveLeft)) {
+			previouslimit = (long)((maximum-minimum) * Math.pow(0.99,Database.instance().getContext().getGlobalVars()[levelregister]) + minimum); 
+			
+			if(timelimit > 0) {
+				if(input.isKeyDown(Controls.moveDown)) {
+					timelimit = minimum;
+				}
+				else {
+					timelimit = previouslimit;
+				}
+			}
+			
+			if((int)Database.instance().getContext().getGlobalVars()[endgameregister] != 0) {
+				return;
+			}
+			else if(input.isKeyPressed(Controls.moveLeft)) {
 				Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
 				Database.instance().getContext().getGlobalVars()[movedirectionregister] = -1;
 			}
@@ -143,8 +135,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 				Database.instance().getContext().getGlobalVars()[stateregister] = turnstate;
 				Database.instance().getContext().getGlobalVars()[movedirectionregister] = 2;
 			}
-			else if(input.isKeyPressed(Controls.moveDown)) {
-				previouslimit = timelimit;
+			else if(input.isKeyPressed(Controls.accept)) {
 				timelimit=0;
 			}
 			else {
@@ -207,6 +198,35 @@ public class Player extends com.valarion.gameengine.events.Player {
 					}
 				}
 				
+				int cleared = 0;
+				
+				for(int i=0; i<deletedlinesregister.length;i++) {
+					if(Database.instance().getContext().getGlobalVars()[deletedlinesregister[i]] > 0) {
+						cleared++;
+					}
+				}
+				
+				int punctuation = 0;
+
+				switch(cleared) {
+				case 1:
+					punctuation = 40;
+					break;
+				case 2:
+					punctuation = 100;
+					break;
+				case 3:
+					punctuation = 300;
+					break;
+				case 4:
+					punctuation = 1200;
+					break;
+				}
+				punctuation *= Database.instance().getContext().getGlobalVars()[levelregister] + 1;
+				Database.instance().getContext().getGlobalVars()[punctuationregister] += punctuation;
+				Database.instance().getContext().getGlobalVars()[clearedlinesregister] += cleared;
+				Database.instance().getContext().getGlobalVars()[levelregister] = Database.instance().getContext().getGlobalVars()[clearedlinesregister] / 10;
+				
 				Database.instance().getContext().getGlobalVars()[updatedcountregister] = 0;
 				Database.instance().getContext().getGlobalVars()[stateregister] = linedeletedstate;
 			}
@@ -225,35 +245,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 			if(timelimit < previouslimit) {
 				timelimit=previouslimit;
 			}
-			Random rng = new Random();
-			int type = rng.nextInt(10);
-			switch(type) {
-			case 0:
-			case 1:
-				type = 0;
-				break;
-			case 2:
-			case 3:
-				type = 1;
-				break;
-			case 4:
-			case 5:
-				type = 2;
-				break;
-			case 6:
-				type = 3;
-				break;
-			case 7:
-				type = 4;
-				break;
-			case 8:
-				type = 5;
-				break;
-			case 9:
-				type = 6;
-				break;
-			}
-			Database.instance().getContext().getGlobalVars()[Player.nextregister] = type;
+			generateNextPiece();
 			break;
 		}
 	}
@@ -306,7 +298,46 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 	@Override
 	public void onMapSetAsActive(GameContainer container, SubTiledMap map) {
+		Database.instance().getContext().getGlobalVars()[endgameregister] = 0;
+		Database.instance().getContext().getGlobalVars()[clearedlinesregister] = 0;
+		Database.instance().getContext().getGlobalVars()[punctuationregister] = 0;
+		Database.instance().getContext().getGlobalVars()[levelregister] = 0;
 		Database.instance().loopMusic("tetris");
+		Database.instance().getContext().getGlobalVars()[stateregister] = generatenewpiecestate;
+
+		generateNextPiece();
+	}
+	
+	protected static void generateNextPiece() {
+		Random rng = new Random();
+		int type = rng.nextInt(10);
+		switch(type) {
+		case 0:
+		case 1:
+			type = 0;
+			break;
+		case 2:
+		case 3:
+			type = 1;
+			break;
+		case 4:
+			type = 2;
+			break;
+		case 5:
+			type = 3;
+			break;
+		case 6:
+		case 7:
+			type = 4;
+			break;
+		case 8:
+			type = 5;
+			break;
+		case 9:
+			type = 6;
+			break;
+		}
+		Database.instance().getContext().getGlobalVars()[Player.nextregister] = type;
 	}
 
 	@Override

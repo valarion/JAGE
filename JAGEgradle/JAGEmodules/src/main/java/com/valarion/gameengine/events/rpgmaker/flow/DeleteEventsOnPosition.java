@@ -21,34 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package externplugin;
+package com.valarion.gameengine.events.rpgmaker.flow;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
-import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
-import com.valarion.gameengine.gamestates.Database;
+import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 
 /**
- * Condition of a global interrupt being in the given state.
+ * Class that deltes from the map all the events in a given position.
  * @author Rubén Tomás Gracia
  *
  */
-public class TileBlockedCondition implements Condition{
-	protected int xvar, yvar;
+public class DeleteEventsOnPosition extends FlowEventClass {
+	int xvar = -1, yvar=-1;
+	@Override
+	public void loadEvent(Element node, Object context) throws SlickException {
+		super.loadEvent(node, context);
+		try {
+			xvar = Integer.parseInt(node.getAttribute("xvar"));
+		}
+		catch(Exception e) {}
+		try {
+			yvar = Integer.parseInt(node.getAttribute("yvar"));
+		}
+		catch(Exception e) {}
+	}
+	
 
 	@Override
-	public boolean eval(Event e, GameContainer container, SubTiledMap map) {
-		return map.isBlocked((int)Database.instance().getContext().getGlobalVars()[xvar], (int)Database.instance().getContext().getGlobalVars()[yvar]);
+	public void performAction(GameContainer container, SubTiledMap map, Event e)
+			throws SlickException {
+		for(Event event : map.getEvents(xvar, yvar)) {
+			map.remove(event);
+		}
 	}
-
-	@Override
-	public void load(Element node, Object context) throws SlickException {
-		xvar = Integer.parseInt(node.getAttribute("xvar"));
-		yvar = Integer.parseInt(node.getAttribute("yvar"));
-	}
-
 }

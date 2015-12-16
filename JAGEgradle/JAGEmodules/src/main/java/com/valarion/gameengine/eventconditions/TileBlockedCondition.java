@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package externplugin;
+package com.valarion.gameengine.eventconditions;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -30,29 +30,25 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.SubTiledMap;
-import com.valarion.gameengine.gamestates.Controls;
+import com.valarion.gameengine.gamestates.Database;
 
 /**
- * Condition of a global interrupt being in the given state.
+ * Condition of a specific position in hte map being blocked.
  * @author Rubén Tomás Gracia
  *
  */
-public class InputCondition implements Condition{
-	protected int key = -1;
+public class TileBlockedCondition implements Condition{
+	protected int xvar, yvar;
 
 	@Override
 	public boolean eval(Event e, GameContainer container, SubTiledMap map) {
-		return container.getInput().isKeyPressed(key);
+		return map.isBlocked((int)Database.instance().getContext().getGlobalVars()[xvar], (int)Database.instance().getContext().getGlobalVars()[yvar]);
 	}
 
 	@Override
 	public void load(Element node, Object context) throws SlickException {
-		try {
-			key = Controls.class.getDeclaredField(node.getAttribute("key")).getInt(null);
-		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-
-			e.printStackTrace();
-		}
+		xvar = Integer.parseInt(node.getAttribute("xvar"));
+		yvar = Integer.parseInt(node.getAttribute("yvar"));
 	}
 
 }

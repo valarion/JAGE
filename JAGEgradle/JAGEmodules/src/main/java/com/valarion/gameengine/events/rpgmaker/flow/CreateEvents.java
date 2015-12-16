@@ -21,91 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package externplugin;
+package com.valarion.gameengine.events.rpgmaker.flow;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
-import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
+import com.valarion.gameengine.events.rpgmaker.GameEvent;
 
 /**
- * Class that describes a constant loop.
- * To break it it's necessary to use a conditional with a break cicle event.
+ * Class that describes an event that creates defined events on the map.
  * @author Rubén Tomás Gracia
  *
  */
-public class Atomic extends FlowEventClass {
-	boolean working;
-	RPGMakerEvent events;
-
+public class CreateEvents extends FlowEventClass {
+	List<Element> events;
 	@Override
-	public void paralelupdate(GameContainer container, int delta,
-			SubTiledMap map) throws SlickException {
-		events.restart();
-		events.performAction(container, map, activator);
+	public void loadEvent(Element node, Object context) throws SlickException {
+		super.loadEvent(node, context);
+		events = new LinkedList<Element>();
 		
-		while(events.isWorking()) {
-			events.paralelupdate(container, delta, map);
+		NodeList childs = node.getChildNodes();
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node n = childs.item(i);
+			if ((n instanceof Element) && n.getNodeName() != null) {
+				events.add((Element)n);
+			}
 		}
-		working = false;
 	}
-
-	@Override
-	public void prerender(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
-	}
-
-	@Override
-	public void render(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
-	}
-
-	@Override
-	public void postrender(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
-	}
+	
 
 	@Override
 	public void performAction(GameContainer container, SubTiledMap map, Event e)
 			throws SlickException {
-		super.performAction(container, map, e);
-		working = true;
-	}
-
-	@Override
-	public boolean isWorking() {
-		return working;
-	}
-
-	@Override
-	public void loadEvent(Element node, Object context) throws SlickException {
-		super.loadEvent(node, context);
-
-		events = new RPGMakerEvent();
-		events.loadEvent(node, this);
-	}
-
-	@Override
-	public void breakCicle() {
-		restart();
-	}
-
-	@Override
-	public void restart() {
-		working = false;
-		events.restart();
-	}
-
-	@Override
-	protected void searchAndActiveLabel(String label) {
-		if (events.hasLabel(label))
-			events.goToLabel(label);
-
-		working = true;
+		for(Element element : events) {
+			try {
+				Map<String, Class<?>> plugins = GameCore.getInstance().getSets().get(Event.class);
+				Class<?> c = plugins.get(element.getNodeName());
+				Event event = (Event) c.newInstance();
+				event.loadEvent((Element) element, getState());
+				event.onMapSetAsActive(container, map);
+				map.add(event);
+			} catch (InstantiationException | IllegalAccessException exception) {
+				exception.printStackTrace();
+			}
+		}
 	}
 }

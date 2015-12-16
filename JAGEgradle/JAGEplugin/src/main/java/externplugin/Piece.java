@@ -1,3 +1,26 @@
+/*******************************************************************************
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2015 Rubén Tomás Gracia
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ ******************************************************************************/
 package externplugin;
 
 import org.newdawn.slick.GameContainer;
@@ -10,6 +33,11 @@ import com.valarion.gameengine.core.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.Database;
 
+/**
+ * Class containing the states machine that works for every piece of a tetris game.
+ * @author Rubén Tomás Gracia
+ *
+ */
 public class Piece extends FlowEventClass {
 	protected int piecetype;
 	protected int pieceblock;
@@ -28,8 +56,8 @@ public class Piece extends FlowEventClass {
 			/*Z*/{{{-1,-1},{0,-1},{0,0},{1,0}},{{0,-1},{0,0},{-1,0},{-1,1}}},
 			/*S*/{{{-1,1},{0,1},{0,0},{1,0}},{{0,1},{0,0},{-1,0},{-1,-1}}},
 			/*T*/{{{1,0},{0,0},{0,1},{0,-1}},{{0,-1},{0,0},{-1,0},{1,0}},{{-1,0},{0,0},{0,-1},{0,1}},{{0,1},{0,0},{1,0},{-1,0}}},
-			/*J*/{{{0,-2},{0,-1},{0,0},{1,0}},{{2,0},{1,0},{0,0},{0,1}},{{0,2},{0,1},{0,0},{-1,0}},{{-2,0},{-1,0},{0,0},{0,-1}}},
 			/*L*/{{{1,0},{0,0},{0,1},{0,2}},{{0,1},{0,0},{-1,0},{-2,0}},{{-1,0},{0,0},{0,-1},{0,-2}},{{0,-1},{0,0},{1,0},{2,0}}},
+			/*J*/{{{0,-2},{0,-1},{0,0},{1,0}},{{2,0},{1,0},{0,0},{0,1}},{{0,2},{0,1},{0,0},{-1,0}},{{-2,0},{-1,0},{0,0},{0,-1}}},
 };
 
 	protected SubTiledMap map;
@@ -51,6 +79,9 @@ public class Piece extends FlowEventClass {
 		int tileId = piecetype+1;
 		TileSet tileset = map.getTileSetByGID(tileId);
 		tile = tileset.tiles.getSubImage(tileset.getTileX(tileId), tileset.getTileY(tileId));
+		if(map.isBlocked(this.x, this.y)) {
+			Database.instance().getContext().getGlobalVars()[Player.endgameregister] = 1;
+		}
 	}
 
 	@Override
@@ -220,9 +251,13 @@ public class Piece extends FlowEventClass {
 	public static final int centerx=13;
 	public static final int centery=7;
 
+	/**
+	 * Create a piece of the type saved in the next piece global variable.
+	 * @param container
+	 * @param map
+	 * @throws SlickException
+	 */
 	public static void generatePiece(GameContainer container, SubTiledMap map) throws SlickException {
-		
-		
 		for(int i=0;i<4;i++) {
 			Piece p = new Piece((int)Database.instance().getContext().getGlobalVars()[Player.nextregister], i,centerx,centery,map);
 			map.add(p);
