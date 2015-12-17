@@ -56,7 +56,6 @@ public class PluginUtil {
 					String name = (shortname?c2.getSimpleName():c2.getName());
 					Map<String, Class<?>> dummy = sets.get(c1);
 					if(dummy.containsKey(name)) {
-						//throw new NameConflictException(name);
 						try {
 							Method methods[] = c2.getMethods();
 							

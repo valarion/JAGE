@@ -35,7 +35,7 @@ import com.valarion.gameengine.gamestates.InGameState;
 
 /**
  * Class containing the mechanics of a camera.
- * This class changes translation matrix to show what's defined to show.
+ * This class changes matrix to show what's defined to show.
  * @author Rubén Tomás Gracia
  *
  */

@@ -1,0 +1,5 @@
+window/Window.png - author: aweryn - link: https://vxresource.wordpress.com/2010/02/10/this-time-cool-windowskins-d/
+sprite/witch.png - author: Tabi no Yadokari - link: https://vxresource.wordpress.com/2013/02/19/a-witch-for-rpg-maker-vx-ace/
+face/witch.png - author: Tabi no Yadokari - link: https://vxresource.wordpress.com/2013/02/19/a-witch-for-rpg-maker-vx-ace/
+image/scene01.jpg - author: aweryn - link: https://vxresource.wordpress.com/2010/07/01/just-a-few/
+author: Mack - https://vxresource.wordpress.com/2010/03/17/the-real-macks-tileset/

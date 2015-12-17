@@ -22,7 +22,6 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 
-//mainClassName = "com.valarion.gameengine.core.GameCore"
 mainClassName = "com.valarion.gameengine.core.GameSwingWindow"
 applicationDefaultJvmArgs = ["-DruningInEclipse=true"]
 
