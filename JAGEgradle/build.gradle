@@ -95,9 +95,11 @@ task debug() {}
 gradle.taskGraph.whenReady {taskGraph ->
     if (taskGraph.hasTask(debug)) {
         project(':JAGEcore').applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
+        project(':JAGEeditor').applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
     }
     else {
     	project(':JAGEcore').applicationDefaultJvmArgs = ["-Djava.library.path=./natives"]
+    	project(':JAGEeditor').applicationDefaultJvmArgs = ["-Djava.library.path=./natives"]
     }
 }
 

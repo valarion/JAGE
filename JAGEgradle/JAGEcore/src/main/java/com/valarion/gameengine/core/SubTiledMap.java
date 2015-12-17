@@ -69,7 +69,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	protected Map<String, Event> eventsById;
 	protected Set<Event>[][] eventsByTile;
 	protected Set<Integer> newPriorities;
-	protected OrderedLinkedList priorities;
+	protected OrderedLinkedList<Integer> priorities;
 	protected Map<Integer, Set<Event>> eventsByPriority;
 	protected Set<Event> events;
 	
@@ -90,7 +90,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		eventsByLayer = new HashMap<String, Set<Event>>();
 		eventsById = new HashMap<String, Event>();
 		eventsByTile = new Set[getWidth()][getHeight()];
-		priorities = new OrderedLinkedList();
+		priorities = new OrderedLinkedList<Integer>();
 		eventsByPriority = new ConcurrentHashMap<Integer,Set<Event>>();
 		tempdeleteds = Util.getset();
 		events = Util.getset();
@@ -254,7 +254,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	 */
 	public void prerender(GameContainer container, Graphics g)
 			throws SlickException {
-		for (Integer i : priorities.getList()) {
+		for (Integer i : priorities) {
 			for (Event event : eventsByPriority.get(i)) {
 				event.prerender(container, g, getTileWidth(), getTileHeight());
 			}
@@ -300,7 +300,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	 */
 	public void postrender(GameContainer container, Graphics g)
 			throws SlickException {
-		for(Integer i : priorities.getList()) {
+		for(Integer i : priorities) {
 			for (Event event : eventsByPriority.get(i)) {
 				event.postrender(container, g, getTileWidth(), getTileHeight());
 			}
@@ -349,7 +349,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	}
 	
 	public void remove(Event event) {
-		for (Integer i : priorities.getList()) {
+		for (Integer i : priorities) {
 			if (eventsByPriority.get(i).contains(event)) {
 				remove(event, i);
 				return;
@@ -384,7 +384,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	 * @param e
 	 */
 	public void tempDelete(Event e) {
-		for (Integer i : priorities.getList()) {
+		for (Integer i : priorities) {
 			if (eventsByPriority.get(i).contains(e)) {
 				remove(e, i);
 				tempdeleteds.add(e);
@@ -406,13 +406,13 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		for (Integer i : priorities.getList()) {
+		for (Integer i : priorities) {
 			for (Event event : eventsByPriority.get(i)) {
 				event.paralelupdate(container, delta, this);
 			}
 		}
 		if (mustupdate) {
-			for (Integer i : priorities.getList()) {
+			for (Integer i : priorities) {
 				for (Event event : eventsByPriority.get(i)) {
 					event.update(container, delta, this);
 				}
@@ -420,7 +420,7 @@ public class SubTiledMap extends TiledMap implements Updatable {
 		}
 		
 		for(Integer i :newPriorities) {
-			priorities.addValue(i);
+			priorities.add(i);
 		}
 		newPriorities.clear();
 	}
