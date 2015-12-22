@@ -34,7 +34,6 @@ import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
