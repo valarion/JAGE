@@ -60,7 +60,7 @@ public class GameCore extends BasicGame {
 	
 	public static final String modulesDir = "./modules";
 	public static final Class<?>[] classes = new Class<?>[] { GameState.class, Event.class,
-		ColoredString.class, Condition.class, VarLong.class };
+		ColoredString.class, Condition.class, VarLong.class, Updatable.class, Renderable.class };
 
 	protected GameCore(String gameName, String startState, int screenwidth,
 			int screenheight, boolean fullscreen) {

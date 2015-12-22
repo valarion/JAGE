@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.core;
+package com.valarion.gameengine.core.tiled;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -38,14 +40,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.Layer;
-import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.ResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.GameCore;
+import com.valarion.gameengine.core.Updatable;
 import com.valarion.gameengine.util.OrderedLinkedList;
 import com.valarion.gameengine.util.Util;
 
@@ -137,6 +143,42 @@ public class SubTiledMap extends TiledMap implements Updatable {
 			}
 
 		loadEvents(ref.substring(0, ref.length() - 3) + "xml", additional);
+		loadObjects(ResourceLoader.getResourceAsStream(ref));
+	}
+
+	protected void loadObjects(InputStream in) {
+		objectGroups.clear();
+		
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			factory.setValidating(false);
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder.setEntityResolver(new EntityResolver() {
+				public InputSource resolveEntity(String publicId,
+						String systemId) throws SAXException, IOException {
+					return new InputSource(
+							new ByteArrayInputStream(new byte[0]));
+				}
+			});
+
+			Document doc = builder.parse(in);
+
+			NodeList childs = doc.getFirstChild().getChildNodes();
+
+			for (int i = 0; i < childs.getLength(); i++) {
+				Node n = childs.item(i);
+				if ((n instanceof Element) && n.getNodeName() != null) {
+					Element e = (Element) n;
+					if("objectgroup".equals(n.getNodeName())) {
+						objectGroups.add(new ObjectGroup(e));
+					}
+				}
+			}
+		}
+		catch(Exception e) {
+			
+		}
 	}
 
 	/**

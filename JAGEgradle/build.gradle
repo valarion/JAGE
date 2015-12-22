@@ -24,6 +24,14 @@ project(':JAGEtetrisplugin') {
 	}
 }
 
+project(':JAGEscrambleplugin') {
+	apply plugin: 'java'
+	dependencies {
+		compile project(':JAGEcore')
+		compile project(':JAGEmodules')
+	}
+}
+
 project(':JAGEmodules') {
 	apply plugin: 'java'
 	dependencies {
@@ -48,8 +56,18 @@ project(':JAGEcore') {
 	    into("build/modules")
 	}
 	
+	task copyScramblePlugin(type: Copy, dependsOn: ":JAGEscrambleplugin:jar") {
+	    from project(":JAGEscrambleplugin").jar
+	    into("build/modules")
+	}
+	
 	task copyTetrisResources(type: Copy) {
 	    from project(":JAGEtetris").projectDir.path + "/resources"
+	    into("build/")
+	}
+	
+	task copyScrambleResources(type: Copy) {
+	    from project(":JAGEscramble").projectDir.path + "/resources"
 	    into("build/")
 	}
 	
@@ -64,7 +82,10 @@ project(':JAGEcore') {
 	task runtetris(dependsOn: ['copyModules','copyTetrisPlugin','copyTetrisResources','run']) {
 	}
 	
-	run.mustRunAfter copyModules,copyTetrisPlugin,copyTetrisResources,copyRpgResources
+	task runscramble(dependsOn: ['copyModules','copyScramblePlugin','copyScrambleResources','run']) {
+	}
+	
+	run.mustRunAfter copyModules,copyTetrisPlugin,copyTetrisResources,copyRpgResources,copyScramblePlugin,copyScrambleResources
 	run.dependsOn ":JAGEcore:unpackNatives"
 }
 
@@ -123,6 +144,16 @@ task copyRpgResources(type: Copy) {
 	into("build/bin")
 }
 
+task copyScramblePlugin(type: Copy, dependsOn: ":JAGEscrambleplugin:jar") {
+	from project(":JAGEscrambleplugin").jar
+	into("build/modules")
+}
+	
+task copyScrambleResources(type: Copy) {
+	from project(":JAGEscramble").projectDir.path + "/resources"
+	into("build/")
+}
+
 task copyNatives(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
 	from project(":JAGEcore").projectDir.path + "/build/natives/windows"
 	from project(":JAGEcore").projectDir.path + "/build/natives/linux"
@@ -145,5 +176,7 @@ task releaseplayer(dependsOn: ['copyNatives','copyCoreLibs']) {}
 task releaserpg(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyRpgResources']) {}
 
 task releasetetris(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyTetrisPlugin','copyTetrisResources']) {}
+
+task releasescramble(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyScramblePlugin','copyScrambleResources']) {}
 
 task releaseeditor(dependsOn: ['copyEditorLibs','copyModules']) {}

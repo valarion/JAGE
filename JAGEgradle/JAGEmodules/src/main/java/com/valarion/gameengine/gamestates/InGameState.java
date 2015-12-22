@@ -42,7 +42,8 @@ import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.Renderable;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.Player;
 import com.valarion.gameengine.events.menu.ingamemenu.MenuMain;
 import com.valarion.gameengine.util.Camera;
@@ -121,7 +122,8 @@ public class InGameState extends SubState {
 
 		Database.instance().getContext().setPlayer(player);
 
-		camera = new Camera(GameCore.getInstance(), this).focusAt(player);
+		camera = ((Camera) GameCore.getInstance().getSets().get(Renderable.class).get("Camera").getDeclaredConstructor(GameCore.class,InGameState.class).newInstance(GameCore.getInstance(),this)).focusAt(player);
+		//camera = new Camera(GameCore.getInstance(), this).focusAt(player);
 
 		String mapname;
 

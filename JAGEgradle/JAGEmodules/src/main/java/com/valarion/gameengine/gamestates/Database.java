@@ -1,5 +1,6 @@
 package com.valarion.gameengine.gamestates;
 
+import java.awt.Font;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.TrueTypeFont;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -38,11 +40,25 @@ public class Database {
 	
 	protected String defaultwindow;
 	
+	public Window getDefaultwindow() {
+		return windows.get(defaultwindow);
+	}
+
 	protected String titleBackground;
 	protected String titleMusic;
 	
 	protected boolean initialized;
+
+	protected TrueTypeFont DEFAULT_FONT;
 	
+	public TrueTypeFont getDefaultFont() {
+		return DEFAULT_FONT;
+	}
+
+	public void setDefaultFont(TrueTypeFont font) {
+		DEFAULT_FONT = font;
+	}
+
 	protected static Database instance = new Database();
 	
 	/**
@@ -79,6 +95,7 @@ public class Database {
 	 * Initializes the database and loads everything.
 	 */
 	protected void init() {
+		DEFAULT_FONT = new TrueTypeFont(new Font("Terminal", Font.BOLD, 18), false);
 		sprites = new HashMap<String, SpriteInfo>();
 		musics = new HashMap<String, Music>();
 		sounds = new HashMap<String, Sound>();
@@ -193,7 +210,7 @@ public class Database {
 					w.createWindow(GameCore.getInstance().getApp().getWidth() / 6, top
 							+ bottom
 							+ i
-							* GameCore.getInstance().getApp().getGraphics().getFont()
+							* /*GameCore.getInstance().getApp().getGraphics().getFont()*/DEFAULT_FONT
 									.getLineHeight() * 2, true));
 		}
 	}

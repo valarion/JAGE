@@ -28,9 +28,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TileSet;
 
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
+import com.valarion.gameengine.core.tiled.TileSet;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.Database;
 

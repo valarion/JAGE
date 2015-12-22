@@ -30,7 +30,7 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.Renderable;
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.InGameState;
 
 /**
@@ -42,7 +42,7 @@ import com.valarion.gameengine.gamestates.InGameState;
 public class Camera implements Renderable {
 	protected Event center;
 	protected float x, y;
-	
+
 	protected SubTiledMap map;
 	
 	protected GameCore game;

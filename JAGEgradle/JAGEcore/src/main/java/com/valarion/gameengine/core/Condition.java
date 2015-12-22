@@ -27,6 +27,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
+import com.valarion.gameengine.core.tiled.SubTiledMap;
+
 /**
  * 
  * @author Ruben Tomás Gracia
