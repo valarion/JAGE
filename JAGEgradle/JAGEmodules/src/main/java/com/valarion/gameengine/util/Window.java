@@ -34,6 +34,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.valarion.gameengine.core.GameCore;
+import com.valarion.gameengine.gamestates.Database;
+
 /**
  * Class containing a window info.
  * @author Rubén Tomás Gracia
@@ -46,6 +49,8 @@ public class Window {
 	protected Map<String, Image> images;
 
 	int border;
+	
+	protected static Image frontsuper,backsuper,containsuper;
 
 	/**
 	 * Load window info from XML node.
@@ -53,6 +58,16 @@ public class Window {
 	 * @throws SlickException
 	 */
 	public Window(Element node) throws SlickException {
+		synchronized(this) {
+			if(frontsuper == null) {
+				frontsuper = new Image(GameCore.getInstance().getApp().getWidth(),GameCore.getInstance().getApp().getHeight());
+				backsuper  = new Image(GameCore.getInstance().getApp().getWidth(),GameCore.getInstance().getApp().getHeight());
+				containsuper = new Image(GameCore.getInstance().getApp().getWidth(),GameCore.getInstance().getApp().getHeight());
+				frontsuper.getGraphics().setFont(Database.instance().getDefaultFont());
+				backsuper.getGraphics().setFont(Database.instance().getDefaultFont());
+				containsuper.getGraphics().setFont(Database.instance().getDefaultFont());
+			}
+		}
 		NodeList nodes = node.getChildNodes();
 
 		images = new HashMap<String, Image>();
@@ -93,11 +108,13 @@ public class Window {
 	public WindowImage createWindow(int w, int h, boolean fix)
 			throws SlickException {
 		Image ret = new Image(w, h);
-		Image front = new Image(w, h);
-		Image back = new Image(w, h);
+		Image front = frontsuper.getSubImage(0, 0, w, h);
+		Image back = backsuper.getSubImage(0, 0, w, h);
 		Graphics r = ret.getGraphics();
 		Graphics f = front.getGraphics();
 		Graphics b = back.getGraphics();
+		f.clear();
+		b.clear();
 		Image background = images.get("background");
 		Image decoration = images.get("decoration");
 		Image topleft = images.get("topleft");
@@ -115,12 +132,10 @@ public class Window {
 		Image arrow4 = images.get("arrow4");
 
 		int twcovered, lhcovered, bwcovered, rhcovered;
-
-		Image background2 = Util.getScaled(background,background.getWidth(), h);
-
+		
 		// Draw background
 		for (int i = 0; i < w; i += background.getWidth()) {
-			b.drawImage(background2, i, 0);
+			b.drawImage(background, i, 0,background.getWidth(),h,0,0,background.getWidth(),background.getHeight());
 		}
 
 		for (int i = 0; i < w; i += decoration.getWidth()) {
@@ -190,7 +205,7 @@ public class Window {
 
 		Animation arrowanim = new Animation(arrow, duration, false);
 
-		return new WindowImage(ret, new Image(twcovered - left.getWidth()
+		return new WindowImage(ret, containsuper.getSubImage(0, 0, twcovered - left.getWidth()
 				- right.getWidth(), lhcovered - top.getHeight()
 				- bottom.getHeight()), left.getWidth(), top.getHeight(),
 				arrowanim, this);

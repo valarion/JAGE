@@ -27,7 +27,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 
 /**

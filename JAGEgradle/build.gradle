@@ -16,7 +16,15 @@ dependencies {
     runtime 'org.slick2d:slick2d-core:1.0.1'
 }
 
-project(':JAGEplugin') {
+project(':JAGEtetrisplugin') {
+	apply plugin: 'java'
+	dependencies {
+		compile project(':JAGEcore')
+		compile project(':JAGEmodules')
+	}
+}
+
+project(':JAGEscrambleplugin') {
 	apply plugin: 'java'
 	dependencies {
 		compile project(':JAGEcore')
@@ -37,53 +45,113 @@ project(':JAGEcore') {
 	dependencies {
 		compile project(':JAGEPluginSystem')
 	}
-	run.dependsOn ":JAGEcore:unpackNatives"
 	
-	task copyModules(type: Copy) {
+	task copyModules(type: Copy, dependsOn: ":JAGEmodules:jar") {
 	    from project(":JAGEmodules").jar
-	    from project(":JAGEplugin").jar
 	    into("build/modules")
-	    //include('JAGEmodules.jar')
 	}
 	
-	copyModules.dependsOn ":JAGEmodules:jar"
-	copyModules.dependsOn ":JAGEplugin:jar"
+	task copyTetrisPlugin(type: Copy, dependsOn: ":JAGEtetrisplugin:jar") {
+	    from project(":JAGEtetrisplugin").jar
+	    into("build/modules")
+	}
 	
-	task copyTest(type: Copy) {
-	    from project(":JAGEtest").projectDir.path + "/resources"
+	task copyScramblePlugin(type: Copy, dependsOn: ":JAGEscrambleplugin:jar") {
+	    from project(":JAGEscrambleplugin").jar
+	    into("build/modules")
+	}
+	
+	task copyTetrisResources(type: Copy) {
+	    from project(":JAGEtetris").projectDir.path + "/resources"
 	    into("build/")
 	}
 	
+	task copyScrambleResources(type: Copy) {
+	    from project(":JAGEscramble").projectDir.path + "/resources"
+	    into("build/")
+	}
+	
+	task copyRpgResources(type: Copy) {
+	    from project(":JAGErpg").projectDir.path + "/resources"
+	    into("build/")
+	}
+	
+	task runrpg(dependsOn: ['copyModules','copyRpgResources','run']) {
+	}
+	
+	task runtetris(dependsOn: ['copyModules','copyTetrisPlugin','copyTetrisResources','run']) {
+	}
+	
+	task runscramble(dependsOn: ['copyModules','copyScramblePlugin','copyScrambleResources','run']) {
+	}
+	
+	run.mustRunAfter copyModules,copyTetrisPlugin,copyTetrisResources,copyRpgResources,copyScramblePlugin,copyScrambleResources
+	run.dependsOn ":JAGEcore:unpackNatives"
+}
+
+project(':JAGEeditor') {
+	apply plugin: 'java'
+	apply plugin: 'application'
+	dependencies {
+		compile project(':JAGEPluginSystem')
+		compile project(':JAGEcore')
+	}
+	
+	task copyModules(type: Copy, dependsOn: [":JAGEmodules:jar",":JAGEtetrisplugin:jar"]) {
+	    from project(":JAGEmodules").jar
+	    from project(":JAGEtetrisplugin").jar
+	    into("build/modules")
+	}
+	
 	run.dependsOn copyModules
-	run.dependsOn copyTest
+	
+	task runeditor(dependsOn: 'run') {}
 }
 
-task debug(dependsOn:":JAGEcore:run") {
 
-}
 
-task release() {
-
-}
+// Utility task to add debug options to the virtual machine when it's present in the task graph
+task debug() {}
 
 gradle.taskGraph.whenReady {taskGraph ->
     if (taskGraph.hasTask(debug)) {
         project(':JAGEcore').applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
+        project(':JAGEeditor').applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8080"]
     }
     else {
     	project(':JAGEcore').applicationDefaultJvmArgs = ["-Djava.library.path=./natives"]
+    	project(':JAGEeditor').applicationDefaultJvmArgs = ["-Djava.library.path=./natives"]
     }
 }
 
 task copyModules(type: Copy, dependsOn: ":JAGEmodules:jar") {
 	from project(":JAGEmodules").jar
 	into("build/bin/modules")
-	include('JAGEmodules.jar')
 }
 	
-task copyTest(type: Copy) {
-	from project(":JAGEtest").projectDir.path + "/resources"
+task copyTetrisPlugin(type: Copy, dependsOn: ":JAGEtetrisplugin:jar") {
+	from project(":JAGEtetrisplugin").jar
+	into("build/bin/modules")
+}
+	
+task copyTetrisResources(type: Copy) {
+	from project(":JAGEtetris").projectDir.path + "/resources"
 	into("build/bin")
+}
+	
+task copyRpgResources(type: Copy) {
+	from project(":JAGErpg").projectDir.path + "/resources"
+	into("build/bin")
+}
+
+task copyScramblePlugin(type: Copy, dependsOn: ":JAGEscrambleplugin:jar") {
+	from project(":JAGEscrambleplugin").jar
+	into("build/modules")
+}
+	
+task copyScrambleResources(type: Copy) {
+	from project(":JAGEscramble").projectDir.path + "/resources"
+	into("build/")
 }
 
 task copyNatives(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
@@ -93,20 +161,22 @@ task copyNatives(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
 	into("build/bin/natives")
 }
 
-/*task copyCore(type: Copy, dependsOn: ":JAGEcore:jar") {
-	from project(":JAGEcore").jar
-	into("build/bin")
-	include('JAGEcore.jar')
-}*/
-
 task copyCoreLibs(type: Copy, dependsOn: ":JAGEcore:installDist") {
 	from project(":JAGEcore").projectDir.path + "/build/install/JAGEcore"
 	into("build")
 }
 
-release.dependsOn copyModules
-release.dependsOn copyTest
-release.dependsOn copyNatives
-//release.dependsOn copyNatives2
-//release.dependsOn copyCore
-release.dependsOn copyCoreLibs
+task copyEditorLibs(type: Copy, dependsOn: ":JAGEeditor:installDist") {
+	from project(":JAGEeditor").projectDir.path + "/build/install/JAGEeditor"
+	into("build")
+}
+
+task releaseplayer(dependsOn: ['copyNatives','copyCoreLibs']) {}
+
+task releaserpg(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyRpgResources']) {}
+
+task releasetetris(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyTetrisPlugin','copyTetrisResources']) {}
+
+task releasescramble(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyScramblePlugin','copyScrambleResources']) {}
+
+task releaseeditor(dependsOn: ['copyEditorLibs','copyModules']) {}

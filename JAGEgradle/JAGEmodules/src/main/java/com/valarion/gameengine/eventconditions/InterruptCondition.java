@@ -23,11 +23,13 @@
  ******************************************************************************/
 package com.valarion.gameengine.eventconditions;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Database;
 
 /**
@@ -42,7 +44,7 @@ public class InterruptCondition implements Condition{
 	protected boolean state = true;
 
 	@Override
-	public boolean eval(Event e) {
+	public boolean eval(Event e, GameContainer container, SubTiledMap map) {
 		return Database.instance().getContext().getGlobalInterrupts()[interrupt] == state;
 	}
 

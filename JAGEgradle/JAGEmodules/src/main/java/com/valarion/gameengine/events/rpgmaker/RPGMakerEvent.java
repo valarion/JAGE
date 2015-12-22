@@ -31,7 +31,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TileSet;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -39,7 +38,8 @@ import org.w3c.dom.NodeList;
 import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
+import com.valarion.gameengine.core.tiled.TileSet;
 import com.valarion.gameengine.events.Moving;
 import com.valarion.gameengine.events.Player;
 import com.valarion.gameengine.events.Route;
@@ -188,6 +188,9 @@ public class RPGMakerEvent extends FlowEventClass {
 	@Override
 	public void onMapSetAsActive(GameContainer container, SubTiledMap map)
 			throws SlickException {
+		if(this.map == null) {
+			this.map = map;
+		}
 		if(tileId>=0) {
 			TileSet tileset = map.getTileSetByGID(tileId);
 			tile = tileset.tiles.getSubImage(tileset.getTileX(tileId), tileset.getTileY(tileId));
@@ -380,7 +383,7 @@ public class RPGMakerEvent extends FlowEventClass {
 				try {
 					Condition e = (Condition) game.getSets().get(Condition.class)
 							.get(n.getNodeName()).newInstance();
-					e.load((Element) n, null);
+					e.load((Element) n, context);
 					conditions.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
@@ -400,7 +403,9 @@ public class RPGMakerEvent extends FlowEventClass {
 		working = true;
 		activator = e;
 		map.setMustupdate(false);
-		getState().getActiveEvents().add(this);
+		if(type != PARALEL) {
+			getState().getActiveEvents().add(this);
+		}
 		
 		Player player = getState().getPlayer();
 		
@@ -458,11 +463,11 @@ public class RPGMakerEvent extends FlowEventClass {
 		}
 	}
 	
-	public boolean isActive(Event eval) {
+	public boolean isActive(Event eval, GameContainer container, SubTiledMap map) {
 		boolean ret = true;
 		
 		for(Condition c : conditions){
-			ret = ret && c.eval(eval);
+			ret = ret && c.eval(eval, container,map);
 		}
 		
 		return ret;
@@ -804,12 +809,21 @@ public class RPGMakerEvent extends FlowEventClass {
 
 	@Override
 	public void setXPos(int newPos) {
+		map.getEvents(x, y).remove(getEvent());
 		x = newPos;
+		map.add(getEvent());
 	}
 
 	@Override
 	public void setYPos(int newPos) {
+		map.getEvents(x, y).remove(getEvent());
 		y = newPos;
+		map.add(getEvent());
+	}
+	
+	@Override
+	public void setBlocking(boolean blocking) {
+		ghost = !blocking;
 	}
 }
 

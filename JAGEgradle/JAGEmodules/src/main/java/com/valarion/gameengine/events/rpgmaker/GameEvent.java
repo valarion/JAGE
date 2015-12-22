@@ -29,10 +29,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.InGameState;
 
@@ -62,7 +63,7 @@ public class GameEvent implements FlowEventInterface {
 	@Override
 	public void paralelupdate(GameContainer container, int delta,
 			SubTiledMap map) throws SlickException {
-		setActive();
+		setActive(container,map);
 		
 		if (active != null) {
 			active.paralelupdate(container, delta, map);
@@ -203,7 +204,7 @@ public class GameEvent implements FlowEventInterface {
 	public void onMapLoad(GameContainer container, SubTiledMap map)
 			throws SlickException {
 		this.map = map;
-		setActive();
+		setActive(container,map);
 	}
 
 	@Override
@@ -215,12 +216,19 @@ public class GameEvent implements FlowEventInterface {
 	@Override
 	public void onMapSetAsActive(GameContainer container, SubTiledMap map)
 			throws SlickException {
-		if(active != null) {
+		for(RPGMakerEvent page : pages) {
+			if(page.isWorking()){
+				map.setMustupdate(false);
+			}
+			page.onMapSetAsActive(container, map);
+		}
+		
+		/*if(active != null) {
 			if(active.isWorking()){
 				map.setMustupdate(false);
 			}
 			active.onMapSetAsActive(container, map);
-		}
+		}*/
 	}
 
 	@Override
@@ -254,17 +262,28 @@ public class GameEvent implements FlowEventInterface {
 		if ("".equals(id))
 			id = null;
 
-		NodeList pagelist = node.getElementsByTagName("page");
-		
 		if(context instanceof InGameState) {
 			state = (InGameState) context;
 		}
+		
+		NodeList childs = node.getChildNodes();
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node n = childs.item(i);
+			if ((n instanceof Element) && (n.getNodeName() != null) && "page".equals(((Element)n).getTagName())) {
+				RPGMakerEvent event = new RPGMakerEvent();
+				event.loadEvent((Element) (n), this);
+				pages.addFirst(event);
+			}
+		}
+		
+		/*
+		NodeList pagelist = node.getElementsByTagName("page");
 
 		for (int i = 0; i < pagelist.getLength(); i++) {
 			RPGMakerEvent event = new RPGMakerEvent();
 			event.loadEvent((Element) (pagelist.item(i)), this);
 			pages.addFirst(event);
-		}
+		}*/
 	}
 
 	@Override
@@ -324,17 +343,23 @@ public class GameEvent implements FlowEventInterface {
 	/**
 	 * Set this event active page.
 	 */
-	protected void setActive() {
+	protected void setActive(GameContainer container, SubTiledMap map) {
 		if (active == null || !active.isWorking()) {
+			boolean found = false;
 			for (RPGMakerEvent page : pages) {
-				if (page.isActive(this)) {
-					/*if(active != null) {
-						map.remove(this);
-					}*/
+				if (page.isActive(this, container, map)) {
+					if(active != null) {
+						map.getEvents(active.getXPos(), active.getYPos()).remove(getEvent());
+					}
 					active = page;
+					found = true;
 					map.add(this);
+					//map.getEvents(active.getXPos(), active.getYPos()).add(getEvent());
 					break;
 				}
+			}
+			if(!found) {
+				active = null;
 			}
 		}
 	}
@@ -368,6 +393,13 @@ public class GameEvent implements FlowEventInterface {
 	@Override
 	public InGameState getState() {
 		return state;
+	}
+
+	@Override
+	public void setBlocking(boolean blocking) {
+		if(active != null) {
+			active.setBlocking(blocking);
+		}
 	}
 	
 	

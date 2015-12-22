@@ -28,6 +28,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
+import com.valarion.gameengine.core.tiled.SubTiledMap;
+
 /**
  * Class that contains all the methods needed for an event based game.
  * @author Rubén Tomás Gracia

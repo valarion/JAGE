@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
 import com.valarion.gameengine.core.Condition;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
@@ -128,7 +128,7 @@ public class Conditional extends FlowEventClass {
 				try {
 					Condition e = (Condition) game.getSets().get(Condition.class)
 							.get(n.getNodeName()).newInstance();
-					e.load((Element) n, null);
+					e.load((Element) n, context);
 					conditions.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
@@ -148,7 +148,7 @@ public class Conditional extends FlowEventClass {
 		boolean result = true;
 		
 		for(Condition c : conditions) {
-			result = result && c.eval(getEvent());
+			result = result && c.eval(getEvent(),container,map);
 		}
 		
 		if(result) {

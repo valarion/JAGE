@@ -28,6 +28,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import com.valarion.gameengine.core.GameCore;
+import com.valarion.gameengine.gamestates.Database;
+
 /**
  * Class containing a ready-to-render window.
  * @author Rubén Tomás Gracia
@@ -42,6 +45,8 @@ public class WindowImage {
 	int x, y;
 
 	boolean showArrow = true;
+	
+	protected static Image mergedsuper;
 
 	/**
 	 * Create window. Should only be called from window.
@@ -55,6 +60,12 @@ public class WindowImage {
 	 */
 	public WindowImage(Image window, Image contain, int x, int y,
 			Animation arrow, Window model) throws SlickException {
+		synchronized(this) {
+			if(mergedsuper == null) {
+				mergedsuper = new Image(GameCore.getInstance().getApp().getWidth(),GameCore.getInstance().getApp().getHeight());
+				mergedsuper.getGraphics().setFont(Database.instance().getDefaultFont());
+			}
+		}
 		this.window = window;
 		this.contain = contain;
 		this.x = x;
@@ -62,7 +73,7 @@ public class WindowImage {
 		this.arrow = arrow;
 		this.model = model;
 
-		merged = new Image(window.getWidth(), window.getHeight());
+		merged = mergedsuper.getSubImage(0, 0,window.getWidth(), window.getHeight());
 
 		Graphics g = getContain().getGraphics();
 		g.clear();

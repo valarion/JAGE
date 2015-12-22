@@ -35,7 +35,7 @@ import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.core.SubTiledMap;
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
@@ -64,6 +64,8 @@ public class Player implements Event, Serializable {
 
 	protected float movingspeed = 0.1f;
 	protected float spritespeed = 1.0f;
+	
+	public Player(){}
 
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map)
