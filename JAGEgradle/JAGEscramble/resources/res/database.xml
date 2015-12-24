@@ -30,7 +30,9 @@
 		<sub name="sleft" x="64" y="64" w="2" h="28"></sub>
 		<sub name="sright" x="64" y="64" w="2" h="28"></sub>
 	</window>
+	<image name="explosion" src="image/explosion.png"></image>
 	<image name="title" src="image/scene01.jpg"></image>
+	<image name="fuel" src="image/fuel.png"></image>
 	<image name="ship" src="image/ship.png"></image>
 	<image name="bullet" src="image/bullet.png"></image>
 	<image name="bomb" src="image/bomb.png"></image>

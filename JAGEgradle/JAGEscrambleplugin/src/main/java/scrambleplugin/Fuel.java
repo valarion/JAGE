@@ -1,8 +1,6 @@
 package scrambleplugin;
 
-import java.awt.geom.Area;
-import java.awt.geom.Path2D;
-import java.util.LinkedList;
+import java.awt.geom.Rectangle2D;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,61 +12,21 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Database;
 
-public class Bullet implements Event {
-	protected Image sprite;
-	protected float x,y,w,h;
+public class Fuel implements Enemy {
+	int x,y,w,h;
 	
-	protected LinkedList<Area> collidables = new LinkedList<Area>();
-
-	protected SubTiledMap map;
-	
-	protected Player player;
-	
-	public Bullet(Player player) {
-		sprite = Database.instance().getImages().get("bullet");
+	Image sprite;
+	public Fuel() {
+		sprite = Database.instance().getImages().get("fuel");
 		w = sprite.getWidth();
 		h = sprite.getHeight();
-		this.player = player;
 	}
 
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
-	public static final float speed = 0.2f;
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
-		x += speed*delta;
-		
-		if(x+w > map.getWidth()*map.getTileWidth()) {
-			map.remove(this);
-		}
-		
-		for(Area area : collidables) {
-			if(area.intersects(x,y+h/4,w,h/2)) {
-				map.remove(this);
-				Explosion s = new Explosion();
-				s.setXPos(x+w-s.getWidth()/2);
-				s.setYPos(y);
-				map.add(s);
-			}
-		}
-		
-		for(Event e : map.getEvents()) {
-			if(e instanceof Enemy) {
-				Enemy enemy = (Enemy)e;
-				if(enemy.collidesWith(x,y+h/4,w,h/2)) {
-					if(enemy instanceof Fuel) {
-						map.remove(enemy);
-						map.remove(this);
-						Explosion s = new Explosion();
-						s.setXPos(x+w-s.getWidth()/2);
-						s.setYPos(y);
-						map.add(s);
-					}
-				}
-			}
-		}
-	}
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
 	@Override
 	public void prerender(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {}
@@ -98,20 +56,12 @@ public class Bullet implements Event {
 
 	@Override
 	public int getXPos() {
-		return 0;
+		return x;
 	}
 
 	@Override
 	public int getYPos() {
-		return 0;
-	}
-	
-	public void setXPos(float newPos) {
-		x = newPos;
-	}
-
-	public void setYPos(float newPos) {
-		y = newPos;
+		return y;
 	}
 
 	@Override
@@ -134,12 +84,12 @@ public class Bullet implements Event {
 
 	@Override
 	public int getWidth() {
-		return (int) w;
+		return w;
 	}
 
 	@Override
 	public int getHeight() {
-		return (int) h;
+		return h;
 	}
 
 	@Override
@@ -148,17 +98,7 @@ public class Bullet implements Event {
 	}
 
 	@Override
-	public void onMapLoad(GameContainer container, SubTiledMap map) throws SlickException {
-		this.map = map;
-		collidables.clear();
-		for (int i = 0; i < map.getObjectGroupCount(); i++) {
-			for (int j = 0; j < map.getObjectCount(i); j++) {
-				if(!(map.getObjectShape(i, j) instanceof Path2D)) {
-					collidables.add(new Area(map.getObjectShape(i, j)));
-				}
-			}
-		}
-	}
+	public void onMapLoad(GameContainer container, SubTiledMap map) throws SlickException {}
 
 	@Override
 	public void onMapSetAsInactive(GameContainer container, SubTiledMap map) throws SlickException {}
@@ -176,10 +116,7 @@ public class Bullet implements Event {
 	public void onBeingTouched(GameContainer container, SubTiledMap map, Event e) throws SlickException {}
 
 	@Override
-	public void loadEvent(Element node, Object context) throws SlickException {
-		// TODO Auto-generated method stub
-
-	}
+	public void loadEvent(Element node, Object context) throws SlickException {}
 
 	@Override
 	public boolean isWorking() {
@@ -192,6 +129,11 @@ public class Bullet implements Event {
 	@Override
 	public String getId() {
 		return null;
+	}
+
+	@Override
+	public boolean collidesWith(float x, float y, float w, float h) {
+		return new Rectangle2D.Float(x,y,w,h).intersects(this.x,this.y,this.w,this.h);
 	}
 
 }

@@ -9,6 +9,7 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Path2D;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -771,6 +772,22 @@ public class TiledMap {
 	public int getObjectGroupCount() {
 		return objectGroups.size();
 	}
+	
+	/**
+	 * Returns the number of objects of a specific object-group.
+	 * 
+	 * @param groupID
+	 *            The index of this object-group
+	 * @return Number of the objects in the object-group or -1, when error
+	 *         occurred.
+	 */
+	public String getObjectGroupName(int groupID) {
+		if (groupID >= 0 && groupID < objectGroups.size()) {
+			ObjectGroup grp = (ObjectGroup) objectGroups.get(groupID);
+			return grp.name;
+		}
+		return null;
+	}
 
 	/**
 	 * Returns the number of objects of a specific object-group.
@@ -1140,6 +1157,33 @@ public class TiledMap {
 							} catch (Exception exception) {
 							}
 						}
+						break;
+					}
+					else if("polyline".equals(n.getNodeName())) {
+						Path2D p = new Path2D.Float();
+						shape = p;
+						
+						String pointsstr = e.getAttribute("points");
+						String points[] = pointsstr.split(" ");
+
+						boolean isfirst = true;
+						for (String point : points) {
+							String coordstr[] = point.split(",");
+							try {
+								if(isfirst) {
+									p.moveTo(x + (int) Float.parseFloat(coordstr[0]),
+										y + (int) Float.parseFloat(coordstr[1]));
+									isfirst = false;
+								}
+								else {
+									p.lineTo(x + (int) Float.parseFloat(coordstr[0]),
+											y + (int) Float.parseFloat(coordstr[1]));
+								}
+								
+							} catch (Exception exception) {
+							}
+						}
+						p.closePath();
 						break;
 					}
 				}

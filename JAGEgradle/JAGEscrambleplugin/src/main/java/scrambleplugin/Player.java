@@ -24,6 +24,8 @@ package scrambleplugin;
  ******************************************************************************/
 
 import java.awt.geom.Area;
+import java.awt.geom.Path2D;
+import java.awt.geom.PathIterator;
 import java.util.LinkedList;
 
 import org.newdawn.slick.GameContainer;
@@ -188,11 +190,11 @@ public class Player extends com.valarion.gameengine.events.Player {
 			}
 		}
 		// }
-		
-		if(input.isKeyPressed(Input.KEY_SPACE)) {
-			Bullet b = new Bullet();
-			b.setXPos((int)(x+xoffset+w));
-			b.setYPos((int)(yoffset+h/2-b.getWidth()/2));
+
+		if (input.isKeyPressed(Input.KEY_SPACE)) {
+			Bullet b = new Bullet(this);
+			b.setXPos((x + xoffset + w - b.getWidth()));
+			b.setYPos((yoffset + h / 2 - b.getWidth() / 2));
 			b.loadEvent(null, state);
 			b.onMapLoad(container, map);
 			map.add(b);
@@ -263,8 +265,30 @@ public class Player extends com.valarion.gameengine.events.Player {
 		this.map = map;
 		collidables.clear();
 		for (int i = 0; i < map.getObjectGroupCount(); i++) {
-			for (int j = 0; j < map.getObjectCount(i); j++) {
-				collidables.add(new Area(map.getObjectShape(i, j)));
+			if ("fuel".equals(map.getObjectGroupName(i))) {
+				for (int j = 0; j < map.getObjectCount(i); j++) {
+					if ((map.getObjectShape(i, j) instanceof Path2D)) {
+						Path2D path = (Path2D) map.getObjectShape(i, j);
+
+						for (PathIterator it = path.getPathIterator(null); !it.isDone(); it.next()) {
+
+							float coords[] = new float[2];
+							it.currentSegment(coords);
+							if(coords[0] != 0) {
+								Fuel f = new Fuel();
+								f.setXPos((int) coords[0]);
+								f.setYPos((int) coords[1] - f.getHeight());
+								map.add(f);
+							}
+						}
+					}
+				}
+			} else {
+				for (int j = 0; j < map.getObjectCount(i); j++) {
+					if (!(map.getObjectShape(i, j) instanceof Path2D)) {
+						collidables.add(new Area(map.getObjectShape(i, j)));
+					}
+				}
 			}
 		}
 
@@ -276,7 +300,6 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 	@Override
 	public void onMapSetAsActive(GameContainer container, SubTiledMap map) {
-
 	}
 
 	@Override

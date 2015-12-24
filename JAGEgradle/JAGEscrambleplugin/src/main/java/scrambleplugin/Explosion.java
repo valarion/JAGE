@@ -1,9 +1,8 @@
 package scrambleplugin;
 
-import java.awt.geom.Area;
-import java.awt.geom.Path2D;
 import java.util.LinkedList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -14,60 +13,34 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Database;
 
-public class Bullet implements Event {
-	protected Image sprite;
-	protected float x,y,w,h;
+public class Explosion implements Event {
+	float x, y, w, h;
 	
-	protected LinkedList<Area> collidables = new LinkedList<Area>();
-
-	protected SubTiledMap map;
-	
-	protected Player player;
-	
-	public Bullet(Player player) {
-		sprite = Database.instance().getImages().get("bullet");
-		w = sprite.getWidth();
-		h = sprite.getHeight();
-		this.player = player;
+	Animation anim;
+	public Explosion() {
+		Image img = Database.instance().getImages().get("explosion");
+		h = img.getHeight();
+		w = h;
+		LinkedList<Image> l = new LinkedList<Image>();
+		
+		for(int i=0; i<img.getWidth();i+=w) {
+			l.add(img.getSubImage(i, 0, (int)w, (int)h));
+		}
+		
+		anim = new Animation(l.toArray(new Image[0]), 100);
+		anim.setLooping(false);
+		anim.start();
 	}
 
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
-	public static final float speed = 0.2f;
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
-		x += speed*delta;
-		
-		if(x+w > map.getWidth()*map.getTileWidth()) {
+		if(anim.isStopped()) {
 			map.remove(this);
 		}
-		
-		for(Area area : collidables) {
-			if(area.intersects(x,y+h/4,w,h/2)) {
-				map.remove(this);
-				Explosion s = new Explosion();
-				s.setXPos(x+w-s.getWidth()/2);
-				s.setYPos(y);
-				map.add(s);
-			}
-		}
-		
-		for(Event e : map.getEvents()) {
-			if(e instanceof Enemy) {
-				Enemy enemy = (Enemy)e;
-				if(enemy.collidesWith(x,y+h/4,w,h/2)) {
-					if(enemy instanceof Fuel) {
-						map.remove(enemy);
-						map.remove(this);
-						Explosion s = new Explosion();
-						s.setXPos(x+w-s.getWidth()/2);
-						s.setYPos(y);
-						map.add(s);
-					}
-				}
-			}
-		}
+		anim.update(delta);
 	}
 
 	@Override
@@ -75,7 +48,7 @@ public class Bullet implements Event {
 
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
-		g.drawImage(sprite, x, y);
+		anim.draw(x, y);
 	}
 
 	@Override
@@ -98,12 +71,12 @@ public class Bullet implements Event {
 
 	@Override
 	public int getXPos() {
-		return 0;
+		return (int) x;
 	}
 
 	@Override
 	public int getYPos() {
-		return 0;
+		return (int) y;
 	}
 	
 	public void setXPos(float newPos) {
@@ -144,21 +117,11 @@ public class Bullet implements Event {
 
 	@Override
 	public boolean isBlocking() {
-		return true;
+		return false;
 	}
 
 	@Override
-	public void onMapLoad(GameContainer container, SubTiledMap map) throws SlickException {
-		this.map = map;
-		collidables.clear();
-		for (int i = 0; i < map.getObjectGroupCount(); i++) {
-			for (int j = 0; j < map.getObjectCount(i); j++) {
-				if(!(map.getObjectShape(i, j) instanceof Path2D)) {
-					collidables.add(new Area(map.getObjectShape(i, j)));
-				}
-			}
-		}
-	}
+	public void onMapLoad(GameContainer container, SubTiledMap map) throws SlickException {}
 
 	@Override
 	public void onMapSetAsInactive(GameContainer container, SubTiledMap map) throws SlickException {}
@@ -176,10 +139,7 @@ public class Bullet implements Event {
 	public void onBeingTouched(GameContainer container, SubTiledMap map, Event e) throws SlickException {}
 
 	@Override
-	public void loadEvent(Element node, Object context) throws SlickException {
-		// TODO Auto-generated method stub
-
-	}
+	public void loadEvent(Element node, Object context) throws SlickException {}
 
 	@Override
 	public boolean isWorking() {
