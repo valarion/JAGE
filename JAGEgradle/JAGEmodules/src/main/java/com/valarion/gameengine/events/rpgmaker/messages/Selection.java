@@ -41,7 +41,6 @@ import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
-import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;
 
 /**
@@ -142,16 +141,16 @@ public class Selection extends FlowEventClass {
 
 			if (image != null) {
 				int h = window.getContain().getHeight() - 2 * y;
-				if (image.getHeight() != h)
-					resized = Util.getScaled(image,
-							(int) (h / (float) image.getHeight() * image
-									.getWidth()), h);
-				else
-					resized = image;
+				int neww = image.getWidth(), newh = image.getHeight();
+				if (image.getHeight() != h) {
+					neww = (int) (h / (float) image.getHeight() * image
+							.getWidth());
+					newh = h;
+				}
+				
+				i.drawImage(image, x, y, x+neww, y+newh, 0, 0, image.getWidth(), image.getHeight());
 
-				i.drawImage(resized, x, y);
-
-				x = x + resized.getWidth() + x;
+				x = x + neww + x;
 			}
 
 			Image arrow = window.getModel().getImage("rightArrow");

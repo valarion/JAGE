@@ -104,7 +104,7 @@ public class GameEvent implements FlowEventInterface {
 	}
 
 	@Override
-	public int getXDraw(int tileWidth) {
+	public float getXDraw(int tileWidth) {
 		if (active != null) {
 			return active.getXDraw(tileWidth);
 		} else {
@@ -113,7 +113,7 @@ public class GameEvent implements FlowEventInterface {
 	}
 
 	@Override
-	public int getYDraw(int tileHeight) {
+	public float getYDraw(int tileHeight) {
 		if (active != null) {
 			return active.getYDraw(tileHeight);
 		} else {

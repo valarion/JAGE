@@ -107,7 +107,7 @@ public interface Event {
 	 * @param tileWidth
 	 * @return
 	 */
-	public int getXDraw(int tileWidth);
+	public float getXDraw(int tileWidth);
 
 	/**
 	 * y position of screen where this should be rendered.
@@ -115,7 +115,7 @@ public interface Event {
 	 * @param tileHeight
 	 * @return
 	 */
-	public int getYDraw(int tileHeight);
+	public float getYDraw(int tileHeight);
 
 	/**
 	 * x position of the map where this event is.

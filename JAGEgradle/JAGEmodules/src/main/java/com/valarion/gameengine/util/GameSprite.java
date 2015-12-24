@@ -131,7 +131,7 @@ public class GameSprite {
 	 * @param x
 	 * @param y
 	 */
-	public void draw(int x, int y) {
+	public void draw(float x, float y) {
 		sides[direction].draw(x, y);
 	}
 

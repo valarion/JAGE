@@ -32,6 +32,8 @@
 	</window>
 	<image name="title" src="image/scene01.jpg"></image>
 	<image name="ship" src="image/ship.png"></image>
+	<image name="bullet" src="image/bullet.png"></image>
+	<image name="bomb" src="image/bomb.png"></image>
 	<sound name="menumove" src="Decision1.ogg"></sound>
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>

@@ -322,13 +322,13 @@ public class Player extends com.valarion.gameengine.events.Player {
 	}
 
 	@Override
-	public int getXDraw(int tilewidth) {
-		return (int) (getXPos() * tilewidth + tilewidth/2 - getWidth()/2 + xOff);
+	public float getXDraw(int tilewidth) {
+		return (getXPos() * tilewidth + tilewidth/2 - getWidth()/2 + xOff);
 	}
 
 	@Override
-	public int getYDraw(int tileheight) {
-		return (int) ((getYPos() + 1) * tileheight - getHeight() + yOff);
+	public float getYDraw(int tileheight) {
+		return ((getYPos() + 1) * tileheight - getHeight() + yOff);
 	}
 
 	@Override

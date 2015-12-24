@@ -42,8 +42,8 @@ import com.valarion.gameengine.util.Util;
 import com.valarion.pluginsystem.ClassOverrider;
 
 /**
- * Class Overwriting the player class in the modules to have a player that
- * doesn't render and that controls a tetris game.
+ * Class overwriting the player class in the modules to have a player that
+ * controls a scramble game.
  * 
  * @author Rubén Tomás Gracia
  *
@@ -56,9 +56,11 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 	protected SubTiledMap map;
 
-	protected int x, xoffset, yoffset, w, h;
+	protected float x, xoffset, yoffset, w, h;
 
 	protected Image sprite;
+
+	protected int lifes = 3;
 
 	public Player() throws SlickException {
 		sprite = Database.instance().getImages().get("ship");
@@ -72,111 +74,128 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 	}
 
-	int count = 0;
+	protected int count = 0;
+
+	public static final float speed = 0.025f;
+
+	public static final float top = 20, bot = 10;
 
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
-		float scale = (float) container.getHeight() / ((float) map.getHeight() * map.getTileHeight());
+		float scale = (float) (container.getHeight() * (100 - top - bot) / 100)
+				/ ((float) map.getHeight() * map.getTileHeight());
 
 		count++;
 
-		if (count % 20 == 0) {
-			int prevx = x;
-			x++;
+		// if (count % 20 == 0) {
+		// int prevx = x;
+		x += delta * speed;
 
-			for (Area area : collidables) {
-				if (collidesWith(area)) {
-					if (!collidesWith(area, 0, 1)) {
-						yoffset = yoffset + 1;
-					} else if (!collidesWith(area, 0, -1)) {
-						yoffset = yoffset - 1;
-					} else if (!collidesWith(area, 0, 2)) {
-						yoffset = yoffset + 2;
-					} else if (!collidesWith(area, 0, -2)) {
-						yoffset = yoffset - 2;
-					} else {
+		for (Area area : collidables) {
+			if (collidesWith(area)) {
+				if (!collidesWith(area, 0, 1)) {
+					yoffset = yoffset + 1;
+				} else if (!collidesWith(area, 0, -1)) {
+					yoffset = yoffset - 1;
+				} else if (!collidesWith(area, 0, 2)) {
+					yoffset = yoffset + 2;
+				} else if (!collidesWith(area, 0, -2)) {
+					yoffset = yoffset - 2;
+				} else {
+					// Game over
+					// x = prevx;
+					xoffset--;
+					if (xoffset < 0) {
 						// Game over
-						x = prevx;
 					}
-					break;
 				}
+				break;
+			}
+		}
+		// }
+
+		// if (count % 4 == 0) {
+
+		Input input = container.getInput();
+
+		float prevy = yoffset;
+
+		if (input.isKeyDown(Controls.moveDown)) {
+			yoffset += delta * speed * 2;
+		}
+
+		if (input.isKeyDown(Controls.moveUp)) {
+			yoffset -= delta * speed * 2;
+		}
+
+		for (Area area : collidables) {
+			if (collidesWith(area)) {
+				if (!collidesWith(area, 1, 0)) {
+					xoffset = xoffset + 1;
+				} else if (!collidesWith(area, -1, 0)) {
+					xoffset = xoffset - 1;
+				} else if (!collidesWith(area, 2, 0)) {
+					xoffset = xoffset + 2;
+				} else if (!collidesWith(area, -2, 0)) {
+					xoffset = xoffset - 2;
+				} else {
+					yoffset = prevy;
+				}
+				break;
 			}
 		}
 
-		if (count % 4 == 0) {
+		if (yoffset + h > map.getHeight() * map.getTileHeight()) {
+			yoffset = map.getHeight() * map.getTileHeight() - h;
+		}
 
-			Input input = container.getInput();
+		if (yoffset < 0) {
+			yoffset = 0;
+		}
 
-			int prevy = yoffset;
+		float prevx = xoffset;
 
-			if (input.isKeyDown(Controls.moveDown)) {
-				yoffset++;
-			}
+		if (input.isKeyDown(Controls.moveLeft)) {
+			xoffset -= delta * speed * 2;
+		}
 
-			if (input.isKeyDown(Controls.moveUp)) {
-				yoffset--;
-			}
+		if (input.isKeyDown(Controls.moveRight)) {
+			xoffset += delta * speed * 2;
+		}
 
-			for (Area area : collidables) {
-				if (collidesWith(area)) {
-					if (!collidesWith(area, 1, 0)) {
-						xoffset = xoffset + 1;
-					} else if (!collidesWith(area, -1, 0)) {
-						xoffset = xoffset - 1;
-					} else if (!collidesWith(area, 2, 0)) {
-						xoffset = xoffset + 2;
-					} else if (!collidesWith(area, -2, 0)) {
-						xoffset = xoffset - 2;
-					} else {
-						yoffset = prevy;
-					}
-					break;
+		if (xoffset + w > container.getWidth() / scale) {
+			xoffset = (int) (container.getWidth() / scale - w);
+		}
+
+		if (xoffset < 0) {
+			xoffset = 0;
+		}
+
+		for (Area area : collidables) {
+			if (collidesWith(area)) {
+				if (!collidesWith(area, 0, 1)) {
+					yoffset = yoffset + 1;
+				} else if (!collidesWith(area, 0, -1)) {
+					yoffset = yoffset - 1;
+				} else if (!collidesWith(area, 0, 2)) {
+					yoffset = yoffset + 2;
+				} else if (!collidesWith(area, 0, -2)) {
+					yoffset = yoffset - 2;
+				} else {
+					xoffset = prevx;
 				}
+				break;
 			}
-
-			if (yoffset + h > map.getHeight() * map.getTileHeight()) {
-				yoffset = map.getHeight() * map.getTileHeight() - h;
-			}
-
-			if (yoffset < 0) {
-				yoffset = 0;
-			}
-
-			int prevx = xoffset;
-
-			if (input.isKeyDown(Controls.moveLeft)) {
-				xoffset--;
-			}
-
-			if (input.isKeyDown(Controls.moveRight)) {
-				xoffset++;
-			}
-
-			if (xoffset + w > container.getWidth() / scale) {
-				xoffset = (int) (container.getWidth() / scale - w);
-			}
-
-			if (xoffset < 0) {
-				xoffset = 0;
-			}
-
-			for (Area area : collidables) {
-				if (collidesWith(area)) {
-					if (!collidesWith(area, 0, 1)) {
-						yoffset = yoffset + 1;
-					} else if (!collidesWith(area, 0, -1)) {
-						yoffset = yoffset - 1;
-					} else if (!collidesWith(area, 0, 2)) {
-						yoffset = yoffset + 2;
-					} else if (!collidesWith(area, 0, -2)) {
-						yoffset = yoffset - 2;
-					} else {
-						// Game over
-						xoffset = prevx;
-					}
-					break;
-				}
-			}
+		}
+		// }
+		
+		if(input.isKeyPressed(Input.KEY_SPACE)) {
+			Bullet b = new Bullet();
+			b.setXPos((int)(x+xoffset+w));
+			b.setYPos((int)(yoffset+h/2-b.getWidth()/2));
+			b.loadEvent(null, state);
+			b.onMapLoad(container, map);
+			map.add(b);
 		}
 	}
 
@@ -206,27 +225,37 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 	@Override
 	public void postrender(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
+		float scale = container.getHeight() * (bot * 80 / 100) / 100 / sprite.getHeight();
+		float w = sprite.getWidth() * scale;
+		float h = sprite.getHeight() * scale;
+		float space = container.getHeight() * (bot * 10 / 100) / 100;
+		float x = space;
+		float y = container.getHeight() * (100 - bot) / 100 + space;
 
+		for (int i = 1; i < lifes; i++) {
+			g.drawImage(sprite, x, y, x + w, y + h, 0, 0, sprite.getWidth(), sprite.getHeight());
+			x += w + space;
+		}
 	}
 
 	@Override
-	public int getXDraw(int tilewidth) {
+	public float getXDraw(int tilewidth) {
 		return x;
 	}
 
 	@Override
-	public int getYDraw(int tileheight) {
-		return yoffset + h / 2;
+	public float getYDraw(int tileheight) {
+		return (yoffset + h / 2);
 	}
 
 	@Override
 	public int getWidth() {
-		return w;
+		return (int) w;
 	}
 
 	@Override
 	public int getHeight() {
-		return h;
+		return (int) h;
 	}
 
 	@Override
@@ -241,6 +270,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 		if (state != null && state.getCamera() instanceof Camera) {
 			((Camera) state.getCamera()).focusAt(map, this);
+			((Camera) state.getCamera()).setGuiPercentage(top, bot);
 		}
 	}
 

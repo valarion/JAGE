@@ -11,8 +11,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.MusicListener;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -49,13 +51,13 @@ public class Database {
 	
 	protected boolean initialized;
 
-	protected TrueTypeFont DEFAULT_FONT;
+	protected UnicodeFont DEFAULT_FONT;
 	
-	public TrueTypeFont getDefaultFont() {
+	public UnicodeFont getDefaultFont() {
 		return DEFAULT_FONT;
 	}
 
-	public void setDefaultFont(TrueTypeFont font) {
+	public void setDefaultFont(UnicodeFont font) {
 		DEFAULT_FONT = font;
 	}
 
@@ -94,8 +96,18 @@ public class Database {
 	/**
 	 * Initializes the database and loads everything.
 	 */
+	@SuppressWarnings("unchecked")
 	protected void init() {
-		DEFAULT_FONT = new TrueTypeFont(new Font("Terminal", Font.BOLD, 18), false);
+		DEFAULT_FONT = new UnicodeFont(new Font("Terminal", Font.BOLD, 18));
+		DEFAULT_FONT.addAsciiGlyphs();
+		DEFAULT_FONT.getEffects().add(new ColorEffect());
+		try {
+			DEFAULT_FONT.loadGlyphs();
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		sprites = new HashMap<String, SpriteInfo>();
 		musics = new HashMap<String, Music>();
 		sounds = new HashMap<String, Sound>();
@@ -207,7 +219,7 @@ public class Database {
 		for (int i = 1; i <= 10; i++) {
 			windowimages.put(
 					Integer.toString(i),
-					w.createWindow(GameCore.getInstance().getApp().getWidth() / 6, top
+					w.createWindow(GameCore.getInstance().getApp().getWidth() / 5, top
 							+ bottom
 							+ i
 							* /*GameCore.getInstance().getApp().getGraphics().getFont()*/DEFAULT_FONT

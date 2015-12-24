@@ -16,6 +16,8 @@ import com.valarion.pluginsystem.ClassOverrider;
  *
  */
 public class Camera extends com.valarion.gameengine.util.Camera {
+	
+	protected float percentagetop=0, percentagebot=0;
 
 	public Camera(GameCore game, InGameState instance) {
 		super(game, instance);
@@ -32,20 +34,34 @@ public class Camera extends com.valarion.gameengine.util.Camera {
 		this.center = center;
 		return this;
 	}
+	
+	/**
+	 * Focus camera at map and event and fix height to screen.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public Camera setGuiPercentage(float top, float bot) {
+		this.percentagetop = top;
+		this.percentagebot = bot;
+		return this;
+	}
 
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
 		if (center != null && map != null) {
-			float scale = (float)container.getHeight()/((float)map.getHeight()*map.getTileHeight());
+			float top = container.getHeight()*percentagetop/100;
+			float bot = container.getHeight()*percentagebot/100;
+			float scale = (float)(container.getHeight()-top-bot)/((float)map.getHeight()*map.getTileHeight());
 			
 			float playerXPos = (game.getApp().getWidth() / 2.f - center
 					.getWidth() / 2.f);
-			float mapXOff = (-(center.getXDraw(0) + GameCore.getInstance().getApp().getWidth() / 2.f / scale)
+			float mapXOff = (-(center.getXDraw(0) + container.getWidth() / 2.f / scale)
 					+ playerXPos/scale);
 			
 			g.scale(scale, scale);
-			g.translate(mapXOff+2, 0);
+			g.translate(mapXOff+2, top/scale);
 		} 
 		else {
 			super.render(container, g);

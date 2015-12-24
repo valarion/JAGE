@@ -474,13 +474,13 @@ public class RPGMakerEvent extends FlowEventClass {
 	}
 
 	@Override
-	public int getXDraw(int tileWidth) {
-		return (int) (getXPos() * tileWidth + xOff);
+	public float getXDraw(int tileWidth) {
+		return (getXPos() * tileWidth + xOff);
 	}
 
 	@Override
-	public int getYDraw(int tileHeight) {
-		return (int) (getYPos() * tileHeight + yOff);
+	public float getYDraw(int tileHeight) {
+		return (getYPos() * tileHeight + yOff);
 	}
 
 	@Override

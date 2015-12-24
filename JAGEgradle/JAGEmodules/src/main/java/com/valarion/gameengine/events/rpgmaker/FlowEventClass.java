@@ -140,7 +140,7 @@ public abstract class FlowEventClass extends SubEventClass implements
 	}
 
 	@Override
-	public int getXDraw(int tileWidth) {
+	public float getXDraw(int tileWidth) {
 		if (parent != null) {
 			return parent.getXDraw(tileWidth);
 		}
@@ -150,7 +150,7 @@ public abstract class FlowEventClass extends SubEventClass implements
 	}
 
 	@Override
-	public int getYDraw(int tileHeight) {
+	public float getYDraw(int tileHeight) {
 		if (parent != null) {
 			return parent.getYDraw(tileHeight);
 		}

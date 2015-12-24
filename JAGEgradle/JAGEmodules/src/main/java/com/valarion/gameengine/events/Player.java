@@ -313,13 +313,13 @@ public class Player implements Event, Serializable {
 	}
 
 	@Override
-	public int getXDraw(int tilewidth) {
-		return (int) (xPos * tilewidth + tilewidth/2 - getWidth()/2 + xOff);
+	public float getXDraw(int tilewidth) {
+		return (xPos * tilewidth + tilewidth/2 - getWidth()/2 + xOff);
 	}
 
 	@Override
-	public int getYDraw(int tileheight) {
-		return (int) ((yPos + 1) * tileheight - getHeight() + yOff);
+	public float getYDraw(int tileheight) {
+		return ((yPos + 1) * tileheight - getHeight() + yOff);
 	}
 
 	@Override

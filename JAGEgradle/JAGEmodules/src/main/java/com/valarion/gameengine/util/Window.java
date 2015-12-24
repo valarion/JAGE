@@ -135,7 +135,7 @@ public class Window {
 		
 		// Draw background
 		for (int i = 0; i < w; i += background.getWidth()) {
-			b.drawImage(background, i, 0,background.getWidth(),h,0,0,background.getWidth(),background.getHeight());
+			b.drawImage(background, i, 0,i+background.getWidth(),h,0,0,background.getWidth(),background.getHeight());
 		}
 
 		for (int i = 0; i < w; i += decoration.getWidth()) {

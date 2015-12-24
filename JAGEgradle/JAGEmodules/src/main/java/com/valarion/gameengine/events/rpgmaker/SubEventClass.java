@@ -68,13 +68,13 @@ public abstract class SubEventClass implements Event {
 	}
 
 	@Override
-	public int getXDraw(int tileWidth) {
+	public float getXDraw(int tileWidth) {
 		// Not needed
 		return 0;
 	}
 
 	@Override
-	public int getYDraw(int tileHeight) {
+	public float getYDraw(int tileHeight) {
 		// Not needed
 		return 0;
 	}

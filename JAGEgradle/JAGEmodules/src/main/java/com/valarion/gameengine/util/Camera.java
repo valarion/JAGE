@@ -101,13 +101,13 @@ public class Camera implements Renderable {
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
 		if (center != null) {
-			int playerXPos = (int) (game.getApp().getWidth() / 2 - center
+			float playerXPos = (game.getApp().getWidth() / 2 - center
 					.getWidth() / 2);
-			int playerYPos = (int) (game.getApp().getHeight() / 2 - center
+			float playerYPos = (game.getApp().getHeight() / 2 - center
 					.getHeight() / 2);
-			int mapXOff = -center.getXDraw(instance.getActive().getTileWidth())
+			float mapXOff = -center.getXDraw(instance.getActive().getTileWidth())
 					+ playerXPos;
-			int mapYOff = -center
+			float mapYOff = -center
 					.getYDraw(instance.getActive().getTileHeight())
 					+ playerYPos;
 

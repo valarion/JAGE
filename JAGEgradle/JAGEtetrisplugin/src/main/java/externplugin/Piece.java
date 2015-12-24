@@ -187,13 +187,13 @@ public class Piece extends FlowEventClass {
 	}
 
 	@Override
-	public int getXDraw(int tileWidth) {
-		return (int) (getXPos() * tileWidth);
+	public float getXDraw(int tileWidth) {
+		return (getXPos() * tileWidth);
 	}
 
 	@Override
-	public int getYDraw(int tileHeight) {
-		return (int) (getYPos() * tileHeight);
+	public float getYDraw(int tileHeight) {
+		return (getYPos() * tileHeight);
 	}
 
 	@Override
