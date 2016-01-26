@@ -1,5 +1,6 @@
 # JAGE
-JustAnotherGameEngine repository
+JustAnotherGameEngine repository.
+Final degree project by **Rubén Tomás Gracia** (valarion) about a 2D RPG game engine easily extensible with java for the University of Zaragoza.
 
 # Build instructions
 
