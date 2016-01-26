@@ -45,12 +45,12 @@ import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.Renderable;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.Player;
-import com.valarion.gameengine.events.menu.ingamemenu.MenuMain;
 import com.valarion.gameengine.util.Camera;
 import com.valarion.gameengine.util.Util;
 
 /**
  * State containing all the mechanics of the actual game.
+ * 
  * @author Rubén Tomás Gracia
  *
  */
@@ -89,8 +89,7 @@ public class InGameState extends SubState {
 			}
 		});
 		for (File map : mapArray) {
-			String mapname = map.getName().substring(0,
-					map.getName().lastIndexOf('.'));
+			String mapname = map.getName().substring(0, map.getName().lastIndexOf('.'));
 
 			int separator = mapname.indexOf('-');
 
@@ -122,8 +121,10 @@ public class InGameState extends SubState {
 
 		Database.instance().getContext().setPlayer(player);
 
-		camera = ((Camera) GameCore.getInstance().getSets().get(Renderable.class).get("Camera").getDeclaredConstructor(GameCore.class,InGameState.class).newInstance(GameCore.getInstance(),this)).focusAt(player);
-		//camera = new Camera(GameCore.getInstance(), this).focusAt(player);
+		camera = ((Camera) GameCore.getInstance().getSets().get(Renderable.class).get("Camera")
+				.getDeclaredConstructor(GameCore.class, InGameState.class).newInstance(GameCore.getInstance(), this))
+						.focusAt(player);
+		// camera = new Camera(GameCore.getInstance(), this).focusAt(player);
 
 		String mapname;
 
@@ -137,55 +138,48 @@ public class InGameState extends SubState {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta)
-			throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
-		if (!player.isMoving() && activeEvents.size() == 0
-				&& input.isKeyPressed(Controls.cancel)) {
-			activeEvents.add(new MenuMain(this));
-		} else {
-			if (active != null) {
-				if (activeEvents.size() > 0)
-					for (Event e : activeEvents)
-						e.paralelupdate(container, delta, active);
-				else
-					active.update(container, delta);
-			}
+
+		if (active != null) {
+			if (activeEvents.size() > 0)
+				for (Event e : activeEvents)
+					e.paralelupdate(container, delta, active);
+			else
+				active.update(container, delta);
 		}
 
 		input.clearKeyPressedRecord();
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g)
-			throws SlickException {
+	public void render(GameContainer container, Graphics g) throws SlickException {
 		if (active != null)
 			active.prerender(container, g);
 		for (Event e : activeEvents) {
-			e.prerender(container, g, active.getTileWidth(),
-					active.getTileHeight());
+			e.prerender(container, g, active.getTileWidth(), active.getTileHeight());
 		}
-		
+
 		g.pushTransform();
-		
+
 		if (camera != null)
 			camera.render(container, g);
 		if (active != null)
-			active.render(container, g,activeEvents);
+			active.render(container, g, activeEvents);
 
 		g.popTransform();
-		
+
 		if (active != null)
 			active.postrender(container, g);
 
 		for (Event e : activeEvents) {
-			e.postrender(container, g, active.getTileWidth(),
-					active.getTileHeight());
+			e.postrender(container, g, active.getTileWidth(), active.getTileHeight());
 		}
 	}
 
 	/**
 	 * Get camera.
+	 * 
 	 * @return
 	 */
 	public Camera getCamera() {
@@ -201,6 +195,7 @@ public class InGameState extends SubState {
 
 	/**
 	 * Remove a loaded map group.
+	 * 
 	 * @param group
 	 */
 	protected void removeLoadedGroup(String group) {
@@ -211,12 +206,12 @@ public class InGameState extends SubState {
 
 	/**
 	 * Load a group.
+	 * 
 	 * @param container
 	 * @param group
 	 * @throws SlickException
 	 */
-	protected void loadGroup(GameContainer container, String group)
-			throws SlickException {
+	protected void loadGroup(GameContainer container, String group) throws SlickException {
 		Set<String> maps = groups.get(group);
 		if (maps != null)
 			for (String entry : maps) {
@@ -226,16 +221,15 @@ public class InGameState extends SubState {
 
 	/**
 	 * Load a map.
+	 * 
 	 * @param container
 	 * @param mapname
 	 * @return
 	 * @throws SlickException
 	 */
-	protected SubTiledMap loadMap(GameContainer container, String mapname)
-			throws SlickException {
-		SubTiledMap map = new SubTiledMap(mapfiles.get(mapname)
-				.getAbsolutePath(), GameCore.getInstance(), this);
-		map.add(player,1);
+	protected SubTiledMap loadMap(GameContainer container, String mapname) throws SlickException {
+		SubTiledMap map = new SubTiledMap(mapfiles.get(mapname).getAbsolutePath(), GameCore.getInstance(), this);
+		map.add(player, 1);
 		loadedmaps.put(mapname, map);
 
 		Set<Event> deletions = new HashSet<Event>();
@@ -255,14 +249,13 @@ public class InGameState extends SubState {
 	}
 
 	/**
-	 * Set a map as active.
-	 * Loads it if it's necessary.
+	 * Set a map as active. Loads it if it's necessary.
+	 * 
 	 * @param container
 	 * @param mapname
 	 * @throws SlickException
 	 */
-	public void setAsActive(GameContainer container, String mapname)
-			throws SlickException {
+	public void setAsActive(GameContainer container, String mapname) throws SlickException {
 		SubTiledMap prev = active;
 
 		if (prev != null) {
@@ -285,7 +278,7 @@ public class InGameState extends SubState {
 			}
 			Database.instance().getContext().getDeletedEvents().clear();
 		}
-		
+
 		active.addDeleteds();
 
 		for (Event e : active.getEvents()) {
@@ -301,6 +294,7 @@ public class InGameState extends SubState {
 
 	/**
 	 * Get player.
+	 * 
 	 * @return
 	 */
 	public Player getPlayer() {
@@ -309,6 +303,7 @@ public class InGameState extends SubState {
 
 	/**
 	 * Get active map.
+	 * 
 	 * @return
 	 */
 	public SubTiledMap getActive() {
@@ -320,7 +315,4 @@ public class InGameState extends SubState {
 		return activeEvents;
 	}
 
-	
-	
-	
 }

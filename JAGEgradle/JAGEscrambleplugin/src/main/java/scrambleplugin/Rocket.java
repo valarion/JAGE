@@ -1,6 +1,7 @@
 package scrambleplugin;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,17 +13,25 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Database;
 
-public class Fuel implements Enemy {
+public class Rocket implements Enemy {
+	float x,y,w,h;
 	
-	protected int x,y,w,h;
-	protected Player player;
-	protected Image sprite;
+	Image sprite;
 	
-	public Fuel(Player player) {
-		sprite = Database.instance().getImages().get("fuel");
+	boolean active = false;
+	
+	int distance;
+	
+	public static final float speed = 0.04f;
+	
+	Player player;
+	public Rocket(Player player) {
+		sprite = Database.instance().getImages().get("rocket");
 		w = sprite.getWidth();
 		h = sprite.getHeight();
 		this.player = player;
+		distance = new Random().nextInt(320)-20;
+		// TODO load fire
 	}
 
 	@Override
@@ -30,6 +39,18 @@ public class Fuel implements Enemy {
 
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+		if(active) {
+			y -= speed*(float)delta;
+			if(y + 2*h < 0) {
+				map.remove(this);
+			}
+		}
+		else {
+			if(x-player.getXDraw(0) < distance) {
+				active = true;
+			}
+		}
+		
 		if(player.collidesWith(x, y, w, h)) {
 			player.die();
 		}
@@ -41,6 +62,10 @@ public class Fuel implements Enemy {
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 		g.drawImage(sprite, x, y);
+		
+		if(active) {
+			// TODO draw fire
+		}
 	}
 
 	@Override
@@ -63,12 +88,12 @@ public class Fuel implements Enemy {
 
 	@Override
 	public int getXPos() {
-		return x;
+		return (int) x;
 	}
 
 	@Override
 	public int getYPos() {
-		return y;
+		return (int) y;
 	}
 
 	@Override
@@ -91,12 +116,12 @@ public class Fuel implements Enemy {
 
 	@Override
 	public int getWidth() {
-		return w;
+		return (int) w;
 	}
 
 	@Override
 	public int getHeight() {
-		return h;
+		return (int) h;
 	}
 
 	@Override
@@ -127,7 +152,7 @@ public class Fuel implements Enemy {
 
 	@Override
 	public boolean isWorking() {
-		return true;
+		return active;
 	}
 
 	@Override
@@ -140,7 +165,7 @@ public class Fuel implements Enemy {
 
 	@Override
 	public boolean collidesWith(float x, float y, float w, float h) {
-		return new Rectangle2D.Float(x,y,w,h).intersects(this.x,this.y,this.w,this.h);
+		return new Rectangle2D.Float(x,y,w,h).intersects(this.x, this.y, this.w, this.h);
 	}
 
 }

@@ -3,6 +3,7 @@ package scrambleplugin;
 import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.util.LinkedList;
+import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -43,6 +44,13 @@ public class Bullet implements Event {
 			map.remove(this);
 		}
 		
+		float scale = (float) (container.getHeight() * (100 - Player.top - Player.bot) / 100)
+				/ ((float) map.getHeight() * map.getTileHeight());
+		
+		if (x - player.getXDraw(0) > container.getWidth() / scale) {
+			map.remove(this);
+		}
+		
 		for(Area area : collidables) {
 			if(area.intersects(x,y+h/4,w,h/2)) {
 				map.remove(this);
@@ -64,6 +72,33 @@ public class Bullet implements Event {
 						s.setXPos(x+w-s.getWidth()/2);
 						s.setYPos(y);
 						map.add(s);
+						
+						player.addFuel();
+						player.addPoints(150);
+					}
+					else if(enemy instanceof Rocket) {
+						map.remove(enemy);
+						map.remove(this);
+						Explosion s = new Explosion();
+						s.setXPos(x+w-s.getWidth()/2);
+						s.setYPos(y);
+						map.add(s);
+						if(enemy.isWorking()) {
+							player.addPoints(80);
+						}
+						else {
+							player.addPoints(50);
+						}
+					}
+					else if(enemy instanceof Mistery) {
+						map.remove(enemy);
+						map.remove(this);
+						Explosion s = new Explosion();
+						s.setXPos(x+w-s.getWidth()/2);
+						s.setYPos(y);
+						map.add(s);
+						
+						player.addPoints((new Random().nextInt(3)+1)*50);
 					}
 				}
 			}
@@ -98,12 +133,12 @@ public class Bullet implements Event {
 
 	@Override
 	public int getXPos() {
-		return 0;
+		return (int) x;
 	}
 
 	@Override
 	public int getYPos() {
-		return 0;
+		return (int) y;
 	}
 	
 	public void setXPos(float newPos) {
@@ -153,7 +188,7 @@ public class Bullet implements Event {
 		collidables.clear();
 		for (int i = 0; i < map.getObjectGroupCount(); i++) {
 			for (int j = 0; j < map.getObjectCount(i); j++) {
-				if(!(map.getObjectShape(i, j) instanceof Path2D)) {
+				if(!(map.getObjectShape(i, j) instanceof Path2D) && !"teleport".equals(map.getObjectGroupName(i))) {
 					collidables.add(new Area(map.getObjectShape(i, j)));
 				}
 			}

@@ -35,10 +35,13 @@ import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
 import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
+import com.valarion.gameengine.events.menu.ingamemenu.MenuMain;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.GameContext;
+import com.valarion.gameengine.gamestates.SubState;
 import com.valarion.gameengine.util.GameSprite;
 
 /**
@@ -72,6 +75,10 @@ public class Player implements Event, Serializable {
 			throws SlickException {
 		//TODO no se activa el teleport
 		Input input = container.getInput();
+		if (!isMoving() && GameCore.getInstance().getActive() instanceof SubState && ((SubState)GameCore.getInstance().getActive()).getActiveEvents().size() == 0
+				&& input.isKeyPressed(Controls.cancel)) {
+			((SubState)GameCore.getInstance().getActive()).getActiveEvents().add(new MenuMain(((SubState)GameCore.getInstance().getActive())));
+		}
 		boolean activated = false;
 		if (input.isKeyPressed(Controls.accept)) {
 			for (Event e : map.getEvents(xPos, yPos)) {

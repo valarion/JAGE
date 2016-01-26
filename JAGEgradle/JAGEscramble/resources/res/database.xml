@@ -34,6 +34,8 @@
 	<image name="title" src="image/scene01.jpg"></image>
 	<image name="fuel" src="image/fuel.png"></image>
 	<image name="ship" src="image/ship.png"></image>
+	<image name="rocket" src="image/rocket.png"></image>
+	<image name="mistery" src="image/mistery.png"></image>
 	<image name="bullet" src="image/bullet.png"></image>
 	<image name="bomb" src="image/bomb.png"></image>
 	<sound name="menumove" src="Decision1.ogg"></sound>

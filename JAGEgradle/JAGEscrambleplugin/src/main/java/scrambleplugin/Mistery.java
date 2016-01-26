@@ -12,16 +12,18 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Database;
 
-public class Fuel implements Enemy {
-	
+public class Mistery implements Enemy {
 	protected int x,y,w,h;
-	protected Player player;
+	
 	protected Image sprite;
 	
-	public Fuel(Player player) {
-		sprite = Database.instance().getImages().get("fuel");
+	protected Player player;
+
+	public Mistery(Player player) {
+		sprite = Database.instance().getImages().get("mistery");
 		w = sprite.getWidth();
 		h = sprite.getHeight();
+		
 		this.player = player;
 	}
 
