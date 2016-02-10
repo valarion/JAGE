@@ -100,6 +100,23 @@ public class Bullet implements Event {
 						
 						player.addPoints((new Random().nextInt(3)+1)*50);
 					}
+					else if(enemy instanceof Ovni) {
+						map.remove(enemy);
+						map.remove(this);
+						Explosion s = new Explosion();
+						s.setXPos(x+w-s.getWidth()/2);
+						s.setYPos(y);
+						map.add(s);
+						
+						player.addPoints(100);
+					}
+					else if(enemy instanceof Fireball) {
+						map.remove(this);
+						Explosion s = new Explosion();
+						s.setXPos(x+w-s.getWidth()/2);
+						s.setYPos(y);
+						map.add(s);
+					}
 				}
 			}
 		}

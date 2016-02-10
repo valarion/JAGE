@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.valarion.gameengine.gamestates;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 import org.newdawn.slick.GameContainer;
@@ -68,7 +69,13 @@ public class StartState extends SubState {
 
 		activeEvents = Util.getset();
 
-		activeEvents.add(new StartMenu(this));
+		try {
+			activeEvents.add((Event) GameCore.getInstance().getSets().get(Event.class).get("StartMenu").getDeclaredConstructor(SubState.class).newInstance(this));
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			activeEvents.add(new StartMenu(this));
+		}
 	}
 
 	@Override

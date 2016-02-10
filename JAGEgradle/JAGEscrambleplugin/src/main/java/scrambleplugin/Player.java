@@ -28,6 +28,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -47,7 +48,6 @@ import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
 import com.valarion.gameengine.gamestates.InGameState;
-import com.valarion.gameengine.gamestates.StartState;
 import com.valarion.gameengine.gamestates.SubState;
 import com.valarion.gameengine.util.Util;
 import com.valarion.pluginsystem.ClassOverrider;
@@ -68,6 +68,8 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	protected SubTiledMap map;
 
 	protected float x, xoffset, yoffset, w, h;
+	
+	protected float startx, startxoffset, startyoffset;
 
 	protected Image sprite;
 
@@ -92,7 +94,6 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 		sprite = Util.getScaled(sprite, sprite.getWidth(), sprite.getHeight());
 		w = sprite.getWidth();
 		h = sprite.getHeight();
-		
 		Image img = Database.instance().getImages().get("explosion");
 		float hexp = img.getHeight();
 		float wexp = hexp;
@@ -125,7 +126,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 			deltacount -= 1000;
 		}
 		Input input = container.getInput();
-		
+
 		if (input.isKeyPressed(Controls.cancel)) {
 			((SubState)GameCore.getInstance().getActive()).getActiveEvents().add(new PauseMenu(((SubState)GameCore.getInstance().getActive())));
 		}
@@ -241,22 +242,41 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 			
 			if(x >= teleportx) {
 				phase++;
-				state.setAsActive(container, "phase"+ phase);
-				x -= teleportx;
 				
+				List<Event> list = new LinkedList<Event>();
 				for(Event e : map.getEvents()) {
 					e.setXPos((int) (e.getXPos()-teleportx));
 					if(e.getXPos() > 0) {
-						state.getActive().add(e);
+						list.add(e);
 					}
 				}
+				x -= teleportx;
+				
+				state.setAsActive(container, "phase"+ phase);
+				
+				for(Event e : list) {
+					state.getActive().add(e);
+				}
+				startx = x;
+				startxoffset = xoffset;
+				startyoffset = yoffset;
 			}
 		}
 		else {
 			death.update(delta);
 			
 			if(death.isStopped()) {
-				GameCore.getInstance().setActive(new StartState());
+				if(lifes > 0) {
+					fuel = 100;
+					state.setAsActive(container, "phase"+ phase);
+					xoffset = startxoffset;
+					x = startx;
+					yoffset = startyoffset;
+					dying = false;
+				}
+				else {
+					GameCore.getInstance().setActive(new GameOver());
+				}
 			}
 		}
 	}
@@ -388,6 +408,11 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 
 	@Override
 	public void onMapLoad(GameContainer container, SubTiledMap map) {
+		
+	}
+
+	@Override
+	public void onMapSetAsActive(GameContainer container, SubTiledMap map) {
 		this.map = map;
 		collidables.clear();
 		for (int i = 0; i < map.getObjectGroupCount(); i++) {
@@ -445,6 +470,46 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 						}
 					}
 				}
+			} else if ("ovni".equals(map.getObjectGroupName(i))) {
+				for (int j = 0; j < map.getObjectCount(i); j++) {
+					if ((map.getObjectShape(i, j) instanceof Path2D)) {
+						Path2D path = (Path2D) map.getObjectShape(i, j);
+
+						for (PathIterator it = path.getPathIterator(null); !it.isDone(); it.next()) {
+							Ovni o;
+							float coords[] = new float[2];
+							it.currentSegment(coords);
+							if (coords[0] != 0) {
+								o = new Ovni(this);
+								o.setXPos((int) coords[0]);
+								o.setYPos((int) coords[1] - o.getHeight());
+								
+								it.next();
+								it.currentSegment(coords);
+								if (coords[0] != 0) {
+									o.setYPos((int) coords[1] - o.getHeight());
+									map.add(o);
+								}
+							}
+							
+						}
+					}
+				}
+			} else if ("fireball".equals(map.getObjectGroupName(i))) {
+				for (int j = 0; j < map.getObjectCount(i); j++) {
+					if ((map.getObjectShape(i, j) instanceof Path2D)) {
+						Path2D path = (Path2D) map.getObjectShape(i, j);
+						FireballGenerator fg = new FireballGenerator(this);
+						for (PathIterator it = path.getPathIterator(null); !it.isDone(); it.next()) {
+							float coords[] = new float[2];
+							it.currentSegment(coords);
+							if (coords[0] != 0) {
+								fg.setYPos((int) coords[1]);
+							}
+						}
+						map.add(fg);
+					}
+				}
 			} else if ("teleport".equals(map.getObjectGroupName(i))) {
 				for (int j = 0; j < map.getObjectCount(i); j++) {
 					if ((map.getObjectShape(i, j) instanceof Rectangle2D.Float)) {
@@ -466,10 +531,6 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 			((Camera) state.getCamera()).focusAt(map, this);
 			((Camera) state.getCamera()).setGuiPercentage(top, bot);
 		}
-	}
-
-	@Override
-	public void onMapSetAsActive(GameContainer container, SubTiledMap map) {
 	}
 
 	@Override
@@ -528,6 +589,13 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 
 	@Override
 	public void onMapSetAsInactive(GameContainer container, SubTiledMap map) throws SlickException {
+		if(map.getEvents().contains(this)) {
+			for(Event e : map.getEvents()) {
+				map.remove(e);
+			}
+			
+			map.add(this);
+		}
 	}
 
 	@Override

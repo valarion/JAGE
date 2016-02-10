@@ -33,6 +33,8 @@
 	<image name="explosion" src="image/explosion.png"></image>
 	<image name="title" src="image/scene01.jpg"></image>
 	<image name="fuel" src="image/fuel.png"></image>
+	<image name="ovni" src="image/ovni.png"></image>
+	<image name="fireball" src="image/fireball.png"></image>
 	<image name="ship" src="image/ship.png"></image>
 	<image name="rocket" src="image/rocket.png"></image>
 	<image name="mistery" src="image/mistery.png"></image>
