@@ -1,10 +1,14 @@
 package scrambleplugin;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
+import org.newdawn.slick.gui.TextField;
 
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.GameState;
@@ -15,11 +19,15 @@ import com.valarion.gameengine.gamestates.StartState;
 public class GameOver extends GameState {
 	UnicodeFont font;
 	String text = "GAME OVER";
-	
+	String name = "Write your name:";
+
+	TextField nameInput;
+
+	String input = null;
 	@SuppressWarnings("unchecked")
 	public GameOver() {
-		font = new UnicodeFont(Database.instance().getDefaultFont().getFont(),50, true, false);
-		
+		font = new UnicodeFont(Database.instance().getDefaultFont().getFont(), 50, true, false);
+
 		font.addAsciiGlyphs();
 		font.getEffects().add(new ColorEffect());
 		try {
@@ -28,26 +36,44 @@ public class GameOver extends GameState {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	}
 	
+		nameInput = new TextField(GameCore.getInstance().getApp(), Database.instance().getDefaultFont(), 150, 20, 500, Database.instance().getDefaultFont().getLineHeight()+20, new ComponentListener() {
+			public void componentActivated(AbstractComponent source) {
+				input = nameInput.getText();
+			}
+
+		});
+		nameInput.setFocus(true);
+		nameInput.setBorderColor(Color.black);
+		nameInput.setText("Anonymous");
+		nameInput.setMaxLength(20);
+	}
+
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		if(container.getInput().isKeyPressed(Controls.accept)) {
+		if (input != null) {
 			GameCore.getInstance().setActive(new StartState());
+			container.getInput().isKeyPressed(Controls.accept);
 		}
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		nameInput.render(container, g);
 		float w = font.getWidth(text);
 		float h = font.getLineHeight();
-		font.drawString(container.getWidth()/2-w/2, container.getHeight()/2-h/2, text);
+		font.drawString(container.getWidth() / 2 - w / 2, container.getHeight() / 2 - h / 2, text);
+		
+		UnicodeFont namefont = Database.instance().getDefaultFont();
+		namefont.drawString(container.getWidth()/8, container.getHeight() / 2 - h / 2 + font.getLineHeight(), name);
+		nameInput.setLocation(container.getWidth()/8 + namefont.getWidth(name) + 20, (int) (container.getHeight() / 2 - h / 2 + font.getLineHeight()));
+		
+		nameInput.render(container, g);
 	}
 
 	@Override
 	public void init(GameContainer container) throws Exception {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

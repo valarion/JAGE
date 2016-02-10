@@ -83,7 +83,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	protected int punctuation = 0;
 	
 	protected String phases[] = new String[]{"1ST","2ND","3RD","4TH","5TH","BASE"};
-	protected int phase = 0;
+	protected int phase = 4;
 
 	protected float teleportx = Float.MAX_VALUE;
 	
@@ -260,6 +260,10 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 				startx = x;
 				startxoffset = xoffset;
 				startyoffset = yoffset;
+			}
+			
+			if(x+xoffset+w > map.getWidth()*map.getTileWidth()) {
+				xoffset = map.getWidth()*map.getTileWidth()-w-x;
 			}
 		}
 		else {

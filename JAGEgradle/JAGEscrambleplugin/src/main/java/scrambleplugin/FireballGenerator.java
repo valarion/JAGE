@@ -18,7 +18,7 @@ public class FireballGenerator implements Event {
 	
 	int counter;
 	public static final int period = 1500;
-	public static final int distance = 1000;
+	public static final int distance = 400;
 	public FireballGenerator(Player player) {
 		this.player = player;
 		heights = new ArrayList<Integer>();
@@ -34,12 +34,12 @@ public class FireballGenerator implements Event {
 		counter += delta;
 		
 		if(counter > period) {
-			if(player.getXPos()+distance < map.getWidth()*map.getTileWidth()) {
+			if(player.getXDraw(0)+distance < map.getWidth()*map.getTileWidth()) {
 				counter -= period;
 				
 				Fireball f = new Fireball(player);
 				f.setYPos(heights.get((new Random()).nextInt(heights.size())));
-				f.setXPos(player.getXPos()+distance);
+				f.setXPos((int) (player.getXDraw(0)+distance));
 				map.add(f);
 			}
 		}
