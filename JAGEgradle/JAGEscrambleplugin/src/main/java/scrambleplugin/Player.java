@@ -68,7 +68,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	protected SubTiledMap map;
 
 	protected float x, xoffset, yoffset, w, h;
-	
+
 	protected float startx, startxoffset, startyoffset;
 
 	protected Image sprite;
@@ -79,16 +79,22 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 
 	protected UnicodeFont font;
 	protected boolean dying;
-	
+
 	protected int punctuation = 0;
-	
-	protected String phases[] = new String[]{"1ST","2ND","3RD","4TH","5TH","BASE"};
+
+	protected String phases[] = new String[] { "1ST", "2ND", "3RD", "4TH", "5TH", "BASE" };
 	protected int phase = 4;
 
 	protected float teleportx = Float.MAX_VALUE;
-	
+
 	protected Animation death;
-	
+
+	protected int lastbomb;
+	protected int lastbullet;
+
+	public static final int bombinterval = 750;
+	public static final int bulletinterval = 250;
+
 	public Player() throws SlickException {
 		sprite = Database.instance().getImages().get("ship");
 		sprite = Util.getScaled(sprite, sprite.getWidth(), sprite.getHeight());
@@ -98,11 +104,11 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 		float hexp = img.getHeight();
 		float wexp = hexp;
 		LinkedList<Image> l = new LinkedList<Image>();
-		
-		for(int i=0; i<img.getWidth();i+=wexp) {
-			l.add(img.getSubImage(i, 0, (int)wexp, (int)hexp));
+
+		for (int i = 0; i < img.getWidth(); i += wexp) {
+			l.add(img.getSubImage(i, 0, (int) wexp, (int) hexp));
 		}
-		
+
 		death = new Animation(l.toArray(new Image[0]), 100);
 		death.setLooping(false);
 	}
@@ -115,22 +121,22 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	public static final float speed = 0.025f;
 
 	public static final float top = 20, bot = 10;
-	
+
 	protected int deltacount = 0;
 
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		deltacount += delta;
-		if(deltacount > 1000) {
+		if (deltacount > 1000) {
 			punctuation += 10;
 			deltacount -= 1000;
 		}
 		Input input = container.getInput();
 
 		if (input.isKeyPressed(Controls.cancel)) {
-			((SubState)GameCore.getInstance().getActive()).getActiveEvents().add(new PauseMenu(((SubState)GameCore.getInstance().getActive())));
-		}
-		else if (!dying) {
+			((SubState) GameCore.getInstance().getActive()).getActiveEvents()
+					.add(new PauseMenu(((SubState) GameCore.getInstance().getActive())));
+		} else if (!dying) {
 			float scale = (float) (container.getHeight() * (100 - top - bot) / 100)
 					/ ((float) map.getHeight() * map.getTileHeight());
 			float movement = delta * speed;
@@ -220,10 +226,10 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 						yoffset = yoffset + movement;
 					} else if (!collidesWith(area, 0, -movement)) {
 						yoffset = yoffset - movement;
-					} else if (!collidesWith(area, 0, 2*movement)) {
-						yoffset = yoffset + 2*movement;
-					} else if (!collidesWith(area, 0, -2*movement)) {
-						yoffset = yoffset - 2*movement;
+					} else if (!collidesWith(area, 0, 2 * movement)) {
+						yoffset = yoffset + 2 * movement;
+					} else if (!collidesWith(area, 0, -2 * movement)) {
+						yoffset = yoffset - 2 * movement;
 					} else {
 						xoffset = prevx;
 					}
@@ -231,54 +237,70 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 				}
 			}
 
-			if (input.isKeyPressed(Input.KEY_SPACE)) {
-				Bullet b = new Bullet(this);
-				b.setXPos((x + xoffset + w - b.getWidth()));
-				b.setYPos((yoffset + h / 2 - b.getWidth() / 2));
-				b.loadEvent(null, state);
-				b.onMapLoad(container, map);
-				map.add(b);
+			lastbomb += delta;
+			lastbullet += delta;
+
+			if (input.isKeyPressed(Input.KEY_Z)) {
+				if (lastbomb > bombinterval) {
+					lastbomb = 0;
+					Bomb b = new Bomb(this);
+					b.setXPos((x + xoffset + w - b.getWidth()));
+					b.setYPos((yoffset + h / 2 - b.getWidth() / 2));
+					b.loadEvent(null, state);
+					b.onMapLoad(container, map);
+					map.add(b);
+				}
 			}
-			
-			if(x >= teleportx) {
+
+			if (input.isKeyPressed(Input.KEY_X)) {
+				if (lastbullet > bulletinterval) {
+					lastbullet = 0;
+					Bullet b = new Bullet(this);
+					b.setXPos((x + xoffset + w - b.getWidth()));
+					b.setYPos((yoffset + h / 2 - b.getWidth() / 2));
+					b.loadEvent(null, state);
+					b.onMapLoad(container, map);
+					map.add(b);
+				}
+			}
+
+			if (x >= teleportx) {
 				phase++;
-				
+
 				List<Event> list = new LinkedList<Event>();
-				for(Event e : map.getEvents()) {
-					e.setXPos((int) (e.getXPos()-teleportx));
-					if(e.getXPos() > 0) {
+				for (Event e : map.getEvents()) {
+					e.setXPos((int) (e.getXPos() - teleportx));
+					if (e.getXPos() > 0) {
 						list.add(e);
 					}
 				}
 				x -= teleportx;
-				
-				state.setAsActive(container, "phase"+ phase);
-				
-				for(Event e : list) {
+
+				state.setAsActive(container, "phase" + phase);
+
+				for (Event e : list) {
 					state.getActive().add(e);
 				}
 				startx = x;
 				startxoffset = xoffset;
 				startyoffset = yoffset;
 			}
-			
-			if(x+xoffset+w > map.getWidth()*map.getTileWidth()) {
-				xoffset = map.getWidth()*map.getTileWidth()-w-x;
+
+			if (x + xoffset + w > map.getWidth() * map.getTileWidth()) {
+				xoffset = map.getWidth() * map.getTileWidth() - w - x;
 			}
-		}
-		else {
+		} else {
 			death.update(delta);
-			
-			if(death.isStopped()) {
-				if(lifes > 0) {
+
+			if (death.isStopped()) {
+				if (lifes > 0) {
 					fuel = 100;
-					state.setAsActive(container, "phase"+ phase);
+					state.setAsActive(container, "phase" + phase);
 					xoffset = startxoffset;
 					x = startx;
 					yoffset = startyoffset;
 					dying = false;
-				}
-				else {
+				} else {
 					GameCore.getInstance().setActive(new GameOver());
 				}
 			}
@@ -306,11 +328,10 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
-		if(!dying) {
+		if (!dying) {
 			g.drawImage(sprite, x + xoffset, yoffset);
-		}
-		else {
-			death.draw(x + xoffset + w/2 - death.getWidth()/2, yoffset + h/2 - death.getHeight()/2);
+		} else {
+			death.draw(x + xoffset + w / 2 - death.getWidth() / 2, yoffset + h / 2 - death.getHeight() / 2);
 		}
 	}
 
@@ -324,7 +345,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 		float h = sprite.getHeight() * scale;
 		float space = container.getHeight() * (bot * 10 / 100) / 100;
 		float x = space;
-		float y = container.getHeight() * ((100 - bot)+(bot * 45 / 100)) / 100 + space;
+		float y = container.getHeight() * ((100 - bot) + (bot * 45 / 100)) / 100 + space;
 
 		g.setColor(Color.black);
 
@@ -348,11 +369,11 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 				e1.printStackTrace();
 			}
 		}
-		
+
 		x = space;
 		y = container.getHeight() * ((100 - bot)) / 100 + space;
-		
-		font.drawString(x, y, "FUEL",Color.yellow);
+
+		font.drawString(x, y, "FUEL", Color.yellow);
 		x += font.getWidth("FUEL") + space;
 
 		float left = container.getWidth() - x - space;
@@ -363,29 +384,29 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 		g.fill(new Rectangle(x, y, part * fuel, h));
 		g.setColor(Color.darkGray);
 		g.fill(new Rectangle(x + part * fuel, y, left - part * fuel, h));
-		
+
 		// Render punctuation
-		
+
 		space = container.getHeight() * (top * 10 / 100) / 100;
 		x = space;
 		y = space;
-		font.drawString(x, y, "SCORE: ",Color.white);
-		x+=font.getWidth("SCORE: ");
-		font.drawString(x, y, Integer.toString(punctuation),Color.yellow);
-		
+		font.drawString(x, y, "SCORE: ", Color.white);
+		x += font.getWidth("SCORE: ");
+		font.drawString(x, y, Integer.toString(punctuation), Color.yellow);
+
 		// Render phases
-		part = container.getWidth() / (phases.length+1);
+		part = container.getWidth() / (phases.length + 1);
 		x = part / 2;
-		y = 2*space + font.getLineHeight();
-		
+		y = 2 * space + font.getLineHeight();
+
 		g.setColor(Color.yellow);
-		g.fill(new Rectangle(x, y, part*phases.length, font.getLineHeight()*2+3));
-		
-		for(int i=0; i< phases.length; i++) {
+		g.fill(new Rectangle(x, y, part * phases.length, font.getLineHeight() * 2 + 3));
+
+		for (int i = 0; i < phases.length; i++) {
 			String phasename = phases[i];
-			font.drawString(x+1, y+1, phasename,Color.blue);
+			font.drawString(x + 1, y + 1, phasename, Color.blue);
 			g.setColor(i <= phase ? Color.green : Color.red);
-			g.fill(new Rectangle(x+1, y+1+font.getLineHeight()+1, part-2, font.getLineHeight()));
+			g.fill(new Rectangle(x + 1, y + 1 + font.getLineHeight() + 1, part - 2, font.getLineHeight()));
 			x += part;
 		}
 	}
@@ -412,7 +433,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 
 	@Override
 	public void onMapLoad(GameContainer container, SubTiledMap map) {
-		
+
 	}
 
 	@Override
@@ -474,6 +495,24 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 						}
 					}
 				}
+			} else if ("boss".equals(map.getObjectGroupName(i))) {
+				for (int j = 0; j < map.getObjectCount(i); j++) {
+					if ((map.getObjectShape(i, j) instanceof Path2D)) {
+						Path2D path = (Path2D) map.getObjectShape(i, j);
+
+						for (PathIterator it = path.getPathIterator(null); !it.isDone(); it.next()) {
+
+							float coords[] = new float[2];
+							it.currentSegment(coords);
+							if (coords[0] != 0) {
+								Boss f = new Boss(this);
+								f.setXPos((int) coords[0]);
+								f.setYPos((int) coords[1] - f.getHeight());
+								map.add(f);
+							}
+						}
+					}
+				}
 			} else if ("ovni".equals(map.getObjectGroupName(i))) {
 				for (int j = 0; j < map.getObjectCount(i); j++) {
 					if ((map.getObjectShape(i, j) instanceof Path2D)) {
@@ -487,7 +526,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 								o = new Ovni(this);
 								o.setXPos((int) coords[0]);
 								o.setYPos((int) coords[1] - o.getHeight());
-								
+
 								it.next();
 								it.currentSegment(coords);
 								if (coords[0] != 0) {
@@ -495,7 +534,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 									map.add(o);
 								}
 							}
-							
+
 						}
 					}
 				}
@@ -593,11 +632,11 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 
 	@Override
 	public void onMapSetAsInactive(GameContainer container, SubTiledMap map) throws SlickException {
-		if(map.getEvents().contains(this)) {
-			for(Event e : map.getEvents()) {
+		if (map.getEvents().contains(this)) {
+			for (Event e : map.getEvents()) {
 				map.remove(e);
 			}
-			
+
 			map.add(this);
 		}
 	}
@@ -632,13 +671,13 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	public boolean collidesWith(float x, float y, float w, float h) {
 		return collidesWith(new Area(new Rectangle2D.Float(x, y, w, h)));
 	}
-	
+
 	public void addPoints(int points) {
-		punctuation+=points;
+		punctuation += points;
 	}
 
 	protected void die() {
-		if(!dying) {
+		if (!dying) {
 			dying = true;
 			lifes--;
 			death.restart();

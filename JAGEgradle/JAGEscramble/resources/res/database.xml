@@ -40,6 +40,7 @@
 	<image name="mistery" src="image/mistery.png"></image>
 	<image name="bullet" src="image/bullet.png"></image>
 	<image name="bomb" src="image/bomb.png"></image>
+	<image name="boss" src="image/boss.png"></image>
 	<sound name="menumove" src="Decision1.ogg"></sound>
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>

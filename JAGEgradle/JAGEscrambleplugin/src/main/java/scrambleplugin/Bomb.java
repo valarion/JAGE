@@ -5,6 +5,7 @@ import java.awt.geom.Path2D;
 import java.util.LinkedList;
 import java.util.Random;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,30 +16,48 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.gamestates.Database;
 
-public class Bullet implements Event {
-	protected Image sprite;
-	protected float x,y,w,h;
+public class Bomb implements Event {
+	float x, y, w, h;
 	
-	protected LinkedList<Area> collidables = new LinkedList<Area>();
-
-	protected SubTiledMap map;
+	Animation anim;
+	public static final float speedx = 0.1f;
+	public static final float speedy = 0.01f;
 	
 	protected Player player;
 	
-	public Bullet(Player player) {
-		sprite = Database.instance().getImages().get("bullet");
-		w = sprite.getWidth();
-		h = sprite.getHeight();
+	protected LinkedList<Area> collidables = new LinkedList<Area>();
+	
+	protected SubTiledMap map;
+	
+	public Bomb(Player player) {
+		Image img = Database.instance().getImages().get("bomb");
+		h = img.getHeight();
+		w = h;
+		LinkedList<Image> l = new LinkedList<Image>();
+		
+		for(int i=0; i<img.getWidth();i+=w) {
+			l.add(img.getSubImage(i, 0, (int)w, (int)h));
+		}
+		
+		anim = new Animation(l.toArray(new Image[0]), 100);
+		anim.setLooping(false);
+		anim.start();
+		
 		this.player = player;
 	}
 
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
-	public static final float speed = 0.2f;
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
-		x += speed*delta;
+		anim.update(delta);
+		
+		if(!anim.isStopped()) {
+			x += speedx*delta;
+		}
+		
+		y+=anim.getFrame()*speedy*delta;
 		
 		if(x+w > map.getWidth()*map.getTileWidth()) {
 			map.remove(this);
@@ -137,7 +156,7 @@ public class Bullet implements Event {
 
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
-		g.drawImage(sprite, x, y);
+		anim.draw(x, y);
 	}
 
 	@Override
@@ -206,7 +225,7 @@ public class Bullet implements Event {
 
 	@Override
 	public boolean isBlocking() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -238,10 +257,7 @@ public class Bullet implements Event {
 	public void onBeingTouched(GameContainer container, SubTiledMap map, Event e) throws SlickException {}
 
 	@Override
-	public void loadEvent(Element node, Object context) throws SlickException {
-		// TODO Auto-generated method stub
-
-	}
+	public void loadEvent(Element node, Object context) throws SlickException {}
 
 	@Override
 	public boolean isWorking() {
