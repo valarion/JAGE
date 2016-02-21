@@ -133,25 +133,25 @@ task copyTetrisPlugin(type: Copy, dependsOn: ":JAGEtetrisplugin:jar") {
 	from project(":JAGEtetrisplugin").jar
 	into("build/bin/modules")
 }
+
+task copyScramblePlugin(type: Copy, dependsOn: ":JAGEscrambleplugin:jar") {
+	from project(":JAGEscrambleplugin").jar
+	into("build/bin/modules")
+}
+
+task copyRpgResources(type: Copy) {
+	from project(":JAGErpg").projectDir.path + "/resources"
+	into("build/bin")
+}
 	
 task copyTetrisResources(type: Copy) {
 	from project(":JAGEtetris").projectDir.path + "/resources"
 	into("build/bin")
 }
 	
-task copyRpgResources(type: Copy) {
-	from project(":JAGErpg").projectDir.path + "/resources"
-	into("build/bin")
-}
-
-task copyScramblePlugin(type: Copy, dependsOn: ":JAGEscrambleplugin:jar") {
-	from project(":JAGEscrambleplugin").jar
-	into("build/modules")
-}
-	
 task copyScrambleResources(type: Copy) {
 	from project(":JAGEscramble").projectDir.path + "/resources"
-	into("build/")
+	into("build/bin")
 }
 
 task copyNatives(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {

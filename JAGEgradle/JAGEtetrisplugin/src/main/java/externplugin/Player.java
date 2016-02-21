@@ -293,6 +293,9 @@ public class Player extends com.valarion.gameengine.events.Player {
 						}
 						Database.instance().playSound("beep");
 					}
+					else {
+						GameCore.getInstance().setActive(new GameOver("Game over",(int) Database.instance().getContext().getGlobalVars()[punctuationregister],true));
+					}
 				} else {
 					timecount += delta;
 				}
