@@ -1,13 +1,16 @@
 package com.valarion.gameengine.util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class OrderedLinkedList<T extends Comparable<T>> implements List<T> {
-    protected LinkedList<T> llist;
+public class OrderedLinkedList<T extends Comparable<T>> implements List<T>, Serializable {
+	private static final long serialVersionUID = -6993148701603045854L;
+	
+	protected LinkedList<T> llist;
     
     public OrderedLinkedList() {
     	llist = new LinkedList<T>();
@@ -47,7 +50,11 @@ public class OrderedLinkedList<T extends Comparable<T>> implements List<T> {
 
 	@Override
 	public boolean addAll(Collection<? extends T> arg0) {
-		return llist.addAll(arg0);
+		boolean ret = true;
+		for(T o : arg0) {
+			ret &= add(o);
+		}
+		return ret;
 	}
 
 	@Override

@@ -79,6 +79,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 
 	protected UnicodeFont font;
 	protected boolean dying;
+	protected boolean winning;
 
 	protected int punctuation = 0;
 
@@ -123,6 +124,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	public static final float top = 20, bot = 10;
 
 	protected int deltacount = 0;
+	
 
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
@@ -136,6 +138,8 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 		if (input.isKeyPressed(Controls.cancel)) {
 			((SubState) GameCore.getInstance().getActive()).getActiveEvents()
 					.add(new PauseMenu(((SubState) GameCore.getInstance().getActive())));
+		} else if (winning) {
+			GameCore.getInstance().setActive(new GameOver("Victory!",punctuation,true));
 		} else if (!dying) {
 			float scale = (float) (container.getHeight() * (100 - top - bot) / 100)
 					/ ((float) map.getHeight() * map.getTileHeight());
@@ -143,6 +147,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 			fuel -= delta / 1000.f;
 			if (fuel < 0) {
 				fuel = 0;
+				die();
 			}
 
 			x += movement;
@@ -301,7 +306,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 					yoffset = startyoffset;
 					dying = false;
 				} else {
-					GameCore.getInstance().setActive(new GameOver());
+					GameCore.getInstance().setActive(new GameOver("Game Over",punctuation,false));
 				}
 			}
 		}
@@ -682,5 +687,9 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 			lifes--;
 			death.restart();
 		}
+	}
+	
+	protected void win() {
+		winning  = true;
 	}
 }

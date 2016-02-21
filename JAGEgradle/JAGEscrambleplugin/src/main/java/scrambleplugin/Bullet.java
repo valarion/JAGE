@@ -117,8 +117,9 @@ public class Bullet implements Event {
 						s.setXPos(x+w-s.getWidth()/2);
 						s.setYPos(y);
 						map.add(s);
-						
-						player.addPoints(100);
+
+						player.addPoints(800);
+						player.win();
 					}
 					else if(enemy instanceof Fireball) {
 						map.remove(this);

@@ -137,7 +137,8 @@ public class Bomb implements Event {
 						s.setYPos(y);
 						map.add(s);
 						
-						player.addPoints(100);
+						player.addPoints(800);
+						player.win();
 					}
 					else if(enemy instanceof Fireball) {
 						map.remove(this);

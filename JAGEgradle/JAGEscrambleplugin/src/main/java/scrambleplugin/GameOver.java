@@ -14,18 +14,22 @@ import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.GameState;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
-import com.valarion.gameengine.gamestates.StartState;
 
 public class GameOver extends GameState {
 	UnicodeFont font;
-	String text = "GAME OVER";
+	String text;
 	String name = "Write your name:";
 
 	TextField nameInput;
 
 	String input = null;
+	boolean victory;
+	int score;
 	@SuppressWarnings("unchecked")
-	public GameOver() {
+	public GameOver(String text, int score, boolean victory) {
+		this.text = text;
+		this.score = score;
+		this.victory = victory;
 		font = new UnicodeFont(Database.instance().getDefaultFont().getFont(), 50, true, false);
 
 		font.addAsciiGlyphs();
@@ -33,7 +37,6 @@ public class GameOver extends GameState {
 		try {
 			font.loadGlyphs();
 		} catch (SlickException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	
@@ -52,7 +55,7 @@ public class GameOver extends GameState {
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		if (input != null) {
-			GameCore.getInstance().setActive(new StartState());
+			GameCore.getInstance().setActive(new Scores(score, victory, input));
 			container.getInput().isKeyPressed(Controls.accept);
 		}
 	}

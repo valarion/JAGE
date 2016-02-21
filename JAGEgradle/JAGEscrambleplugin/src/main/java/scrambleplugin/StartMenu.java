@@ -42,7 +42,7 @@ public class StartMenu extends OptionsMenu {
 	 */
 	public StartMenu(SubState instance) {
 		super(false, instance, OptionsMenu.center,
-				OptionsMenu.mid, new FlowEventInterface[] { new NewGame(), new ExitGame() });
+				OptionsMenu.mid, new FlowEventInterface[] { new NewGame(), new ScoresOption(), new ExitGame() });
 	}
 	
 	@ClassOverrider
