@@ -108,11 +108,15 @@ public class Player extends com.valarion.gameengine.events.Player {
 	protected static final int starty = 1, endy = 22;
 
 	protected int x, y;
+	
+	protected int lastleft, lastright;
+	public static final int replimit = 250;
 
 	@Override
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		Input input = container.getInput();
-
+		lastleft += delta;
+		lastright += delta;
 		if (input.isKeyPressed(Controls.cancel)) {
 			((SubState) GameCore.getInstance().getActive()).getActiveEvents()
 					.add(new PauseMenu(((SubState) GameCore.getInstance().getActive())));
@@ -137,10 +141,12 @@ public class Player extends com.valarion.gameengine.events.Player {
 					timecount = 0;
 					Database.instance().stopMusic("tetris");
 					Database.instance().getContext().getGlobalVars()[stateregister] = endgamestate;
-				} else if (input.isKeyPressed(Controls.moveLeft)) {
+				} else if (input.isKeyPressed(Controls.moveLeft) || (input.isKeyDown(Controls.moveLeft) && lastleft > replimit)) {
+					lastleft = 0;
 					Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
 					Database.instance().getContext().getGlobalVars()[movedirectionregister] = -1;
-				} else if (input.isKeyPressed(Controls.moveRight)) {
+				} else if (input.isKeyPressed(Controls.moveRight) || (input.isKeyDown(Controls.moveRight) && lastright > replimit)) {
+					lastright = 0;
 					Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
 					Database.instance().getContext().getGlobalVars()[movedirectionregister] = 1;
 				} else if (input.isKeyPressed(Controls.moveUp)) {

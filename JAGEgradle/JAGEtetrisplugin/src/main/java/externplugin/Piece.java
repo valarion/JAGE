@@ -256,7 +256,7 @@ public class Piece extends FlowEventClass {
 	}
 	
 	public static final int centerx=14;
-	public static final int centery=3;
+	public static final int centery=5;
 
 	/**
 	 * Create a piece of the type saved in the next piece global variable.
