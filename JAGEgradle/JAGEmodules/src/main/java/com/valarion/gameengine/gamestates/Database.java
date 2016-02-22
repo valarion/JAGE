@@ -313,7 +313,7 @@ public class Database {
 	 * @param pitch
 	 * @return
 	 */
-	public boolean playMusic(String name, int volume, int pitch) {
+	public boolean playMusic(String name, float volume, float pitch) {
 		Music m = musics.get(name);
 		if (m != null) {
 			m.play(pitch, volume);
@@ -546,7 +546,7 @@ public class Database {
 	 * @param pitch
 	 * @return
 	 */
-	public boolean playSound(String name, int volume, int pitch) {
+	public boolean playSound(String name, float volume, float pitch) {
 		Sound s = sounds.get(name);
 		if (s != null) {
 			s.play(pitch, volume);

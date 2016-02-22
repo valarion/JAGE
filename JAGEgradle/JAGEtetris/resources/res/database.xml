@@ -35,5 +35,9 @@
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>
 	<sound name="beep" src="26777__junggle__btn402.ogg"></sound>
+	<sound name="line" src="tetris1.wav"></sound>
+	<sound name="twolines" src="tetris2.wav"></sound>
+	<sound name="threelines" src="tetris3.wav"></sound>
+	<sound name="fourlines" src="tetris4.wav"></sound>
 	<music name="tetris" src="tetris.ogg"></music>
 </database>

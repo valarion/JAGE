@@ -108,7 +108,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 	protected static final int starty = 1, endy = 22;
 
 	protected int x, y;
-	
+
 	protected int lastleft, lastright;
 	public static final int replimit = 250;
 
@@ -141,11 +141,13 @@ public class Player extends com.valarion.gameengine.events.Player {
 					timecount = 0;
 					Database.instance().stopMusic("tetris");
 					Database.instance().getContext().getGlobalVars()[stateregister] = endgamestate;
-				} else if (input.isKeyPressed(Controls.moveLeft) || (input.isKeyDown(Controls.moveLeft) && lastleft > replimit)) {
+				} else if (input.isKeyPressed(Controls.moveLeft)
+						|| (input.isKeyDown(Controls.moveLeft) && lastleft > replimit)) {
 					lastleft = 0;
 					Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
 					Database.instance().getContext().getGlobalVars()[movedirectionregister] = -1;
-				} else if (input.isKeyPressed(Controls.moveRight) || (input.isKeyDown(Controls.moveRight) && lastright > replimit)) {
+				} else if (input.isKeyPressed(Controls.moveRight)
+						|| (input.isKeyDown(Controls.moveRight) && lastright > replimit)) {
 					lastright = 0;
 					Database.instance().getContext().getGlobalVars()[stateregister] = moveleftrightstate;
 					Database.instance().getContext().getGlobalVars()[movedirectionregister] = 1;
@@ -227,15 +229,19 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 					switch (cleared) {
 					case 1:
+						Database.instance().playSound("line", 400.f, 1.f);
 						punctuation = 40;
 						break;
 					case 2:
+						Database.instance().playSound("twolines", 400.f, 1.f);
 						punctuation = 100;
 						break;
 					case 3:
+						Database.instance().playSound("threelines", 400.f, 1.f);
 						punctuation = 300;
 						break;
 					case 4:
+						Database.instance().playSound("fourlines", 400.f, 1.f);
 						punctuation = 1200;
 						break;
 					}
@@ -298,9 +304,9 @@ public class Player extends com.valarion.gameengine.events.Player {
 							}
 						}
 						Database.instance().playSound("beep");
-					}
-					else {
-						GameCore.getInstance().setActive(new GameOver("Game over",(int) Database.instance().getContext().getGlobalVars()[punctuationregister],true));
+					} else {
+						GameCore.getInstance().setActive(new GameOver("Game over",
+								(int) Database.instance().getContext().getGlobalVars()[punctuationregister], true));
 					}
 				} else {
 					timecount += delta;
@@ -359,7 +365,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 		Database.instance().getContext().getGlobalVars()[clearedlinesregister] = 0;
 		Database.instance().getContext().getGlobalVars()[punctuationregister] = 0;
 		Database.instance().getContext().getGlobalVars()[levelregister] = 0;
-		Database.instance().loopMusic("tetris");
+		Database.instance().loopMusic("tetris",0.1f,1.f);
 		Database.instance().getContext().getGlobalVars()[stateregister] = generatenewpiecestate;
 		state.getCamera().focusAt(map);
 		generateNextPiece();
