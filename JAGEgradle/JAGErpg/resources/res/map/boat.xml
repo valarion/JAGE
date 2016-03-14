@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="9" y="5" layer="player"  type="activation" sprite="TestSprite" >
+			<events>
+				<Battle enemyhp="100" playerhp="100"/>
+			</events>
+		</page>
+	</GameEvent>
+
+</mapevents>

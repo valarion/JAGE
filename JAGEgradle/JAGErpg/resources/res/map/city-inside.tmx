@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" source="../tileset/types.tsx"/>
+ <layer name="floor" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBTgAgDjoo9oIAMAAA==
+  </data>
+ </layer>
+ <layer name="player" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBTgAgDjoo9oIAMAAA==
+  </data>
+ </layer>
+ <layer name="top" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBTgAgDjoo9oIAMAAA==
+  </data>
+ </layer>
+ <layer name="types" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NiYGBgojJmpBIeNW/UPHLMIzZ9EqMWAIFn8hMgAwAA
+  </data>
+ </layer>
+ <layer name="effects" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBTgAgDjoo9oIAMAAA==
+  </data>
+ </layer>
+</map>

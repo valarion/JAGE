@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="31" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="031_Ship02_edit" tilewidth="32" tileheight="32" tilecount="360">
+  <image source="../tileset/031_Ship02_edit.png" width="256" height="1440"/>
+ </tileset>
+ <tileset firstgid="361" name="ship_edit_C" tilewidth="32" tileheight="32" tilecount="592">
+  <image source="../tileset/ship_edit_C.png" width="256" height="2368"/>
+ </tileset>
+ <tileset firstgid="953" name="ship_edit_new_A" tilewidth="32" tileheight="32" tilecount="600">
+  <image source="../tileset/ship_edit_new_A.png" width="256" height="2400"/>
+ </tileset>
+ <tileset firstgid="1553" name="031_Ship02_edit_pink" tilewidth="32" tileheight="32" tilecount="360">
+  <image source="../tileset/031_Ship02_edit_pink.png" width="256" height="1440"/>
+ </tileset>
+ <tileset firstgid="1913" name="ship_edit_C_pink" tilewidth="32" tileheight="32" tilecount="592">
+  <image source="../tileset/ship_edit_C_pink.png" width="256" height="2368"/>
+ </tileset>
+ <tileset firstgid="2505" name="ship_edit_new_A_pink" tilewidth="32" tileheight="32" tilecount="600">
+  <image source="../tileset/ship_edit_new_A_pink.png" width="256" height="2400"/>
+ </tileset>
+ <tileset firstgid="3105" name="nuevo_barco_tileset" tilewidth="32" tileheight="32" tilecount="232">
+  <image source="../tileset/nuevo_barco_tileset.png" width="256" height="928"/>
+ </tileset>
+ <tileset firstgid="3337" name="types" tilewidth="32" tileheight="32" tilecount="3">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="walkable"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="floor" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3QuQrCQBRA0RFSJX6RnVqplfoNKnHXxB1cwa1xaVwqP9UbUJiIExMQC8mDA8PMuykixHemoAlRRElT75i8lVFBFTXU0UAT3Tdti7s2LNjoYIEe+hhjgqnUDjgPMXrsmhG3JXcrrKVmxnmu2H/a8baXmg3nrce+48T7WWoOnI8fGsdNai7O/+IuFlVz3q8vjfy9uC5EAkndfe/VpNhNIxOgybKbQz5AoxI2/91Yhr/GNoRr/DTh/H7uV8QsuEwGAAA=
+  </data>
+ </layer>
+ <layer name="floordecoration" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAVDAWQzEcajYBSMglEwUAAAHyKxHEwGAAA=
+  </data>
+ </layer>
+ <layer name="botstairs" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBTAwBceBobPQPwViL9hwd+h8j94EHr+ANm/gfgvEP/Dgv9D5Rl4B8xbo2AU0BwAAM2+bZ9MBgAA
+  </data>
+ </layer>
+ <layer name="topstairs" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAX0BHd4iFP3AEndEyD7GRA/xaH3OVT+BZL8GyD7HRC/xaHnPVT+A5HuGQWjYBSMAnwAAH9Nt0lMBgAA
+  </data>
+ </layer>
+ <layer name="player" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGP4gjouBIR6IE7iI15MGVJsOxBkk6MkDqs0H4gIS9IwC8sBonA7+MJAlTfkoGOIAANZDaBVMBgAA
+  </data>
+ </layer>
+ <layer name="topplayer" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAUDAe7yMDDcw4Lv8wy0y0bBKMAEojQw8ycHA8MvID7DgRBDZ/8G4j9IYoycDAxMQHwFKHYZitHZzEB5Fk6EHk4gmwuIbwPl7nCg0jA2N1CeB0mPIJAtBMSPgXJPOFBpGFsYKC+CpEcSyJYC4tdAuTccqDSMLQ2Ul0HSM5wAABoYTFlMBgAA
+  </data>
+ </layer>
+ <layer name="mastil3" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3LuQ6AIBBF0VGxsfP/v9AF973ilgYxMbTOTU5IgCcS7sxeHm5VRqRGgxYXLDr0GMxzM3I3YcaCNBdZOTfsOAIbv+TDH78yYlNEbDRN0/6YAy/XV1ZMBgAA
+  </data>
+ </layer>
+ <layer name="mastil2" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3POwqAMBQF0avExv1v0n/8i5VTRyESO3kDh0DILSJZX6qcVKNBixMdegzw7r4ZuZswY0FeSCvnhh3HwyYse/EmZfO3/4SVCRvLsuJdBFkxd0wGAAA=
+  </data>
+ </layer>
+ <layer name="mastil2top" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3LSw6AIBAE0UlAYaPe/57yWSBYnAC2kKnk7bpF1uk1IgERCdmMP4XNh4rW93b8sWwOnHDwE5/exe7GM7nXNE3bpR+o0KqATAYAAA==
+  </data>
+ </layer>
+ <layer name="mastil2top2" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGFjwk5l0PYwspOvhJEPPKBgFo2AUjALiAADRpQ7QTAYAAA==
+  </data>
+ </layer>
+ <layer name="mastil1" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3LuQqAMBRE0VFjY+f/f6H7vlbeOgoRW9+FQyC8kSzrPx1J+KZwUokKNU40aNGhd/fNwN+ICTPiVFp4V2zYHzZ+0Ysbv/zDJvuwsaxQF3nvnLVMBgAA
+  </data>
+ </layer>
+ <layer name="types" width="13" height="31">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+PiZWDgGiKYEwsmRj0hMWzmEyNODT24MDY9hPyKSwyX+dR0G7310Dp+yAnr4RYGlKZrXGIDEW6jmPYYADrfF89MBgAA
+  </data>
+ </layer>
+</map>
