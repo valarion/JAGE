@@ -35,22 +35,24 @@ import com.valarion.gameengine.gamestates.BattleState;
  * @author Rubén Tomás Gracia
  *
  */
-public class MenuShield extends FlowEventClass implements ToolTip {
+public class BattleOption extends FlowEventClass implements ToolTip {
 	protected BattleState state;
+	protected BattleState.Attack attack;
 	
-	public MenuShield(BattleState state) {
+	public BattleOption(BattleState state, BattleState.Attack attack) {
 		this.state = state;
+		this.attack = attack;
 	}
 	
 	@Override
 	public void paralelupdate(GameContainer container, int delta,
 			SubTiledMap map) throws SlickException {
-		state.setPlayerAttack(BattleState.Attack.shielddefense);
+		state.setPlayerAttack(attack);
 	}
 
 	@Override
 	public String toString() {
-		return "Shield Defense";
+		return attack.toString();
 	}
 
 	@Override
@@ -60,7 +62,6 @@ public class MenuShield extends FlowEventClass implements ToolTip {
 
 	@Override
 	public String getToolTip() {
-		// TODO Auto-generated method stub
-		return null;
+		return attack.getToolTip();
 	}
 }

@@ -185,4 +185,8 @@ public class OptionsMenu extends FlowEventClass {
 	public void setSelected(int selected) {
 		this.selected = selected;
 	}
+	
+	public int getSelected() {
+		return selected;
+	}
 }

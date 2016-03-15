@@ -38,8 +38,8 @@ import com.valarion.gameengine.gamestates.Database;
  */
 public class BattleText extends OptionsMenu {
 
-	public BattleText(BattleState instance) throws SlickException {
-		super(true, instance, OptionsMenu.XPosition.right, OptionsMenu.YPosition.bot, Database.instance().getWindowimages().get("2x1"), new FlowEventInterface[]{});
+	public BattleText(BattleState instance,OptionsMenu.XPosition xpos, OptionsMenu.YPosition ypos, String window) throws SlickException {
+		super(false, instance, xpos,ypos, Database.instance().getWindowimages().get(window), new FlowEventInterface[]{});
 		loadEvent(null, instance);
 	}
 	

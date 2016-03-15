@@ -39,8 +39,22 @@ import com.valarion.gameengine.gamestates.Database;
 public class BattleMenu extends OptionsMenu {
 
 	public BattleMenu(BattleState instance) throws SlickException {
-		super(true, instance, OptionsMenu.XPosition.left, OptionsMenu.YPosition.bot, Database.instance().getWindowimages().get("1x1"), new FlowEventInterface[] { new MenuFeint(instance),
-				new MenuThurst(instance), new MenuShield(instance), new MenuHeal(instance) });
+		// super(true, instance, OptionsMenu.XPosition.left,
+		// OptionsMenu.YPosition.bot,
+		// Database.instance().getWindowimages().get("1x1"), new
+		// FlowEventInterface[] { new MenuFeint(instance),
+		// new MenuThurst(instance), new MenuShield(instance), new
+		// MenuHeal(instance) });
+		super(true, instance, OptionsMenu.XPosition.left, OptionsMenu.YPosition.bot,
+				Database.instance().getWindowimages().get("1x1"),
+				new FlowEventInterface[] { new BattleOption(instance, BattleState.Attack.feintandsidecut),
+						new BattleOption(instance, BattleState.Attack.thrust),
+						new BattleOption(instance, BattleState.Attack.shielddefense),
+						new BattleOption(instance, BattleState.Attack.heal) });
 		loadEvent(null, instance);
+	}
+
+	public FlowEventInterface[] getOptions() {
+		return options;
 	}
 }

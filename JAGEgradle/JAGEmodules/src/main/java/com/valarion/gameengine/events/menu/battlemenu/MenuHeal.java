@@ -35,7 +35,7 @@ import com.valarion.gameengine.gamestates.BattleState;
  * @author Rubén Tomás Gracia
  *
  */
-public class MenuHeal extends FlowEventClass {
+public class MenuHeal extends FlowEventClass implements ToolTip {
 	protected BattleState state;
 	
 	public MenuHeal(BattleState state) {
@@ -56,5 +56,11 @@ public class MenuHeal extends FlowEventClass {
 	@Override
 	public boolean isWorking() {
 		return true;
+	}
+
+	@Override
+	public String getToolTip() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

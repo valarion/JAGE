@@ -35,7 +35,7 @@ import com.valarion.gameengine.gamestates.BattleState;
  * @author Rubén Tomás Gracia
  *
  */
-public class MenuThurst extends FlowEventClass {
+public class MenuThurst extends FlowEventClass implements ToolTip {
 	protected BattleState state;
 	
 	public MenuThurst(BattleState state) {
@@ -56,5 +56,11 @@ public class MenuThurst extends FlowEventClass {
 	@Override
 	public boolean isWorking() {
 		return true;
+	}
+
+	@Override
+	public String getToolTip() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
