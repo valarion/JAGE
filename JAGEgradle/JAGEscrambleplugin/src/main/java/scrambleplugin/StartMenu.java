@@ -41,8 +41,8 @@ public class StartMenu extends OptionsMenu {
 	 * @param instance State in which this menu is working.
 	 */
 	public StartMenu(SubState instance) {
-		super(false, instance, OptionsMenu.center,
-				OptionsMenu.mid, new FlowEventInterface[] { new NewGame(), new ScoresOption(), new ExitGame() });
+		super(false, instance, OptionsMenu.XPosition.center,
+				OptionsMenu.YPosition.mid, new FlowEventInterface[] { new NewGame(), new ScoresOption(), new ExitGame() });
 	}
 	
 	@ClassOverrider

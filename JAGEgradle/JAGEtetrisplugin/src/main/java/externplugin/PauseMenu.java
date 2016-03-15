@@ -38,8 +38,8 @@ import com.valarion.gameengine.gamestates.SubState;
 public class PauseMenu extends OptionsMenu {
 
 	public PauseMenu(SubState instance) throws SlickException {
-		super(true, instance, OptionsMenu.right,
-				OptionsMenu.top, new FlowEventInterface[] { 
+		super(true, instance, OptionsMenu.XPosition.right,
+				OptionsMenu.YPosition.top, new FlowEventInterface[] { 
 						new MenuExit() });
 		loadEvent(null,instance);
 	}
