@@ -28,6 +28,7 @@ import org.newdawn.slick.SlickException;
 import com.valarion.gameengine.events.menu.OptionsMenu;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.BattleState;
+import com.valarion.gameengine.gamestates.Database;
 
 /**
  * Ingame menu.
@@ -38,7 +39,7 @@ import com.valarion.gameengine.gamestates.BattleState;
 public class BattleMenu extends OptionsMenu {
 
 	public BattleMenu(BattleState instance) throws SlickException {
-		super(true, instance, OptionsMenu.right, OptionsMenu.top, new FlowEventInterface[] { new MenuFeint(instance),
+		super(true, instance, OptionsMenu.XPosition.left, OptionsMenu.YPosition.bot, Database.instance().getWindowimages().get("1x1"), new FlowEventInterface[] { new MenuFeint(instance),
 				new MenuThurst(instance), new MenuShield(instance), new MenuHeal(instance) });
 		loadEvent(null, instance);
 	}

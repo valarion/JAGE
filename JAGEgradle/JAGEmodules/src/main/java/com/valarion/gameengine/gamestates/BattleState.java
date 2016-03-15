@@ -1,5 +1,6 @@
 package com.valarion.gameengine.gamestates;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
@@ -13,6 +14,9 @@ import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.GameState;
 import com.valarion.gameengine.events.menu.battlemenu.BattleMenu;
+import com.valarion.gameengine.events.menu.battlemenu.BattleText;
+import com.valarion.gameengine.events.menu.battlemenu.CommonOption;
+import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.util.Util;
 
 public class BattleState extends SubState {
@@ -37,6 +41,8 @@ public class BattleState extends SubState {
 	
 	protected BattleMenu menu;
 	
+	protected BattleText text;
+	
 	public static enum Attack {
 		
 		thrust,feintandsidecut,shielddefense,heal;
@@ -51,35 +57,25 @@ public class BattleState extends SubState {
 				   (this.equals(shielddefense) && attack.equals(thrust));
 		}
 		
-		public int newOponentHp(int oponenthp) {
+		public int hpDealt() {
 			switch(this) {
 			case feintandsidecut:
-				oponenthp -= new Random().nextInt(20)+60;
-				break;
+				return new Random().nextInt(20)+60;
 			case thrust:
-				oponenthp -= new Random().nextInt(10)+50;
-				break;
+				return new Random().nextInt(10)+50;
 			default:
-				break;
+				return 0;
 			}
-			if(oponenthp < 0) {
-				oponenthp = 0;
-			}
-			return oponenthp;
+			
 		}
 		
-		public int newSelfHp(int selfhp, int maxhp) {
+		public int hpHealed() {
 			switch(this) {
 			case heal:
-				selfhp += new Random().nextInt(10)+55;
-				break;
+				return new Random().nextInt(10)+55;
 			default:
-				break;
+				return 0;
 			}
-			if(selfhp > maxhp) {
-				selfhp = maxhp;
-			}
-			return selfhp;
 		}
 	}
 	
@@ -100,7 +96,9 @@ public class BattleState extends SubState {
 		active = Util.getset();
 		
 		try {
+			text = new BattleText(this);
 			menu = new BattleMenu(this);
+			
 		} catch (SlickException e) {
 			e.printStackTrace();
 			throw new NullPointerException();
@@ -119,41 +117,74 @@ public class BattleState extends SubState {
 			menu.paralelupdate(container, delta, null);
 			break;
 		case enemyturn:
+			ArrayList<CommonOption> options = new ArrayList<CommonOption>();
 			enemyattack = Attack.values()[new Random().nextInt(Attack.values().length)];
-			
-			nextplayerhp = playerattack.newSelfHp((int)playerhp, playermaxhp);
-			nextenemyhp = enemyattack.newSelfHp((int)enemyhp, enemymaxhp);
-			
-			System.out.println("Player healed "+(nextplayerhp-playerhp));
-			System.out.println("Enemy healed "+(nextenemyhp-enemyhp));
-			if(!enemyattack.negates(playerattack)) {
-				nextenemyhp = playerattack.newOponentHp((int)enemyhp);
+			options.add(new CommonOption("You used "+playerattack.name()+". Enemy used "+enemyattack.name()));
+
+			int healed = playerattack.hpHealed();
+			if(healed > 0) {
+				options.add(new CommonOption("Player healed "+healed+" HP"));
 			}
-			else {
-				System.out.println("Player attack negated");
+			nextplayerhp = (int) (playerhp+healed);
+			if(nextplayerhp > playermaxhp) {
+				nextplayerhp = playermaxhp;
 			}
+			healed = enemyattack.hpHealed();
+			if(healed > 0) {
+				options.add(new CommonOption("Enemy healed "+healed+" HP"));
+			}
+			nextenemyhp = (int) (enemyhp+healed);
+			if(nextenemyhp > enemymaxhp) {
+				nextenemyhp = enemymaxhp;
+			}
+			
 			if(!playerattack.negates(enemyattack)) {
-				nextplayerhp = enemyattack.newOponentHp((int)enemyhp);
+				int dealt = enemyattack.hpDealt();
+				if(dealt > 0) {
+					options.add(new CommonOption("Enemy dealt "+dealt+" HP"));
+				}
+				nextplayerhp -= dealt;
+				if(nextplayerhp < 0) {
+					nextplayerhp = 0;
+				}
 			}
 			else {
-				System.out.println("Enemy attack negated");
+				options.add(new CommonOption("Enemy attack negated"));
 			}
+			if(!enemyattack.negates(playerattack)) {
+				int dealt = playerattack.hpDealt();
+				if(dealt > 0) {
+					options.add(new CommonOption("Player dealt "+dealt+" HP"));
+				}
+				nextenemyhp -= dealt;
+				if(nextenemyhp < 0) {
+					nextenemyhp = 0;
+				}
+			}
+			else {
+				options.add(new CommonOption("Player attack negated"));
+			}
+			
 			
 			
 			stance = Stance.calculatenewhealth;
-			System.out.println("You used "+playerattack.name()+". Enemy used "+enemyattack.name());
-			System.out.println("Player: "+nextplayerhp+"\t\tEnemy: "+nextenemyhp);
+			
+			//System.out.println("Player: "+nextplayerhp+"\t\tEnemy: "+nextenemyhp);
+			//System.out.println();
+			options.add(new CommonOption("Player: "+playerhp+"\t\tEnemy: "+enemyhp));
+			text.setOptions(options.toArray(new FlowEventInterface[]{}));
+			text.setSelected(-1);
 			break;
 		case calculatenewhealth: 
 			if(playerhp != nextplayerhp) {
 				if(playerhp > nextplayerhp) {
-					playerhp -= delta*0.01;
+					playerhp -= delta*0.02;
 					if(playerhp < nextplayerhp) {
 						playerhp = nextplayerhp;
 					}
 				}
 				else {
-					playerhp += delta*0.01;
+					playerhp += delta*0.02;
 					if(playerhp > nextplayerhp) {
 						playerhp = nextplayerhp;
 					}
@@ -161,29 +192,33 @@ public class BattleState extends SubState {
 			}
 			if(enemyhp != nextenemyhp) {
 				if(enemyhp > nextenemyhp) {
-					enemyhp -= delta*0.01;
+					enemyhp -= delta*0.02;
 					if(enemyhp < nextenemyhp) {
 						enemyhp = nextenemyhp;
 					}
 				}
 				else {
-					enemyhp += delta*0.01;
+					enemyhp += delta*0.02;
 					if(enemyhp > nextenemyhp) {
 						enemyhp = nextenemyhp;
 					}
 				}
 			}
-			if(playerhp == 0 && enemyhp != 0) {
-				stance = Stance.loose;
-			}
-			else if(playerhp != 0 && enemyhp == 0) {
-				stance = Stance.win;
-			}
-			else if(playerhp == 0 && enemyhp == 0) {
-				stance = Stance.draw;
-			}
-			else if(playerhp == nextplayerhp && enemyhp == nextenemyhp) {
-				stance = Stance.playerturn;
+			text.getOptions()[text.getOptions().length-1] = new CommonOption("Player: "+(int)playerhp+"   Enemy: "+(int)enemyhp);
+			
+			if(playerhp == nextplayerhp && enemyhp == nextenemyhp) {
+				if(playerhp == 0 && enemyhp != 0) {
+					stance = Stance.loose;
+				}
+				else if(playerhp != 0 && enemyhp == 0) {
+					stance = Stance.win;
+				}
+				else if(playerhp == 0 && enemyhp == 0) {
+					stance = Stance.draw;
+				}
+				else {
+					stance = Stance.playerturn;
+				}
 			}
 			break;
 		case draw:
@@ -201,6 +236,7 @@ public class BattleState extends SubState {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		menu.postrender(container, g, 0, 0);
+		text.postrender(container, g, 0, 0);
 		// TODO Auto-generated method stub
 
 	}

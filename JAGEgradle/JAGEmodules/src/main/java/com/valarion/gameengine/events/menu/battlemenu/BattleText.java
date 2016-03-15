@@ -21,25 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.events.menu.ingamemenu;
+package com.valarion.gameengine.events.menu.battlemenu;
 
 import org.newdawn.slick.SlickException;
 
 import com.valarion.gameengine.events.menu.OptionsMenu;
 import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
-import com.valarion.gameengine.gamestates.SubState;
+import com.valarion.gameengine.gamestates.BattleState;
+import com.valarion.gameengine.gamestates.Database;
 
 /**
  * Ingame menu.
+ * 
  * @author Rubén Tomás Gracia
  *
  */
-public class MenuMain extends OptionsMenu {
+public class BattleText extends OptionsMenu {
 
-	public MenuMain(SubState instance) throws SlickException {
-		super(true, instance, OptionsMenu.XPosition.right,
-				OptionsMenu.YPosition.top, new FlowEventInterface[] { new SaveMenu(),
-						new MenuExit() });
-		loadEvent(null,instance);
+	public BattleText(BattleState instance) throws SlickException {
+		super(true, instance, OptionsMenu.XPosition.right, OptionsMenu.YPosition.bot, Database.instance().getWindowimages().get("2x1"), new FlowEventInterface[]{});
+		loadEvent(null, instance);
+	}
+	
+	public void setOptions(FlowEventInterface... options) {
+		this.options = options;
+	}
+	
+	public FlowEventInterface[] getOptions() {
+		return options;
 	}
 }

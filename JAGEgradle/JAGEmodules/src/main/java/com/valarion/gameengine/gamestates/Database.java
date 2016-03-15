@@ -225,6 +225,15 @@ public class Database {
 							* /*GameCore.getInstance().getApp().getGraphics().getFont()*/DEFAULT_FONT
 									.getLineHeight() * 2, true));
 		}
+		
+		for(int i=1;i<=3;i++) {
+			for(int j=1;j<=3;j++) {
+				windowimages.put(
+						i+"x"+j,
+						w.createWindow(GameCore.getInstance().getApp().getWidth() * i / 3, 
+								GameCore.getInstance().getApp().getHeight() * j / 3, true));
+			}
+		}
 	}
 	
 	/**

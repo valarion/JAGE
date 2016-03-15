@@ -45,13 +45,13 @@ import com.valarion.gameengine.util.WindowImage;
  */
 public class OptionsMenu extends FlowEventClass {
 
-	public static final int top = 0;
-	public static final int mid = 1;
-	public static final int bot = 2;
-
-	public static final int left = 0;
-	public static final int center = 1;
-	public static final int right = 2;
+	public static enum XPosition {
+		left,right,center
+	}
+	
+	public static enum YPosition {
+		top,mid,bot
+	}
 
 	protected FlowEventInterface options[];
 
@@ -59,19 +59,22 @@ public class OptionsMenu extends FlowEventClass {
 
 	protected int selected = 0;
 
-	protected int xpos, ypos;
+	protected XPosition xpos;
+	protected YPosition ypos;
 
 	protected SubState instance;
 
 	protected boolean closeoncancel;
-
-	public OptionsMenu(boolean closeoncancel, SubState instance, int xpos,
-			int ypos, FlowEventInterface... options) {
+	
+	public OptionsMenu(boolean closeoncancel, SubState instance, XPosition xpos,
+			YPosition ypos, WindowImage window, FlowEventInterface... options) {
 		this.xpos = xpos;
 		this.ypos = ypos;
 		this.options = options;
 		this.instance = instance;
 		this.closeoncancel = closeoncancel;
+		
+		this.window = window;
 
 		for (FlowEventInterface e : options) {
 			try {
@@ -81,6 +84,13 @@ public class OptionsMenu extends FlowEventClass {
 				throw new RuntimeException();
 			}
 		}
+	}
+
+	public OptionsMenu(boolean closeoncancel, SubState instance, XPosition xpos,
+			YPosition ypos, FlowEventInterface... options) {
+		this(closeoncancel,instance,xpos,ypos,Database.instance().getWindowimages()
+				.get(Integer.toString(options.length)),options);
+		
 	}
 
 	@Override
@@ -117,8 +127,6 @@ public class OptionsMenu extends FlowEventClass {
 	@Override
 	public void postrender(GameContainer container, Graphics g, int tilewidth,
 			int tileheight) throws SlickException {
-		window = Database.instance().getWindowimages()
-				.get(Integer.toString(options.length));
 		window.setShowArrow(false);
 		Graphics i = window.getContain().getGraphics();
 		i.clear();
@@ -152,21 +160,29 @@ public class OptionsMenu extends FlowEventClass {
 		Image end = window.getImage();
 		x = 0;
 		switch (xpos) {
-		case 1:
+		case center:
 			x = container.getWidth() / 2 - end.getWidth() / 2;
 			break;
-		case 2:
+		case right:
 			x = container.getWidth() - end.getWidth();
+		default:
+			break;
 		}
 		y = 0;
 		switch (ypos) {
-		case 1:
+		case mid:
 			y = container.getHeight() / 2 - end.getHeight() / 2;
 			break;
-		case 2:
-			x = container.getHeight() - end.getHeight();
+		case bot:
+			y = container.getHeight() - end.getHeight();
+		default:
+			break;
 		}
 
 		g.drawImage(window.getImage(), x, y);
+	}
+	
+	public void setSelected(int selected) {
+		this.selected = selected;
 	}
 }
