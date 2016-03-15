@@ -49,9 +49,9 @@ public class BattleState extends SubState {
 
 	public static enum Attack {
 
-		thrust("Thrust","Deals 50-60 HP. Negates feint and side cut."), 
-		feintandsidecut("Feint and side cut","Deals 60-80 HP. Negates shield defense."), 
-		shielddefense("Shield defense","Negates thrust. Deals 10-30 damage if enemy used it."), 
+		thrust("Thrust","Deals 50-60 HP. Negates \"feint and side cut\"."), 
+		feintandsidecut("Feint and side cut","Deals 60-80 HP. Negates \"shield defense\"."), 
+		shielddefense("Shield defense","Negates \"thrust\". Deals 10-30 damage if enemy used it."), 
 		heal("Heal","Heals 55-65 HP.");
 		
 		private Attack(String name, String tooltip) {
@@ -70,7 +70,8 @@ public class BattleState extends SubState {
 		 * @return
 		 */
 		public boolean negates(Attack attack) {
-			return (this.equals(thrust) && attack.equals(feintandsidecut))
+			return (this.equals(attack) && (this.equals(thrust) || this.equals(feintandsidecut)))
+					|| (this.equals(thrust) && attack.equals(feintandsidecut))
 					|| (this.equals(feintandsidecut) && attack.equals(shielddefense))
 					|| (this.equals(shielddefense) && attack.equals(thrust));
 		}
@@ -154,8 +155,8 @@ public class BattleState extends SubState {
 			break;
 		case enemyturn:
 			ArrayList<CommonOption> options = new ArrayList<CommonOption>();
-			enemyattack = Attack.values()[new Random().nextInt(Attack.values().length)];
-			options.add(new CommonOption("You used " + playerattack.name() + ". Enemy used " + enemyattack.name()));
+			enemyattack = Attack.values()[new Random().nextInt(Attack.values().length-(enemyhp==enemymaxhp?1:0))];
+			options.add(new CommonOption("You used " + playerattack.toString() + ". Enemy used " + enemyattack.toString()));
 
 			int healed = playerattack.hpHealed();
 			if (healed > 0) {

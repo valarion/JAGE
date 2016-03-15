@@ -40,17 +40,32 @@ import com.valarion.gameengine.util.WindowImage;
 
 /**
  * Describes the functioning of an options menu.
+ * 
  * @author Rubén Tomás Gracia
  *
  */
 public class OptionsMenu extends FlowEventClass {
 
 	public static enum XPosition {
-		left,right,center
+		left, right, center, custom;
+
+		protected int position;
+
+		public static XPosition customPosition(int position) {
+			custom.position = position;
+			return custom;
+		}
 	}
-	
+
 	public static enum YPosition {
-		top,mid,bot
+		top, mid, bot, custom;
+
+		protected int position;
+
+		public static YPosition customPosition(int position) {
+			custom.position = position;
+			return custom;
+		}
 	}
 
 	protected FlowEventInterface options[];
@@ -65,15 +80,15 @@ public class OptionsMenu extends FlowEventClass {
 	protected SubState instance;
 
 	protected boolean closeoncancel;
-	
-	public OptionsMenu(boolean closeoncancel, SubState instance, XPosition xpos,
-			YPosition ypos, WindowImage window, FlowEventInterface... options) {
+
+	public OptionsMenu(boolean closeoncancel, SubState instance, XPosition xpos, YPosition ypos, WindowImage window,
+			FlowEventInterface... options) {
 		this.xpos = xpos;
 		this.ypos = ypos;
 		this.options = options;
 		this.instance = instance;
 		this.closeoncancel = closeoncancel;
-		
+
 		this.window = window;
 
 		for (FlowEventInterface e : options) {
@@ -86,16 +101,15 @@ public class OptionsMenu extends FlowEventClass {
 		}
 	}
 
-	public OptionsMenu(boolean closeoncancel, SubState instance, XPosition xpos,
-			YPosition ypos, FlowEventInterface... options) {
-		this(closeoncancel,instance,xpos,ypos,Database.instance().getWindowimages()
-				.get(Integer.toString(options.length)),options);
-		
+	public OptionsMenu(boolean closeoncancel, SubState instance, XPosition xpos, YPosition ypos,
+			FlowEventInterface... options) {
+		this(closeoncancel, instance, xpos, ypos,
+				Database.instance().getWindowimages().get(Integer.toString(options.length)), options);
+
 	}
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta,
-			SubTiledMap map) throws SlickException {
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		Input input = container.getInput();
 		if (input.isKeyPressed(Controls.accept)) {
 			FlowEventInterface menu = options[selected];
@@ -125,8 +139,7 @@ public class OptionsMenu extends FlowEventClass {
 	}
 
 	@Override
-	public void postrender(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
+	public void postrender(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 		window.setShowArrow(false);
 		Graphics i = window.getContain().getGraphics();
 		i.clear();
@@ -145,11 +158,9 @@ public class OptionsMenu extends FlowEventClass {
 				i.drawImage(arrow, x - separation, y);
 			}
 			if (!options[in].isWorking()) {
-				i.getFont().drawString(x, y, options[in].toString(),
-						Color.black);
+				i.getFont().drawString(x, y, options[in].toString(), Color.black);
 			} else {
-				i.getFont().drawString(x, y, options[in].toString(),
-						Color.white);
+				i.getFont().drawString(x, y, options[in].toString(), Color.white);
 			}
 
 			y += linewidth;
@@ -165,6 +176,10 @@ public class OptionsMenu extends FlowEventClass {
 			break;
 		case right:
 			x = container.getWidth() - end.getWidth();
+			break;
+		case custom:
+			x = xpos.position;
+			break;
 		default:
 			break;
 		}
@@ -175,17 +190,21 @@ public class OptionsMenu extends FlowEventClass {
 			break;
 		case bot:
 			y = container.getHeight() - end.getHeight();
+			break;
+		case custom:
+			y = ypos.position;
+			break;
 		default:
 			break;
 		}
 
 		g.drawImage(window.getImage(), x, y);
 	}
-	
+
 	public void setSelected(int selected) {
 		this.selected = selected;
 	}
-	
+
 	public int getSelected() {
 		return selected;
 	}
