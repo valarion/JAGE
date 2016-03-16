@@ -270,12 +270,15 @@ public class BattleState extends SubState {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		
+		// Dialogs
 		menu.postrender(container, g, 0, 0);
 		text.postrender(container, g, 0, 0);
 		if(stance.equals(Stance.playerturn)) {
 			tooltip.setOptions(new CommonOption(((BattleOption)menu.getOptions()[menu.getSelected()]).getToolTip()));
 			tooltip.postrender(container, g, 0, 0);
 		}
+		// Enemy
 		if(enemy != null) {
 			int maxw = container.getWidth();
 			int maxh = container.getHeight() - menu.getWindow().getWindow().getHeight() - tooltip.getWindow().getWindow().getHeight();
@@ -289,15 +292,31 @@ public class BattleState extends SubState {
 			float y = maxh/2-finalh/2 + tooltip.getWindow().getWindow().getHeight();
 			
 			if(!stance.equals(Stance.calculatenewhealth) || nextenemyhp >= enemyhp || System.currentTimeMillis() % 400 < 200) {
-				Color c = Color.white;;
+				Color c = Color.white;
 				if(nextenemyhp > enemyhp && System.currentTimeMillis() % 400 < 200) {
 					c = Color.green;
 				}
 				g.drawImage(enemy, x, y, x+finalw, y+finalh, 0, 0, enemy.getWidth(), enemy.getHeight(),c);
 			}
 		}
-		// TODO Auto-generated method stub
 
+		// Health bars
+		int w = text.getWindow().getContain().getGraphics().getFont().getWidth("                                          ");
+		int h = text.getWindow().getContain().getGraphics().getFont().getLineHeight();
+		
+		int x = container.getWidth()/2-w/2;
+		int y = container.getHeight()-h-text.getWindow().getWindow().getHeight();
+		
+		Image healthbar = Database.instance().getImages().get("healthbar");
+		
+		g.setColor(Color.red);
+		g.fillRect(x+w/100, y, w*98/100*enemyhp/enemymaxhp, h);
+		
+		g.drawImage(healthbar, x, y, x+w, y+h, 0, 0, healthbar.getWidth(), healthbar.getHeight());
+		
+		g.setColor(Color.white);
+		g.drawString(Integer.toString((int)enemyhp), x+w+2, y);
+		g.drawString(" / "+Integer.toString((int)enemymaxhp), x+w+2+g.getFont().getWidth(Integer.toString((int)enemymaxhp)), y);
 	}
 
 	@Override
