@@ -281,7 +281,7 @@ public class BattleState extends SubState {
 		// Enemy
 		if(enemy != null) {
 			int maxw = container.getWidth();
-			int maxh = container.getHeight() - menu.getWindow().getWindow().getHeight() - tooltip.getWindow().getWindow().getHeight();
+			int maxh = container.getHeight() - menu.getWindow().getWindow().getHeight() - tooltip.getWindow().getWindow().getHeight()-text.getWindow().getContain().getGraphics().getFont().getLineHeight();
 			float wratio = maxw / (float)enemy.getWidth();
 			float hratio = maxh / (float)enemy.getHeight();
 			float ratio = Math.min(wratio, hratio);
