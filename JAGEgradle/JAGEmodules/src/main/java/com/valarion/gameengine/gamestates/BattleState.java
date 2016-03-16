@@ -131,7 +131,7 @@ public class BattleState extends SubState {
 		try {
 			text = new BattleText(this,XPosition.right,YPosition.bot,"2x1");
 			text.setOptions(new FlowEventInterface[] { new CommonOption(""), new CommonOption(""), new CommonOption(""),
-					new CommonOption("Player: " + (int) playerhp + "   Enemy: " + (int) enemyhp) });
+					new CommonOption("Player: ") });
 			text.setSelected(-1);
 			tooltip = new BattleText(this,XPosition.center,YPosition.top,"loadtop");
 			tooltip.setSelected(-1);
@@ -209,7 +209,7 @@ public class BattleState extends SubState {
 			for(int i=options.size();i<3;i++) {
 				options.add(new CommonOption(""));
 			}
-			options.add(new CommonOption("Player: " + (int) playerhp + "\t\tEnemy: " + (int) enemyhp));
+			options.add(new CommonOption("Player: "));
 			text.setOptions(options.toArray(new FlowEventInterface[] {}));
 			playerattack=null;
 			enemyattack=null;
@@ -242,7 +242,7 @@ public class BattleState extends SubState {
 				}
 			}
 			text.getOptions()[text.getOptions().length - 1] = new CommonOption(
-					"Player: " + (int) playerhp + "   Enemy: " + (int) enemyhp);
+					"Player: ");
 
 			if (playerhp == nextplayerhp && enemyhp == nextenemyhp) {
 				if (playerhp == 0 && enemyhp != 0) {
@@ -301,13 +301,13 @@ public class BattleState extends SubState {
 		}
 
 		// Health bars
+		Image healthbar = Database.instance().getImages().get("healthbar");
 		int w = text.getWindow().getContain().getGraphics().getFont().getWidth("                                          ");
 		int h = text.getWindow().getContain().getGraphics().getFont().getLineHeight();
 		
+		// Enemy health bar
 		int x = container.getWidth()/2-w/2;
 		int y = container.getHeight()-h-text.getWindow().getWindow().getHeight();
-		
-		Image healthbar = Database.instance().getImages().get("healthbar");
 		
 		g.setColor(Color.red);
 		g.fillRect(x+w/100, y, w*98/100*enemyhp/enemymaxhp, h);
@@ -317,6 +317,19 @@ public class BattleState extends SubState {
 		g.setColor(Color.white);
 		g.drawString(Integer.toString((int)enemyhp), x+w+2, y);
 		g.drawString(" / "+Integer.toString((int)enemymaxhp), x+w+2+g.getFont().getWidth(Integer.toString((int)enemymaxhp)), y);
+	
+		// Player health bar
+		x = menu.getWindow().getWindow().getWidth()+menu.getWindow().getModel().getImage("left").getWidth()+text.getWindow().getContain().getWidth()/20+(int) (((float) (text.getWindow().getModel().getImage("rightArrow").getWidth())) * 1.5f)+text.getWindow().getContain().getGraphics().getFont().getWidth(" Player: ");
+		y = (int) (container.getHeight()-text.getWindow().getWindow().getHeight()+text.getWindow().getModel().getImage("top").getHeight()+text.getWindow().getContain().getGraphics().getFont().getLineHeight()*6.5f);
+	
+		g.setColor(Color.red);
+		g.fillRect(x+w/100, y, w*98/100*playerhp/playermaxhp, h);
+		
+		g.drawImage(healthbar, x, y, x+w, y+h, 0, 0, healthbar.getWidth(), healthbar.getHeight());
+		
+		g.setColor(Color.white);
+		g.drawString(Integer.toString((int)playerhp), x+w+2, y);
+		g.drawString(" / "+Integer.toString((int)playermaxhp), x+w+2+g.getFont().getWidth(Integer.toString((int)playermaxhp)), y);
 	}
 
 	@Override
