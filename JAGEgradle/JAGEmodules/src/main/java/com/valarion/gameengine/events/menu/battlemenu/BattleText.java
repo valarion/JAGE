@@ -42,12 +42,5 @@ public class BattleText extends OptionsMenu {
 		super(false, instance, xpos,ypos, Database.instance().getWindowimages().get(window), new FlowEventInterface[]{});
 		loadEvent(null, instance);
 	}
-	
-	public void setOptions(FlowEventInterface... options) {
-		this.options = options;
-	}
-	
-	public FlowEventInterface[] getOptions() {
-		return options;
-	}
+
 }

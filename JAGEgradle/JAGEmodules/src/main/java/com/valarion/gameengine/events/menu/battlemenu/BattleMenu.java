@@ -53,8 +53,4 @@ public class BattleMenu extends OptionsMenu {
 						new BattleOption(instance, BattleState.Attack.heal) });
 		loadEvent(null, instance);
 	}
-
-	public FlowEventInterface[] getOptions() {
-		return options;
-	}
 }

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -274,6 +275,26 @@ public class BattleState extends SubState {
 		if(stance.equals(Stance.playerturn)) {
 			tooltip.setOptions(new CommonOption(((BattleOption)menu.getOptions()[menu.getSelected()]).getToolTip()));
 			tooltip.postrender(container, g, 0, 0);
+		}
+		if(enemy != null) {
+			int maxw = container.getWidth();
+			int maxh = container.getHeight() - menu.getWindow().getWindow().getHeight() - tooltip.getWindow().getWindow().getHeight();
+			float wratio = maxw / (float)enemy.getWidth();
+			float hratio = maxh / (float)enemy.getHeight();
+			float ratio = Math.min(wratio, hratio);
+			float finalw = enemy.getWidth()*ratio;
+			float finalh = enemy.getHeight()*ratio;
+			
+			float x = maxw/2-finalw/2;
+			float y = maxh/2-finalh/2 + tooltip.getWindow().getWindow().getHeight();
+			
+			if(!stance.equals(Stance.calculatenewhealth) || nextenemyhp >= enemyhp || System.currentTimeMillis() % 400 < 200) {
+				Color c = Color.white;;
+				if(nextenemyhp > enemyhp && System.currentTimeMillis() % 400 < 200) {
+					c = Color.green;
+				}
+				g.drawImage(enemy, x, y, x+finalw, y+finalh, 0, 0, enemy.getWidth(), enemy.getHeight(),c);
+			}
 		}
 		// TODO Auto-generated method stub
 

@@ -80,6 +80,9 @@ public class OptionsMenu extends FlowEventClass {
 	protected SubState instance;
 
 	protected boolean closeoncancel;
+	
+	protected int x;
+	protected int y;
 
 	public OptionsMenu(boolean closeoncancel, SubState instance, XPosition xpos, YPosition ypos, WindowImage window,
 			FlowEventInterface... options) {
@@ -98,6 +101,13 @@ public class OptionsMenu extends FlowEventClass {
 				e1.printStackTrace();
 				throw new RuntimeException();
 			}
+		}
+		
+		if(xpos.equals(XPosition.custom)) {
+			x = xpos.position;
+		}
+		if(ypos.equals(YPosition.custom)) {
+			y = ypos.position;
 		}
 	}
 
@@ -178,7 +188,7 @@ public class OptionsMenu extends FlowEventClass {
 			x = container.getWidth() - end.getWidth();
 			break;
 		case custom:
-			x = xpos.position;
+			x = this.x;
 			break;
 		default:
 			break;
@@ -192,7 +202,7 @@ public class OptionsMenu extends FlowEventClass {
 			y = container.getHeight() - end.getHeight();
 			break;
 		case custom:
-			y = ypos.position;
+			y = this.y;
 			break;
 		default:
 			break;
@@ -207,5 +217,17 @@ public class OptionsMenu extends FlowEventClass {
 
 	public int getSelected() {
 		return selected;
+	}
+	
+	public FlowEventInterface[] getOptions() {
+		return options;
+	}
+	
+	public void setOptions(FlowEventInterface... options) {
+		this.options = options;
+	}
+	
+	public WindowImage getWindow() {
+		return window;
 	}
 }

@@ -59,6 +59,7 @@
 	</window>
 	<image name="testface" src="face/witch.png" x="0" y="0" w="96" h="96"></image>
 	<image name="title" src="image/scene01.jpg"></image>
+	<image name="knight" src="image/knight.png"></image>
 	<sound name="menumove" src="Decision1.ogg"></sound>
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>
