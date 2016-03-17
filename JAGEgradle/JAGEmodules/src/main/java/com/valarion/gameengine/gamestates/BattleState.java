@@ -348,5 +348,9 @@ public class BattleState extends SubState {
 		this.enemyattack = null;
 		this.stance = Stance.enemyturn;
 	}
+	
+	public Stance getResult() {
+		return stance;
+	}
 
 }

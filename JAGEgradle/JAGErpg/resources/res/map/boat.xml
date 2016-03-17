@@ -3,7 +3,18 @@
 	<GameEvent>
 		<page x="9" y="5" layer="player"  type="activation" sprite="TestSprite" >
 			<events>
-				<Battle enemyhp="100" playerhp="100" image="knight"/>
+				<Battle enemyhp="100" playerhp="100" image="knight">
+					<win>
+						<Dialog image="testface">
+							<Text>Congratulations!</Text>
+						</Dialog>
+					</win>
+					<loose>
+						<Dialog image="testface">
+							<Text>Looooooooooseeeeeeeer!</Text>
+						</Dialog>
+					</loose>
+				</Battle>
 			</events>
 		</page>
 	</GameEvent>

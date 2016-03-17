@@ -144,6 +144,7 @@ public class GameCore extends BasicGame {
 	public void update(GameContainer container, int delta)
 			throws SlickException {
 		active.update(container, delta);
+		container.getInput().clearKeyPressedRecord();
 	}
 
 	@Override
