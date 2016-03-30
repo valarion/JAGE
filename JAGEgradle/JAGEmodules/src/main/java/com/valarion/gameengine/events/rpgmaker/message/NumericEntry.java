@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.events.rpgmaker.messages;
+package com.valarion.gameengine.events.rpgmaker.message;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;

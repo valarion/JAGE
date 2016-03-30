@@ -1,4 +1,4 @@
-package com.valarion.gameengine.events.rpgmaker.messages;
+package com.valarion.gameengine.events.rpgmaker.message;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

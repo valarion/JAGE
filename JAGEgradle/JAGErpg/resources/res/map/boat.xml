@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <mapevents>
 	<GameEvent>
-		<page x="9" y="5" layer="player"  type="activation" sprite="TestSprite" >
+		<page x="9" y="5" layer="player" type="activation" sprite="TestSprite">
 			<events>
+				<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
 				<Battle enemyhp="100" playerhp="100" image="knight">
 					<win>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
 						<Dialog image="testface">
 							<Text>Congratulations!</Text>
 						</Dialog>
+
 					</win>
 					<loose>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
 						<Dialog image="testface">
 							<Text>Looooooooooseeeeeeeer!</Text>
 						</Dialog>

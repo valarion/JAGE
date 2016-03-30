@@ -52,6 +52,8 @@ public class Database {
 	protected boolean initialized;
 
 	protected UnicodeFont DEFAULT_FONT;
+
+	protected String music;
 	
 	public UnicodeFont getDefaultFont() {
 		return DEFAULT_FONT;
@@ -306,6 +308,7 @@ public class Database {
 	 * @return
 	 */
 	public boolean playMusic(String name) {
+		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
 			m.play();
@@ -323,6 +326,7 @@ public class Database {
 	 * @return
 	 */
 	public boolean playMusic(String name, float volume, float pitch) {
+		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
 			m.play(pitch, volume);
@@ -338,6 +342,7 @@ public class Database {
 	 * @return
 	 */
 	public boolean loopMusic(String name) {
+		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
 			m.loop();
@@ -355,6 +360,7 @@ public class Database {
 	 * @return
 	 */
 	public boolean loopMusic(String name, float volume, float pitch) {
+		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
 			m.loop(pitch, volume);
@@ -400,6 +406,7 @@ public class Database {
 	 * @return
 	 */
 	public boolean resumeMusic(String name) {
+		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
 			m.resume();
@@ -418,6 +425,7 @@ public class Database {
 	 * @return
 	 */
 	public boolean fadeMusic(String name, int duration, float endVolume, boolean stopAfterFade) {
+		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
 			m.fade(duration, endVolume, stopAfterFade);
@@ -624,6 +632,10 @@ public class Database {
 		} else {
 			return false;
 		}
+	}
+
+	public String getMusic() {
+		return music;
 	}
 
 }
