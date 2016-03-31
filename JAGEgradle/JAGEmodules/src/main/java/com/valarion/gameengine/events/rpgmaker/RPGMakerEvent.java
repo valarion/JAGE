@@ -105,6 +105,8 @@ public class RPGMakerEvent extends FlowEventClass {
 	protected boolean movementfirst = true;
 	protected int ignored = Moving.NOTHING;
 	protected int prevignored = Moving.NOTHING;
+	
+	protected boolean rendersprite = true;
 
 	protected Iterator<Integer> activeiterator;
 	protected Route activeroute;
@@ -161,11 +163,13 @@ public class RPGMakerEvent extends FlowEventClass {
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth,
 			int tileheight) throws SlickException {
-		if(sprite != null) {
-			sprite.draw(getXDraw(tilewidth), getYDraw(tileheight));
-		}
-		else if(tile != null) {
-			g.drawImage(tile, getXDraw(tilewidth), getYDraw(tileheight));
+		if(rendersprite) {
+			if(sprite != null) {
+				sprite.draw(getXDraw(tilewidth), getYDraw(tileheight));
+			}
+			else if(tile != null) {
+				g.drawImage(tile, getXDraw(tilewidth), getYDraw(tileheight));
+			}
 		}
 		
 		if (active != null)
@@ -193,6 +197,7 @@ public class RPGMakerEvent extends FlowEventClass {
 		}
 		if(tileId>=0) {
 			TileSet tileset = map.getTileSetByGID(tileId);
+			tileId -= tileset.firstGID-1;
 			tile = tileset.tiles.getSubImage(tileset.getTileX(tileId), tileset.getTileY(tileId));
 		}
 		
@@ -824,6 +829,10 @@ public class RPGMakerEvent extends FlowEventClass {
 	@Override
 	public void setBlocking(boolean blocking) {
 		ghost = !blocking;
+	}
+	
+	public void setRendersprite(boolean state) {
+		rendersprite = state;
 	}
 }
 

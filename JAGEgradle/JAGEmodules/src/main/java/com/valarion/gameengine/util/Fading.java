@@ -4,8 +4,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import com.valarion.gameengine.gamestates.Database;
-
 public class Fading {
 	Color start;
 	Color end;

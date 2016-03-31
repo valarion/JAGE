@@ -171,7 +171,12 @@ public class Dialog extends FlowEventClass {
 			}
 
 			i.flush();
-			g.drawImage(window.getImage(), 0, y);
+			if(position == MID){
+				g.drawImage(window.getContain(), 0, y);
+			}
+			else {
+				g.drawImage(window.getImage(), 0, y);
+			}
 		}
 	}
 
@@ -199,7 +204,7 @@ public class Dialog extends FlowEventClass {
 
 		String ap = node.getAttribute("apear");
 
-		if ("true".equals(ap))
+		if ("true".equalsIgnoreCase(ap))
 			apear = true;
 
 		strings = getDialog(node, this);

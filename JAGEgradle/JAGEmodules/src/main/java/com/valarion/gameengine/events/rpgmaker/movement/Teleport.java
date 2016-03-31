@@ -141,7 +141,7 @@ public class Teleport extends FlowEventClass {
 	@Override
 	public void performAction(GameContainer container, SubTiledMap map, Event e)
 			throws SlickException {
-		if (e instanceof Player && !teleporting) {
+		if (!teleporting) {
 			teleporting = true;
 			shading = true;
 			alpha = 0;

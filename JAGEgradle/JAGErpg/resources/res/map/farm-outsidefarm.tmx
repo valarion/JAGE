@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="types" tilewidth="32" tileheight="32" tilecount="3">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="walkable"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="4" name="023-FarmVillage01" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../tileset/023-FarmVillage01.png" width="256" height="1024"/>
+ </tileset>
+ <tileset firstgid="260" name="024-FarmVillage02" tilewidth="32" tileheight="32" tilecount="184">
+  <image source="../tileset/024-FarmVillage02.png" width="256" height="736"/>
+ </tileset>
+ <tileset firstgid="444" name="170-Door01" tilewidth="32" tileheight="32" tilecount="32">
+  <image source="../tileset/170-Door01.png" width="128" height="256"/>
+ </tileset>
+ <tileset firstgid="476" name="soldier" tilewidth="32" tileheight="32" tilecount="96">
+  <image source="../tileset/soldier.png" width="384" height="256"/>
+ </tileset>
+ <tileset firstgid="572" name="tileset" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../tileset/tileset.png" width="512" height="512"/>
+ </tileset>
+ <layer name="floor" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3DQQ0AAAwDoXvUv+YJGSSsmqqqqu8eZouWbxAOAAA=
+  </data>
+ </layer>
+ <layer name="underplayer" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjgDZAZZjYQSswlN0+2MFhxoGx15cJla8KxGpImJoAOf2g20svgMteWqdtaviXHDcORDirDJC9DGj2UjtO8ZlHin+pmddJsZeacYLPLPRwotReJyB2hrJzgWbZEon9mKiXBrD5gR71IbXzUdwA2BsDxGlALAzEQkji2MKPGvbC7ElhID6t1JKQrojByO6gNaCXPYMRAAC6u6H/EA4AAA==
+  </data>
+ </layer>
+ <layer name="player" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UQQ0AIBAEsYPgXyQJPpCxOWgVzGuqAIAf7ZEu6GfNdAG863hSxAVFVF0KEA4AAA==
+  </data>
+ </layer>
+ <layer name="fence" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWDCdwE4ltAfJvO9j4E4kdA/BjKZwViNiIwOxBvgWJywEsgfgXEr6F8XiDmIwLzU2gvOhBFMg8fFqehvXvwqBOnkn3Y7MUHaGkvPrupba8sEMshYXrZOwpGwSgYBaNg+AJuIOYaRvYQAiPNvyMJAACMhCuYEA4AAA==
+  </data>
+ </layer>
+ <layer name="walls" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8WVuU4DMRCGp8ij8AhoC1BScRUIKICOkjdMGQgFBAqugqvgKjhSAKIIK0r+VXYkZxg747BrRvqkeLXxZ3v8Jw0iavwDa2AjMatgBWwlZrn0bieGve0AHbADdkEX7FF8yTlDXq59cAB64BAc1eTNhPcCXIIrcA1ulPmmPGtvi/dC3pZ4/xbcgXvwAB4Vb4dG+8F0I7xynU/gGbyAV9BX9lEU9+OUhj2RffF5tSqev4F38FHyqbxfjI/BifCegXPhzTz7lfMNwFc5zsG3Z51Wb0vxNun3GYbunNUr758lv9qd07B4LfcqFtfLpPC6OWc47zHeLNLr5pzhvMd4Q73UcHPu0jd6tbJ4Zc5l3uvq74CGOc/LteY0mve6vBq+8xrnnQGzYDpiziq8vu9ZnCFC/78+11+d7N0Uz2LzY0HuZV2sXatJPE0xlnup4swmoagF5/O4+2Upi3eObPmtwiXvVZ2/GyHvEphPzCL4AcUPxswQDgAA
+  </data>
+ </layer>
+ <layer name="doors" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWEwHs623cLSn+ns72jYBRQG+xnHBh7Dw+QvaNgFIxUMJrXR8EoGAWjYOgCAGiWqmgQDgAA
+  </data>
+ </layer>
+ <layer name="lateralroof" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAA8Gh7blyXEA4AAA==
+  </data>
+ </layer>
+ <layer name="roof" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAA8Gh7blyXEA4AAA==
+  </data>
+ </layer>
+ <layer name="types" width="30" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2VWxYAEAhEY/+LtoEUTQ8HH/OBjlsZdCLqX1erJQvhInWhXGscx+XGXP7e3JV+vsq1+IqbR+5UpJ+l2Kx79Lk+3N18EO6pfj6Ru9MzjSvl7NEb63oUN0qzd7uC67WvNo7yjlRn5tmu/MMZ9Vb6uUID0KEzYRAOAAA=
+  </data>
+ </layer>
+</map>

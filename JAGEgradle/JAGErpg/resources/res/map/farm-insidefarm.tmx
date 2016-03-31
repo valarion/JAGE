@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="massinnerchipset" tilewidth="32" tileheight="32" tilecount="1600">
+  <image source="../tileset/massinnerchipset.png" width="256" height="6400"/>
+ </tileset>
+ <tileset firstgid="1601" name="types" tilewidth="32" tileheight="32" tilecount="3">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="walkable"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="1604" name="soldier" tilewidth="32" tileheight="32" tilecount="96">
+  <image source="../tileset/soldier.png" width="384" height="256"/>
+ </tileset>
+ <layer name="floor" width="10" height="7">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgIA4wUQEz4xBnGWDzsfkPAEBhMLQYAQAA
+  </data>
+ </layer>
+ <layer name="walls" width="10" height="7">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACwtlZGDwJ4BDgNgDiOcy4MduUHVLGfBjmDpCgBbqfIHYHgmDgD2amA8QAwCxjE8IGAEAAA==
+  </data>
+ </layer>
+ <layer name="objects" width="10" height="7">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgIB2sZGRgsGRmYLACYmtmTPmJTBB6I1CdI1DeCYidsaibyYRgewLlvYDYG4i1WRgYdFgQcguZMPXSGgAAcYiRGxgBAAA=
+  </data>
+ </layer>
+ <layer name="player" width="10" height="7">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAXYAABs1fqEGAEAAA==
+  </data>
+ </layer>
+ <layer name="overplayer" width="10" height="7">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGDiwkgm7uCJQXBmHHDIwBKoxJkIdOQAAQgO8vRgBAAA=
+  </data>
+ </layer>
+ <layer name="types" width="10" height="7">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC3NiY2BwGiDsiAOTotaRSDX4zMUmDgA4sPpMGAEAAA==
+  </data>
+ </layer>
+</map>

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -46,6 +47,7 @@ import com.valarion.gameengine.util.GameSprite;
 
 /**
  * Class representing the player and all it's mechanics.
+ * 
  * @author Rubén Tomás Gracia
  *
  */
@@ -67,229 +69,253 @@ public class Player implements Event, Serializable {
 
 	protected float movingspeed = 0.1f;
 	protected float spritespeed = 1.0f;
-	
-	public Player(){}
+
+	protected Route movementrouteobject;
+	protected Iterator<Integer> movementiterator;
+
+	public Player() {
+	}
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map)
-			throws SlickException {
-		//TODO no se activa el teleport
-		Input input = container.getInput();
-		if (!isMoving() && GameCore.getInstance().getActive() instanceof SubState && ((SubState)GameCore.getInstance().getActive()).getActiveEvents().size() == 0
-				&& input.isKeyPressed(Controls.cancel)) {
-			((SubState)GameCore.getInstance().getActive()).getActiveEvents().add(new MenuMain(((SubState)GameCore.getInstance().getActive())));
-		}
-		boolean activated = false;
-		if (input.isKeyPressed(Controls.accept)) {
-			for (Event e : map.getEvents(xPos, yPos)) {
-				if (activated == true)
-					break;
-				activated = true;
-				e.onEventActivation(container, map, this);
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+		// TODO no se activa el teleport
+		if (sprite != null) {
+			Input input = container.getInput();
+			if (!isMoving() && GameCore.getInstance().getActive() instanceof SubState
+					&& ((SubState) GameCore.getInstance().getActive()).getActiveEvents().size() == 0
+					&& input.isKeyPressed(Controls.cancel)) {
+				((SubState) GameCore.getInstance().getActive()).getActiveEvents()
+						.add(new MenuMain(((SubState) GameCore.getInstance().getActive())));
 			}
-			switch (sprite.getDirection()) {
-			case GameSprite.UP:
-				for (Event e : map.getEvents(xPos, yPos - 1)) {
-					e.onEventActivation(container, map, this);
+			boolean activated = false;
+			if (input.isKeyPressed(Controls.accept)) {
+				for (Event e : map.getEvents(xPos, yPos)) {
 					if (activated == true)
 						break;
 					activated = true;
-				}
-				break;
-			case GameSprite.DOWN:
-				for (Event e : map.getEvents(xPos, yPos + 1)) {
 					e.onEventActivation(container, map, this);
-					if (activated == true)
-						break;
-					activated = true;
 				}
-				break;
-			case GameSprite.LEFT:
-				for (Event e : map.getEvents(xPos - 1, yPos)) {
-					e.onEventActivation(container, map, this);
-					if (activated == true)
-						break;
-					activated = true;
-				}
-				break;
-			case GameSprite.RIGHT:
-				for (Event e : map.getEvents(xPos + 1, yPos)) {
-					e.onEventActivation(container, map, this);
-					if (activated == true)
-						break;
-					activated = true;
-				}
-				break;
-			}
-		} else {
-			float multiplier = 1.0f;
-
-			if (input.isKeyDown(Controls.speedUp)) {
-				multiplier = 2.0f;
-			}
-
-			sprite.setMultiplier(multiplier);
-
-			if (moving) {
-				sprite.update(delta);
 				switch (sprite.getDirection()) {
 				case GameSprite.UP:
-					// The lower the delta the slowest the sprite will animate.
-					yOff -= delta * movingspeed * multiplier;
-					if (-yOff >= map.getTileHeight()) {
-						yOff = 0.0f;
-						map.getEvents(xPos, yPos).remove(this);
-						yPos--;
-						moving = false;
-					}
-					break;
-				case GameSprite.DOWN:
-					// The lower the delta the slowest the sprite will animate.
-					yOff += delta * movingspeed * multiplier;
-
-					if (yOff >= map.getTileHeight()) {
-						yOff = 0.0f;
-						map.getEvents(xPos, yPos).remove(this);
-						yPos++;
-						moving = false;
-					}
-					break;
-				case GameSprite.LEFT:
-					// The lower the delta the slowest the sprite will animate.
-					xOff -= delta * movingspeed * multiplier;
-
-					if (-xOff >= map.getTileWidth()) {
-						xOff = 0.0f;
-						map.getEvents(xPos, yPos).remove(this);
-						xPos--;
-						moving = false;
-					}
-					break;
-				case GameSprite.RIGHT:
-					// The lower the delta the slowest the sprite will animate.
-					xOff += delta * movingspeed * multiplier;
-					if (xOff >= map.getTileWidth()) {
-						xOff = 0.0f;
-						map.getEvents(xPos, yPos).remove(this);
-						xPos++;
-						moving = false;
-					}
-					break;
-				}
-
-				if (moving == false) {
-					GameContext c = Database.instance().getContext();
-					c.setStat("steps", c.getStat("steps")+1);
-					sprite.setStopped();
-					for (Event e : map.getEvents(xPos, yPos)) {
-						e.onEventTouch(container, map, this);
-						e.onBeingTouched(container, map, this);
-					}
-				}
-
-			} else {
-				if (input.isKeyDown(Controls.moveUp)) {
-					if ((wait == 0 && sprite.getDirection() == GameSprite.UP)
-							|| wait > limit) {
-						if (!map.isBlocked(xPos, yPos - 1)) {
-							map.getEvents(xPos, yPos - 1).add(this);
-							moving = true;
-
-							yOff = 0.0f;
-
-							wait -= delta;
-						} else
-							for (Event e : map.getEvents(xPos, yPos - 1)) {
-								if (e.isBlocking()) {
-									if (activated == true)
-										break;
-									activated = true;
-									e.onEventTouch(container, map, this);
-									e.onBeingTouched(container, map, this);
-								}
-							}
-					}
-					sprite.setDirection(GameSprite.UP);
-					wait += delta;
-				} else if (input.isKeyDown(Controls.moveDown)) {
-					if ((wait == 0 && sprite.getDirection() == GameSprite.DOWN)
-							|| wait > limit) {
-						if (!map.isBlocked(xPos, yPos + 1)) {
-							map.getEvents(xPos, yPos + 1).add(this);
-							moving = true;
-
-							yOff = 0.0f;
-
-							wait -= delta;
-						} else {
-							for (Event e : map.getEvents(xPos, yPos + 1)) {
-								if (e.isBlocking()) {
-									if (activated == true)
-										break;
-									activated = true;
-									e.onEventTouch(container, map, this);
-									e.onBeingTouched(container, map, this);
-								}
-							}
-						}
-					}
-					sprite.setDirection(GameSprite.DOWN);
-					wait += delta;
-				} else if (input.isKeyDown(Controls.moveLeft)) {
-					if ((wait == 0 && sprite.getDirection() == GameSprite.LEFT)
-							|| wait > limit) {
-						if (!map.isBlocked(xPos - 1, yPos)) {
-							map.getEvents(xPos - 1, yPos).add(this);
-							moving = true;
-
-							xOff = 0.0f;
-
-							wait -= delta;
-						} else
-							for (Event e : map.getEvents(xPos - 1, yPos)) {
-								if (e.isBlocking()) {
-									if (activated == true)
-										break;
-									activated = true;
-									e.onEventTouch(container, map, this);
-									e.onBeingTouched(container, map, this);
-								}
-							}
-					}
-					sprite.setDirection(GameSprite.LEFT);
-					wait += delta;
-				} else if (input.isKeyDown(Controls.moveRight)) {
-					if ((wait == 0 && sprite.getDirection() == GameSprite.RIGHT)
-							|| wait > limit) {
-						if (!map.isBlocked(xPos + 1, yPos)) {
-							map.getEvents(xPos + 1, yPos).add(this);
-							moving = true;
-
-							xOff = 0.0f;
-
-							wait -= delta;
-						} else
-							for (Event e : map.getEvents(xPos + 1, yPos)) {
-								if (e.isBlocking()) {
-									if (activated == true)
-										break;
-									activated = true;
-									e.onEventTouch(container, map, this);
-									e.onBeingTouched(container, map, this);
-								}
-							}
-					}
-					sprite.setDirection(GameSprite.RIGHT);
-					wait += delta;
-				} else if (wait > 0) {
-					wait = 0;
-
-					for (Event e : map.getEvents(xPos, yPos)) {
+					for (Event e : map.getEvents(xPos, yPos - 1)) {
+						e.onEventActivation(container, map, this);
 						if (activated == true)
 							break;
 						activated = true;
-						e.onEventTouch(container, map, this);
-						e.onBeingTouched(container, map, this);
+					}
+					break;
+				case GameSprite.DOWN:
+					for (Event e : map.getEvents(xPos, yPos + 1)) {
+						e.onEventActivation(container, map, this);
+						if (activated == true)
+							break;
+						activated = true;
+					}
+					break;
+				case GameSprite.LEFT:
+					for (Event e : map.getEvents(xPos - 1, yPos)) {
+						e.onEventActivation(container, map, this);
+						if (activated == true)
+							break;
+						activated = true;
+					}
+					break;
+				case GameSprite.RIGHT:
+					for (Event e : map.getEvents(xPos + 1, yPos)) {
+						e.onEventActivation(container, map, this);
+						if (activated == true)
+							break;
+						activated = true;
+					}
+					break;
+				}
+			} else {
+				float multiplier = 1.0f;
+
+				if (input.isKeyDown(Controls.speedUp)) {
+					multiplier = 2.0f;
+				}
+
+				sprite.setMultiplier(multiplier);
+
+				if (moving) {
+					sprite.update(delta);
+					switch (sprite.getDirection()) {
+					case GameSprite.UP:
+						// The lower the delta the slowest the sprite will
+						// animate.
+						yOff -= delta * movingspeed * multiplier;
+						if (-yOff >= map.getTileHeight()) {
+							yOff = 0.0f;
+							map.getEvents(xPos, yPos).remove(this);
+							yPos--;
+							moving = false;
+						}
+						break;
+					case GameSprite.DOWN:
+						// The lower the delta the slowest the sprite will
+						// animate.
+						yOff += delta * movingspeed * multiplier;
+
+						if (yOff >= map.getTileHeight()) {
+							yOff = 0.0f;
+							map.getEvents(xPos, yPos).remove(this);
+							yPos++;
+							moving = false;
+						}
+						break;
+					case GameSprite.LEFT:
+						// The lower the delta the slowest the sprite will
+						// animate.
+						xOff -= delta * movingspeed * multiplier;
+
+						if (-xOff >= map.getTileWidth()) {
+							xOff = 0.0f;
+							map.getEvents(xPos, yPos).remove(this);
+							xPos--;
+							moving = false;
+						}
+						break;
+					case GameSprite.RIGHT:
+						// The lower the delta the slowest the sprite will
+						// animate.
+						xOff += delta * movingspeed * multiplier;
+						if (xOff >= map.getTileWidth()) {
+							xOff = 0.0f;
+							map.getEvents(xPos, yPos).remove(this);
+							xPos++;
+							moving = false;
+						}
+						break;
+					}
+
+					if (moving == false) {
+						GameContext c = Database.instance().getContext();
+						c.setStat("steps", c.getStat("steps") + 1);
+						sprite.setStopped();
+						for (Event e : map.getEvents(xPos, yPos)) {
+							e.onEventTouch(container, map, this);
+							e.onBeingTouched(container, map, this);
+						}
+					}
+
+				} else {
+					if (movementrouteobject != null) {
+						if (movementiterator == null) {
+							movementiterator = movementrouteobject.getRoute().iterator();
+						}
+						if(movementiterator.hasNext()) {
+							activated = setMovement(movementiterator.next(),container,delta,map,activated);
+						}
+						else {
+							movementrouteobject = null;
+							movementiterator = null;
+						}
+						
+					} else {
+						if (input.isKeyDown(Controls.moveUp)) {
+							if ((wait == 0 && sprite.getDirection() == GameSprite.UP) || wait > limit) {
+								if (!map.isBlocked(xPos, yPos - 1)) {
+									map.getEvents(xPos, yPos - 1).add(this);
+									moving = true;
+
+									yOff = 0.0f;
+
+									wait -= delta;
+								} else {
+									for (Event e : map.getEvents(xPos, yPos - 1)) {
+										if (e.isBlocking()) {
+											if (activated == true)
+												break;
+											activated = true;
+											e.onEventTouch(container, map, this);
+											e.onBeingTouched(container, map, this);
+										}
+									}
+								}
+							}
+							sprite.setDirection(GameSprite.UP);
+							wait += delta;
+						} else if (input.isKeyDown(Controls.moveDown)) {
+							if ((wait == 0 && sprite.getDirection() == GameSprite.DOWN) || wait > limit) {
+								if (!map.isBlocked(xPos, yPos + 1)) {
+									map.getEvents(xPos, yPos + 1).add(this);
+									moving = true;
+
+									yOff = 0.0f;
+
+									wait -= delta;
+								} else {
+									for (Event e : map.getEvents(xPos, yPos + 1)) {
+										if (e.isBlocking()) {
+											if (activated == true)
+												break;
+											activated = true;
+											e.onEventTouch(container, map, this);
+											e.onBeingTouched(container, map, this);
+										}
+									}
+								}
+							}
+							sprite.setDirection(GameSprite.DOWN);
+							wait += delta;
+						} else if (input.isKeyDown(Controls.moveLeft)) {
+							if ((wait == 0 && sprite.getDirection() == GameSprite.LEFT) || wait > limit) {
+								if (!map.isBlocked(xPos - 1, yPos)) {
+									map.getEvents(xPos - 1, yPos).add(this);
+									moving = true;
+
+									xOff = 0.0f;
+
+									wait -= delta;
+								} else {
+									for (Event e : map.getEvents(xPos - 1, yPos)) {
+										if (e.isBlocking()) {
+											if (activated == true)
+												break;
+											activated = true;
+											e.onEventTouch(container, map, this);
+											e.onBeingTouched(container, map, this);
+										}
+									}
+								}
+							}
+							sprite.setDirection(GameSprite.LEFT);
+							wait += delta;
+						} else if (input.isKeyDown(Controls.moveRight)) {
+							if ((wait == 0 && sprite.getDirection() == GameSprite.RIGHT) || wait > limit) {
+								if (!map.isBlocked(xPos + 1, yPos)) {
+									map.getEvents(xPos + 1, yPos).add(this);
+									moving = true;
+
+									xOff = 0.0f;
+
+									wait -= delta;
+								} else {
+									for (Event e : map.getEvents(xPos + 1, yPos)) {
+										if (e.isBlocking()) {
+											if (activated == true)
+												break;
+											activated = true;
+											e.onEventTouch(container, map, this);
+											e.onBeingTouched(container, map, this);
+										}
+									}
+								}
+							}
+							sprite.setDirection(GameSprite.RIGHT);
+							wait += delta;
+						} else if (wait > 0) {
+							wait = 0;
+
+							for (Event e : map.getEvents(xPos, yPos)) {
+								if (activated == true)
+									break;
+								activated = true;
+								e.onEventTouch(container, map, this);
+								e.onBeingTouched(container, map, this);
+							}
+						}
 					}
 				}
 			}
@@ -302,26 +328,25 @@ public class Player implements Event, Serializable {
 	}
 
 	@Override
-	public void prerender(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
+	public void prerender(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
-		sprite.draw(getXDraw(tilewidth), getYDraw(tileheight));
+	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
+		if (sprite != null) {
+			sprite.draw(getXDraw(tilewidth), getYDraw(tileheight));
+		}
 	}
 
 	@Override
-	public void postrender(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
+	public void postrender(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 
 	}
 
 	@Override
 	public float getXDraw(int tilewidth) {
-		return (xPos * tilewidth + tilewidth/2 - getWidth()/2 + xOff);
+		return (xPos * tilewidth + tilewidth / 2 - getWidth() / 2 + xOff);
 	}
 
 	@Override
@@ -331,12 +356,20 @@ public class Player implements Event, Serializable {
 
 	@Override
 	public int getWidth() {
-		return sprite.getWidth();
+		if (sprite != null) {
+			return sprite.getWidth();
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
 	public int getHeight() {
-		return sprite.getHeight();
+		if (sprite != null) {
+			return sprite.getHeight();
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -348,8 +381,7 @@ public class Player implements Event, Serializable {
 	}
 
 	@Override
-	public void onEventActivation(GameContainer container, SubTiledMap map,
-			Event e) {
+	public void onEventActivation(GameContainer container, SubTiledMap map, Event e) {
 	}
 
 	@Override
@@ -366,8 +398,12 @@ public class Player implements Event, Serializable {
 		yPos = Integer.parseInt(node.getAttribute("y"));
 		spritespeed = Float.parseFloat(node.getAttribute("spritespeed"));
 		movingspeed = Float.parseFloat(node.getAttribute("movingspeed"));
-		sprite = Database.instance().getSprites().get(node.getAttribute("sprite"))
-				.createSprite(spritespeed, movingspeed);
+		try {
+			sprite = Database.instance().getSprites().get(node.getAttribute("sprite")).createSprite(spritespeed,
+					movingspeed);
+		} catch (Exception e) {
+
+		}
 	}
 
 	@Override
@@ -376,8 +412,7 @@ public class Player implements Event, Serializable {
 	}
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta,
-			SubTiledMap map) throws SlickException {
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 	}
 
 	@Override
@@ -392,12 +427,18 @@ public class Player implements Event, Serializable {
 
 	@Override
 	public int getDirection() {
-		return sprite.getDirection();
+		if (sprite != null) {
+			return sprite.getDirection();
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
 	public void setDirection(int direction) {
-		sprite.setDirection(direction);
+		if (sprite != null) {
+			sprite.setDirection(direction);
+		}
 	}
 
 	@Override
@@ -416,15 +457,13 @@ public class Player implements Event, Serializable {
 	}
 
 	@Override
-	public void performAction(GameContainer container, SubTiledMap map, Event e)
-			throws SlickException {
+	public void performAction(GameContainer container, SubTiledMap map, Event e) throws SlickException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onMapSetAsInactive(GameContainer container, SubTiledMap map)
-			throws SlickException {
+	public void onMapSetAsInactive(GameContainer container, SubTiledMap map) throws SlickException {
 		// TODO Auto-generated method stub
 
 	}
@@ -437,38 +476,164 @@ public class Player implements Event, Serializable {
 
 	/**
 	 * Method for serializing the object.
+	 * 
 	 * @param stream
 	 * @throws IOException
 	 */
 	private void writeObject(ObjectOutputStream stream) throws IOException {
 		stream.defaultWriteObject();
-		stream.writeObject(sprite.getName());
-		stream.writeFloat(sprite.getSpritespeed());
-		stream.writeFloat(sprite.getMovingspeed());
-		stream.writeInt(sprite.getDirection());
+		if (sprite != null) {
+			stream.writeBoolean(true);
+			stream.writeObject(sprite.getName());
+			stream.writeFloat(sprite.getSpritespeed());
+			stream.writeFloat(sprite.getMovingspeed());
+			stream.writeInt(sprite.getDirection());
+		} else {
+			stream.writeBoolean(false);
+		}
 	}
 
 	/**
 	 * MEthod for deserializing the object.
+	 * 
 	 * @param stream
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void readObject(ObjectInputStream stream) throws IOException,
-			ClassNotFoundException {
+	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		stream.defaultReadObject();
-		sprite = Database.instance().getSprites()
-				.get((String) (stream.readObject()))
-				.createSprite(stream.readFloat(), stream.readFloat());
-		sprite.setDirection(stream.readInt());
+		if (stream.readBoolean()) {
+			sprite = Database.instance().getSprites().get((String) (stream.readObject()))
+					.createSprite(stream.readFloat(), stream.readFloat());
+			sprite.setDirection(stream.readInt());
+		}
 	}
 
 	/**
 	 * Returns true if the player is moving.
+	 * 
 	 * @return
 	 */
 	public boolean isMoving() {
 		return moving;
 	}
 
+	public void setSprite(GameSprite sprite) {
+		this.sprite = sprite;
+		if (sprite != null) {
+			this.movingspeed = sprite.getMovingspeed();
+			this.spritespeed = sprite.getSpritespeed();
+		}
+	}
+
+	public GameSprite getSprite() {
+		return sprite;
+	}
+
+	protected boolean setMovement(int movement, GameContainer container, int delta, SubTiledMap map, boolean activated) throws SlickException {
+		switch(movement) {
+		case Moving.LOOKUP:
+			sprite.setDirection(GameSprite.UP);
+			break;
+		case Moving.LOOKDOWN:
+			sprite.setDirection(GameSprite.DOWN);
+			break;
+		case Moving.LOOKLEFT:
+			sprite.setDirection(GameSprite.LEFT);
+			break;
+		case Moving.LOOKRIGHT:
+			sprite.setDirection(GameSprite.RIGHT);
+			break;
+		case Moving.MOVEUP:
+			sprite.setDirection(GameSprite.UP);
+			if (!map.isBlocked(xPos, yPos - 1)) {
+				map.getEvents(xPos, yPos - 1).add(this);
+				moving = true;
+
+				yOff = 0.0f;
+
+				wait -= delta;
+			} else {
+				for (Event e : map.getEvents(xPos, yPos - 1)) {
+					if (e.isBlocking()) {
+						if (activated == true)
+							break;
+						activated = true;
+						e.onEventTouch(container, map, this);
+						e.onBeingTouched(container, map, this);
+					}
+				}
+			}
+			break;
+		case Moving.MOVEDOWN:
+			sprite.setDirection(GameSprite.DOWN);
+			if (!map.isBlocked(xPos, yPos + 1)) {
+				map.getEvents(xPos, yPos + 1).add(this);
+				moving = true;
+
+				yOff = 0.0f;
+
+				wait -= delta;
+			} else {
+				for (Event e : map.getEvents(xPos, yPos + 1)) {
+					if (e.isBlocking()) {
+						if (activated == true)
+							break;
+						activated = true;
+						e.onEventTouch(container, map, this);
+						e.onBeingTouched(container, map, this);
+					}
+				}
+			}
+			break;
+		case Moving.MOVELEFT:
+			sprite.setDirection(GameSprite.LEFT);
+			if (!map.isBlocked(xPos - 1, yPos)) {
+				map.getEvents(xPos - 1, yPos).add(this);
+				moving = true;
+
+				xOff = 0.0f;
+
+				wait -= delta;
+			} else {
+				for (Event e : map.getEvents(xPos - 1, yPos)) {
+					if (e.isBlocking()) {
+						if (activated == true)
+							break;
+						activated = true;
+						e.onEventTouch(container, map, this);
+						e.onBeingTouched(container, map, this);
+					}
+				}
+			}
+			break;
+		case Moving.MOVERIGHT:
+			sprite.setDirection(GameSprite.RIGHT);
+			if (!map.isBlocked(xPos + 1, yPos)) {
+				map.getEvents(xPos + 1, yPos).add(this);
+				moving = true;
+
+				xOff = 0.0f;
+
+				wait -= delta;
+			} else {
+				for (Event e : map.getEvents(xPos + 1, yPos)) {
+					if (e.isBlocking()) {
+						if (activated == true)
+							break;
+						activated = true;
+						e.onEventTouch(container, map, this);
+						e.onBeingTouched(container, map, this);
+					}
+				}
+			}
+			break;
+
+		}
+		return activated;
+	}
+	
+	public void setRoute(Route route) {
+		this.movementrouteobject = route;
+	}
 }

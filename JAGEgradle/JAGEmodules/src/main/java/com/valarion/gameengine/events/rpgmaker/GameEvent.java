@@ -402,5 +402,7 @@ public class GameEvent implements FlowEventInterface {
 		}
 	}
 	
-	
+	public RPGMakerEvent getActive() {
+		return active;
+	}
 }

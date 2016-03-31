@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="9" y="5" layer="player" type="paralel">
+			<events>
+				<LoopSound sound="thunderstorm"></LoopSound>
+				<Dialog position="mid" apear="true">
+					<Text>It was a day like any other.
+					Valar was deeply asleep in his farm.
+					A thunderstorm started.</Text>
+				</Dialog>
+				<Dialog position="mid" apear="true">
+					<Text>Valar wasn't hearing the thunder noises.
+					He was dreaming, and in his dreams, he was a hero.</Text>
+				</Dialog>
+				<Dialog position="mid" apear="true">
+					<Text>Little did he know that when he waked up,
+					he was going to be a real hero...</Text>
+				</Dialog>
+				<PlaySound sound="knocking"></PlaySound>
+				<Dialog position="mid" apear="true">
+					<Text>A sound woke him up.
+					Someone was knocking the door.</Text>
+				</Dialog>
+				<PlaySound sound="knocking"></PlaySound>
+				<Dialog position="mid" apear="true">
+					<Text>Valar woke up to the insistence of the knocking.</Text>
+				</Dialog>
+				<Dialog image="testface">
+					<Text>Who is it?</Text>
+				</Dialog>
+				<Dialog position="mid" apear="true">
+					<Text>Nobody responded.</Text>
+				</Dialog>
+				<PlaySound sound="knocking"></PlaySound>
+				<Dialog position="mid" apear="true">
+					<Text>They knocked again.</Text>
+				</Dialog>
+				<Dialog image="testface">
+					<Text>You are starting to scare me. Who is it?</Text>
+				</Dialog>
+				<Dialog position="mid" apear="true">
+					<Text>Again, nobody responded.</Text>
+				</Dialog>
+				<PlaySound sound="knocking"></PlaySound>
+				<Dialog position="mid" apear="true">
+					<Text>Valar went to open the door.</Text>
+				</Dialog>
+				<ChangeSprite sprite="TestSprite"></ChangeSprite>
+				<Teleport xDest="1" yDest="3" destMap="insidefarm"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+
+</mapevents>

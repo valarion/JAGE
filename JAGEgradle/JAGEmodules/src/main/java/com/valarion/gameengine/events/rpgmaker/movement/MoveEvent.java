@@ -67,13 +67,13 @@ public class MoveEvent extends FlowEventClass {
 	public void performAction(GameContainer container, SubTiledMap map, Event e) {
 		try {
 			if(id != null) {
-					event = (FlowEventInterface) map.getEventsById().get(id);
+				event = (FlowEventInterface) map.getEventsById().get(id);
 			}
 			else if(!player) {
 				event = getEvent();
 			}
 			else {
-				event = (FlowEventInterface) getState().getPlayer();
+				getState().getPlayer().setRoute(route);
 			}
 		}
 		catch(Exception ex) {

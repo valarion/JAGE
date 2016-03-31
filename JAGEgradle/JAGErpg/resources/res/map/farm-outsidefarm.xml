@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="4" y="6" layer="player" type="touch">
+			<events>
+				<Teleport xDest="10" yDest="10" destMap="insidefarm"
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="21" y="18" layer="player" type="activation">
+			<events>
+				<Dialog position="bot">
+					<Text>You have it closed to prevent animals from escaping.</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="26" y="26" layer="player" type="activation">
+			<events>
+				<Dialog position="bot">
+					<Text>They went to the west.
+						Please, help her.
+					</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="3" y="17" layer="player" type="activation">
+			<events>
+				<Dialog position="bot">
+					<Text>
+						To...
+						the...
+						west...
+					</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="20" y="19" layer="player" type="activation">
+			<events>
+				<Dialog position="bot">
+					<Text>
+						They attacked us on the road and took the princess.
+						You should
+						probably pick a sword and a shield because
+						they were professional swordmen.
+					</Text>
+				</Dialog>
+				<Dialog position="bot">
+					<Text>
+						They went to the west.
+						Please help us.
+					</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="1" y="26" layer="bot" type="touch">
+			<conditions>
+			</conditions>
+			<events>
+				<Dialog position="bot">
+					<Text>
+						I should really get something to defend myself.
+					</Text>
+				</Dialog>
+				<MoveEvent objetive="player" ignore="false" loop="false"
+					wait="true">
+					<moveright></moveright>
+				</MoveEvent>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

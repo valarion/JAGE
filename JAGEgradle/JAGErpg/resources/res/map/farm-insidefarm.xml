@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="4" y="6" layer="player" type="activation" tile="243">
+			<events>
+				<Interrupt interrupt="0" action="true"></Interrupt>
+			</events>
+		</page>
+		<page x="4" y="6" layer="player" type="paralel" tile="1678">
+			<conditions>
+				<InterruptCondition interrupt="0"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog position="bot">
+					<Text>The princess has been kidnapped....</Text>
+				</Dialog>
+				<Dialog position="bot">
+					<Text>Please...</Text>
+				</Dialog>
+				<Dialog position="bot">
+					<Text>Help her...</Text>
+				</Dialog>
+				<Blink time="500" period="100"></Blink>
+				<Interrupt interrupt="1" action="true"></Interrupt>
+			</events>
+		</page>
+		<page x="4" y="6" layer="bot" type="touch">
+			<conditions>
+				<InterruptCondition interrupt="1"></InterruptCondition>
+			</conditions>
+			<events>
+				<Teleport xDest="10" yDest="11" destMap="outsidefarm"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

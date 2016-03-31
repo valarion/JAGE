@@ -65,5 +65,7 @@
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>
 	<sound name="writting" src="typewriter.wav"></sound>
+	<sound name="thunderstorm" src="thunderstorm.wav"></sound>
+	<sound name="knocking" src="knock.wav"></sound>
 	<music name="title" src="Rain.ogg"></music>
 </database>
