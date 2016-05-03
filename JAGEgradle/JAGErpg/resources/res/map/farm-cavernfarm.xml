@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="2" y="2" layer="player" type="activation" tile="1417">
+			<events>
+				<Dialog position="bot">
+					<Text>You grab a sword.</Text>
+				</Dialog>
+				<Interrupt interrupt="10" action="true"></Interrupt>
+			</events>
+		</page>
+		<page>
+			<conditions>
+				<InterruptCondition interrupt="10"></InterruptCondition>
+			</conditions>
+		</page>
+	</GameEvent>
+	<GameEvent>
+		<page x="3" y="2" layer="player" type="activation" tile="1418">
+			<events>
+				<Dialog position="bot">
+					<Text>You grab a sword.</Text>
+				</Dialog>
+				<Interrupt interrupt="10" action="true"></Interrupt>
+			</events>
+		</page>
+		<page>
+			<conditions>
+				<InterruptCondition interrupt="10"></InterruptCondition>
+			</conditions>
+		</page>
+	</GameEvent>
+	<GameEvent>
+		<page x="5" y="2" layer="player" type="activation" tile="1420">
+			<events>
+				<Dialog position="bot">
+					<Text>You grab a shield.</Text>
+				</Dialog>
+				<Interrupt interrupt="11" action="true"></Interrupt>
+			</events>
+		</page>
+		<page>
+			<conditions>
+				<InterruptCondition interrupt="11"></InterruptCondition>
+			</conditions>
+		</page>
+	</GameEvent>
+	<GameEvent>
+		<page x="5" y="9" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="13" yDest="4" destMap="outsidefarm"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

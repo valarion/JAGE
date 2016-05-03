@@ -82,5 +82,20 @@
 				</MoveEvent>
 			</events>
 		</page>
+		<page>
+			<conditions>
+				<InterruptCondition interrupt="10"></InterruptCondition>
+				<InterruptCondition interrupt="11"></InterruptCondition>
+			</conditions>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page x="13" y="3" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="5" yDest="8" destMap="cavernfarm"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
 	</GameEvent>
 </mapevents>
