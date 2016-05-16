@@ -229,7 +229,7 @@ public class InGameState extends SubState {
 	 */
 	protected SubTiledMap loadMap(GameContainer container, String mapname) throws SlickException {
 		SubTiledMap map = new SubTiledMap(mapfiles.get(mapname).getAbsolutePath(), GameCore.getInstance(), this);
-		map.add(player, 1);
+		
 		loadedmaps.put(mapname, map);
 
 		Set<Event> deletions = new HashSet<Event>();
@@ -278,6 +278,8 @@ public class InGameState extends SubState {
 			}
 			Database.instance().getContext().getDeletedEvents().clear();
 		}
+		
+		active.add(player, 1);
 
 		active.addDeleteds();
 
