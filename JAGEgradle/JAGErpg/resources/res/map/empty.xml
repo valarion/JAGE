@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <mapevents>
 	<GameEvent>
-		<page x="9" y="5" layer="player" type="paralel">
+		<page x="0" y="0" layer="player" type="paralel">
 			<events>
 				<LoopSound sound="thunderstorm"></LoopSound>
 				<Dialog position="mid" apear="true">
@@ -47,8 +47,8 @@
 					<Text>Valar went to open the door.</Text>
 				</Dialog>
 				<ChangeSprite sprite="TestSprite"></ChangeSprite>
-				<Teleport xDest="1" yDest="3" destMap="insidefarm"
-					destDirection="down"></Teleport>
+				<Teleport xDest="1" yDest="5" destMap="insidefarm"
+					destDirection="right"></Teleport>
 			</events>
 		</page>
 	</GameEvent>

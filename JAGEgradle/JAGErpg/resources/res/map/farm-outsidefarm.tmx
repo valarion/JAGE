@@ -62,7 +62,7 @@
  </layer>
  <layer name="doors" width="30" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWEwHs623eLzvaNglFAK7CfcWDsPTxA9o6CUTBSwWheHwWjYBSMgqELAKfP0kkQDgAA
+   H4sIAAAAAAAAC2NgGAWEwHs623eLzvaNglFAK7CfcaBdMApGwSigBxiovH54tIwZBaNgFIwCigEA/S8wrRAOAAA=
   </data>
  </layer>
  <layer name="lateralroof" width="30" height="30">

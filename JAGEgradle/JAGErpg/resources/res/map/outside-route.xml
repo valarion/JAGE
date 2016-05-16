@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="9" y="28" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="1" yDest="26" destMap="outsidefarm"
+					destDirection="left"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+	<GameEvent>
+		<page x="6" y="25" layer="effects" type="touch">
+			<events>
+				<PlayEmote spritesheet="Emotes" sprite="exclamation" time="500"></PlayEmote>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

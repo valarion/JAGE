@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <mapevents>
 	<GameEvent>
-		<page x="4" y="6" layer="player" type="touch">
-			<events>
-				<Teleport xDest="10" yDest="10" destMap="insidefarm"
-					destDirection="up"></Teleport>
-			</events>
-		</page>
-	</GameEvent>
-
-	<GameEvent>
 		<page x="21" y="18" layer="player" type="activation">
 			<events>
 				<Dialog position="bot">
@@ -23,7 +14,8 @@
 		<page x="26" y="26" layer="player" type="activation">
 			<events>
 				<Dialog position="bot">
-					<Text>They went to the west.
+					<Text>
+						They went to the west.
 						Please, help her.
 					</Text>
 				</Dialog>
@@ -94,7 +86,25 @@
 		<page x="13" y="3" layer="bot" type="touch">
 			<events>
 				<Teleport xDest="5" yDest="8" destMap="cavernfarm"
-					destDirection="down"></Teleport>
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page x="0" y="26" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="8" yDest="28" destMap="route"
+					destDirection="left"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page x="10" y="10" layer="player" type="touch">
+			<events>
+				<Teleport xDest="4" yDest="5" destMap="insidefarm"
+					destDirection="up"></Teleport>
 			</events>
 		</page>
 	</GameEvent>

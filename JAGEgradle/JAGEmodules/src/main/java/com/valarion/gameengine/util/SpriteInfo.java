@@ -23,6 +23,9 @@
  ******************************************************************************/
 package com.valarion.gameengine.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -44,6 +47,8 @@ public class SpriteInfo {
 	Image[] down;
 	Image[] left;
 	Image[] right;
+	
+	Map<String,Image[]> sprites;
 
 	String name;
 
@@ -63,19 +68,26 @@ public class SpriteInfo {
 
 		spritesheet = new SpriteSheet("res/sprite/" + filename, tilewidth,
 				tileheight);
+		
+		sprites = new HashMap<String,Image[]>();
 
 		for (int i = 0; i < tiles.getLength(); i++) {
 			Node e = tiles.item(i);
-
+			Image[] sprite = null;
+			
 			if ("up".equals(e.getNodeName())) {
-				up = createImage(e);
+				sprite = up = createImage(e);
 			} else if ("down".equals(e.getNodeName())) {
-				down = createImage(e);
+				sprite = down = createImage(e);
 			} else if ("left".equals(e.getNodeName())) {
-				left = createImage(e);
+				sprite = left = createImage(e);
 			} else if ("right".equals(e.getNodeName())) {
-				right = createImage(e);
+				sprite = right = createImage(e);
+			} else {
+				sprite = createImage(e);
 			}
+			
+			sprites.put(e.getNodeName(), sprite);
 		}
 	}
 
@@ -103,6 +115,16 @@ public class SpriteInfo {
 						left, horizontalduration, false), new Animation(right,
 						horizontalduration, false), spritespeed, movingspeed,
 				name);
+	}
+	
+	/**
+	 * Create animation given the name of the sprite in the spritesheet.
+	 * @param name
+	 * @param duration
+	 * @return
+	 */
+	public Animation createAnimation(String name, int duration) {
+		return new Animation(sprites.get(name),duration,false);
 	}
 
 	/**

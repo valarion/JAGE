@@ -11,6 +11,7 @@
 				<InterruptCondition interrupt="0"></InterruptCondition>
 			</conditions>
 			<events>
+				<PlaySound sound="door"></PlaySound>
 				<Dialog position="bot">
 					<Text>The princess has been kidnapped....</Text>
 				</Dialog>

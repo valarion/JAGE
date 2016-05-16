@@ -27,6 +27,19 @@
 			<tile x="2" y="2"></tile>
 		</right>
 	</spritesheet>
+	<spritesheet name="Emotes" image="emote.png"
+		tilewidth="32" tileheight="32">
+		<interrogation>
+			<tile x="0" y="0"></tile>
+			<tile x="0" y="1"></tile>
+			<tile x="0" y="2"></tile>
+		</interrogation>
+		<exclamation>
+			<tile x="1" y="0"></tile>
+			<tile x="1" y="1"></tile>
+			<tile x="1" y="2"></tile>
+		</exclamation>
+	</spritesheet>
 	<window name="defaultwindow" image="Window.png" border="2">
 		<sub name="background" x="0" y="0" w="64" h="64"></sub>
 		<sub name="decoration" x="0" y="64" w="64" h="64"></sub>
@@ -67,5 +80,6 @@
 	<sound name="writting" src="typewriter.ogg"></sound>
 	<sound name="thunderstorm" src="thunderstorm.ogg"></sound>
 	<sound name="knocking" src="knock.ogg"></sound>
+	<sound name="door" src="025-Door02.ogg"></sound>
 	<music name="title" src="Rain.ogg"></music>
 </database>

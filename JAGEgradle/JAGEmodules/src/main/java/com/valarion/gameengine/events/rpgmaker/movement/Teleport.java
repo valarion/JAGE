@@ -71,15 +71,14 @@ public class Teleport extends FlowEventClass {
 					InGameState gameinstance = getState();
 					Event player = gameinstance.getPlayer();
 
-					map.getEvents(player.getXPos(), player.getYPos()).remove(
-							player);
+					map.getEvents(player.getXPos(), player.getYPos()).remove(player);
 
 					player.setXPos(destX);
 					player.setYPos(destY);
 					player.setDirection(destDirection);
 
 					gameinstance.setAsActive(container, destMap);
-					gameinstance.getActive().add(this);
+					//gameinstance.getActive().add(this);
 
 				} else {
 					alpha += delta;
@@ -91,6 +90,7 @@ public class Teleport extends FlowEventClass {
 			} else {
 				if (alpha == 0) {
 					teleporting = false;
+					getState().getActive().remove(getEvent());
 				} else {
 					alpha -= delta;
 					if (alpha <= 0) {

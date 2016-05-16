@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="30" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="types" tilewidth="32" tileheight="32" tilecount="3">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="walkable"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="4" name="celianna_farmnature_tileset" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../tileset/celianna_farmnature_tileset.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="260" name="023-FarmVillage01" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../tileset/023-FarmVillage01.png" width="256" height="1024"/>
+ </tileset>
+ <layer name="floor" width="10" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACwtgZGAIRcJhQMwCxCFIYv5A7AfEsUg4DqouBknMB6ouFQmnQdWlIInB1LEQwKPqRpY6HyqrQ07DyNgfTR1yGkbG6OYhp2FkPFjCj1J1IUSqiyFSXQqR6kjBAAhdBKSwBAAA
+  </data>
+ </layer>
+ <layer name="overfloor" width="10" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgwATFjFgEsYBqItU1E6mOEuABtMMVB3ZDsp8Fj1v8kOQCgOxQHDgMzYxYRuw4Dk1dKiN2nEal8HHB4l9swAcq70cndTB3uTNCwp+QeTDggaSPGIAvbkfB4Ab48i8yBgCY/iwcsAQAAA==
+  </data>
+ </layer>
+ <layer name="obstacles" width="10" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAVDHfgyDk6zRgF1ADlxQmk8UqJfGKhXiEbpCAAG9ZQesAQAAA==
+  </data>
+ </layer>
+ <layer name="player" width="10" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMgqEBAGlKTgywBAAA
+  </data>
+ </layer>
+ <layer name="overplayer" width="10" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMAsKAm5GBgYtxYN0AAAYqVWuwBAAA
+  </data>
+ </layer>
+ <layer name="effects" width="10" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMgqEBAGlKTgywBAAA
+  </data>
+ </layer>
+ <layer name="types" width="10" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NiYGBgQsOMWMSwYUrVMRLApKqjpVvpqY7UcMFmDz7z8KlDN5dS8/DFPTHqsKWXwa6OWukZPX5JMQ+bu0mxF596QuaRGi7E5hEQBgCxK15VsAQAAA==
+  </data>
+ </layer>
+</map>
