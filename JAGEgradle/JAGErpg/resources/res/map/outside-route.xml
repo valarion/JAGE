@@ -10,7 +10,7 @@
 	</GameEvent>
 
 	<GameEvent id="routesoldier">
-		<page type="paralel" x="8" y="5" layer="player" sprite="SoldierSprite"
+		<page x="8" y="5" layer="player" sprite="SoldierSprite"
 			direction="down" movement="fixed" animatedmovement="true" animated="false"
 			fixeddirection="false" ghost="false">
 

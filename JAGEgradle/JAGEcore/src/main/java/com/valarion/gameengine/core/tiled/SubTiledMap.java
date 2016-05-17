@@ -448,12 +448,13 @@ public class SubTiledMap extends TiledMap implements Updatable {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
+		boolean wasmustupdate = mustupdate;
 		for (Integer i : priorities) {
 			for (Event event : eventsByPriority.get(i)) {
 				event.paralelupdate(container, delta, this);
 			}
 		}
-		if (mustupdate) {
+		if (wasmustupdate) {
 			for (Integer i : priorities) {
 				for (Event event : eventsByPriority.get(i)) {
 					event.update(container, delta, this);
