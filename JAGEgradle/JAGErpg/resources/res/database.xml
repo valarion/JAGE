@@ -27,17 +27,44 @@
 			<tile x="2" y="2"></tile>
 		</right>
 	</spritesheet>
+	<spritesheet name="SoldierSprite" image="People4.png"
+		tilewidth="32" tileheight="32">
+		<up>
+			<tile x="7" y="7"></tile>
+			<tile x="6" y="7"></tile>
+			<tile x="7" y="7"></tile>
+			<tile x="8" y="7"></tile>
+		</up>
+		<down>
+			<tile x="7" y="4"></tile>
+			<tile x="6" y="4"></tile>
+			<tile x="7" y="4"></tile>
+			<tile x="8" y="4"></tile>
+		</down>
+		<left>
+			<tile x="7" y="5"></tile>
+			<tile x="6" y="5"></tile>
+			<tile x="7" y="5"></tile>
+			<tile x="8" y="5"></tile>
+		</left>
+		<right>
+			<tile x="7" y="6"></tile>
+			<tile x="6" y="6"></tile>
+			<tile x="7" y="6"></tile>
+			<tile x="8" y="6"></tile>
+		</right>
+	</spritesheet>
 	<spritesheet name="Emotes" image="emote.png"
 		tilewidth="32" tileheight="32">
 		<interrogation>
 			<tile x="0" y="0"></tile>
-			<tile x="0" y="1"></tile>
-			<tile x="0" y="2"></tile>
+			<tile x="1" y="0"></tile>
+			<tile x="2" y="0"></tile>
 		</interrogation>
 		<exclamation>
-			<tile x="1" y="0"></tile>
+			<tile x="0" y="1"></tile>
 			<tile x="1" y="1"></tile>
-			<tile x="1" y="2"></tile>
+			<tile x="2" y="1"></tile>
 		</exclamation>
 	</spritesheet>
 	<window name="defaultwindow" image="Window.png" border="2">

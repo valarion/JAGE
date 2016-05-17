@@ -48,20 +48,21 @@ import com.valarion.gameengine.util.GameSprite;
 
 /**
  * Class that describes a page in a game event.
+ * 
  * @author Rubén Tomás Gracia
  *
  */
 public class RPGMakerEvent extends FlowEventClass {
-	
+
 	public static final int ONACTIVATION = 0;
 	public static final int ONTOUCH = 1;
 	public static final int ONBEINGTOUCHED = 2;
 	public static final int ONSTART = 3;
 	public static final int PARALEL = 4;
 
-	protected int x=-1;
-	protected int y=-1;
-	
+	protected int x = -1;
+	protected int y = -1;
+
 	protected LinkedList<Condition> conditions = new LinkedList<Condition>();
 	protected LinkedList<Event> events = new LinkedList<Event>();
 	protected Iterator<Event> iterator = null;
@@ -69,26 +70,26 @@ public class RPGMakerEvent extends FlowEventClass {
 	protected Event activator = null;
 	protected boolean working = false;
 	protected SubTiledMap map = null;
-	
+
 	protected int tileId = -1;
 	protected Image tile = null;
 	protected GameSprite sprite = null;
 	protected float xOff = 0;
 	protected float yOff = 0;
-	
+
 	protected int count = 0;
 	protected boolean moving = false;
 	protected int nextmove = -1;
 	protected float movingspeed = 0.1f;
 	protected float spritespeed = 1.0f;
 	protected int movingdirection = 0;
-	
+
 	protected int prevdirection = -1;
-	
+
 	protected int type = -1;
-	
+
 	protected String layer = null;
-	
+
 	protected boolean animatedmovement = true;
 	protected boolean animated = false;
 	protected boolean fixeddirection = false;
@@ -96,7 +97,7 @@ public class RPGMakerEvent extends FlowEventClass {
 	protected float speed = 1;
 	protected int period = Integer.MAX_VALUE;
 	protected int movement = FIXED;
-	
+
 	protected Route customrouteobject;
 	protected Iterator<Integer> customiterator;
 	protected boolean customfirst = true;
@@ -105,131 +106,116 @@ public class RPGMakerEvent extends FlowEventClass {
 	protected boolean movementfirst = true;
 	protected int ignored = Moving.NOTHING;
 	protected int prevignored = Moving.NOTHING;
-	
+
 	protected boolean rendersprite = true;
 
 	protected Iterator<Integer> activeiterator;
 	protected Route activeroute;
-	
+
 	public static final int FIXED = 0;
 	public static final int RANDOMMOVEMENT = 1;
 	public static final int TOPLAYER = 2;
 	public static final int CUSTOM = 3;
-	
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map)
-			throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		if (active != null)
 			active.update(container, delta, map);
 	}
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta,
-			SubTiledMap map) throws SlickException {
-		if(sprite != null) {
-			if(animated || (animatedmovement && moving)) {
-				sprite.setMultiplier(1/speed);
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+		if (sprite != null) {
+			if (animated || (animatedmovement && moving)) {
+				sprite.setMultiplier(1 / speed);
 				sprite.update(delta);
 			}
 		}
-		
+
 		if (!working && !moving && type == PARALEL) {
 			performAction(container, map, null);
 		}
 
 		if (working) {
-			work(container,delta,map);
+			work(container, delta, map);
 		}
 
-			if(moving) {
-				move(container,delta,map);
-			}
-			else if(nextmove != Moving.NOTHING) {
-				startmove(container,delta,map);
-			}
-			else {
-				calcnextmove(container,delta,map);
-			}
+		if (moving) {
+			move(container, delta, map);
+		} else if (nextmove != Moving.NOTHING) {
+			startmove(container, delta, map);
+		} else {
+			calcnextmove(container, delta, map);
+		}
 	}
 
 	@Override
-	public void prerender(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
+	public void prerender(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 		if (active != null)
 			active.prerender(container, g, tilewidth, tileheight);
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
-		if(rendersprite) {
-			if(sprite != null) {
+	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
+		if (rendersprite) {
+			if (sprite != null) {
 				sprite.draw(getXDraw(tilewidth), getYDraw(tileheight));
-			}
-			else if(tile != null) {
+			} else if (tile != null) {
 				g.drawImage(tile, getXDraw(tilewidth), getYDraw(tileheight));
 			}
 		}
-		
+
 		if (active != null)
 			active.render(container, g, tilewidth, tileheight);
 	}
 
 	@Override
-	public void postrender(GameContainer container, Graphics g, int tilewidth,
-			int tileheight) throws SlickException {
+	public void postrender(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 		if (active != null)
 			active.postrender(container, g, tilewidth, tileheight);
 	}
-	
+
 	@Override
-	public void onMapSetAsInactive(GameContainer container, SubTiledMap map)
-			throws SlickException {
+	public void onMapSetAsInactive(GameContainer container, SubTiledMap map) throws SlickException {
 		map.setMustupdate(true);
 	}
 
 	@Override
-	public void onMapSetAsActive(GameContainer container, SubTiledMap map)
-			throws SlickException {
-		if(this.map == null) {
+	public void onMapSetAsActive(GameContainer container, SubTiledMap map) throws SlickException {
+		if (this.map == null) {
 			this.map = map;
 		}
-		if(tileId>=0) {
+		if (tileId >= 0) {
 			TileSet tileset = map.getTileSetByGID(tileId);
-			tileId -= tileset.firstGID-1;
+			tileId -= tileset.firstGID - 1;
 			tile = tileset.tiles.getSubImage(tileset.getTileX(tileId), tileset.getTileY(tileId));
 		}
-		
+
 		if (map.equals(this.map) && !working && !moving && type == ONSTART) {
 			performAction(container, map, null);
 		}
-		
-		if(working) {
+
+		if (working) {
 			map.setMustupdate(false);
 		}
 	}
 
 	@Override
-	public void onEventActivation(GameContainer container, SubTiledMap map,
-			Event e) throws SlickException {
+	public void onEventActivation(GameContainer container, SubTiledMap map, Event e) throws SlickException {
 		if (!working && !moving && type == ONACTIVATION) {
 			performAction(container, map, e);
 		}
 	}
 
 	@Override
-	public void onEventTouch(GameContainer container, SubTiledMap map, Event e)
-			throws SlickException {
+	public void onEventTouch(GameContainer container, SubTiledMap map, Event e) throws SlickException {
 		if (!working && !moving && type == ONTOUCH) {
 			performAction(container, map, e);
 		}
 	}
 
-
 	@Override
-	public void onBeingTouched(GameContainer container, SubTiledMap map, Event e)
-			throws SlickException {
+	public void onBeingTouched(GameContainer container, SubTiledMap map, Event e) throws SlickException {
 		if (!working && !moving && type == ONBEINGTOUCHED) {
 			performAction(container, map, e);
 		}
@@ -238,7 +224,7 @@ public class RPGMakerEvent extends FlowEventClass {
 	@Override
 	public void loadEvent(Element node, Object context) throws SlickException {
 		super.loadEvent(node, context);
-		
+
 		try {
 			this.x = Integer.parseInt(node.getAttribute("x"));
 			this.y = Integer.parseInt(node.getAttribute("y"));
@@ -247,9 +233,8 @@ public class RPGMakerEvent extends FlowEventClass {
 		}
 
 		String t = node.getAttribute("type");
-		
-		String direction = node.getAttribute("direction");
 
+		String direction = node.getAttribute("direction");
 
 		layer = node.getAttribute("layer");
 
@@ -266,108 +251,95 @@ public class RPGMakerEvent extends FlowEventClass {
 		} else {
 			type = -1;
 		}
-		
+
 		String mov = node.getAttribute("movement");
-		
-		if("random".equals(mov)){
+
+		if ("random".equals(mov)) {
 			movement = RANDOMMOVEMENT;
-		}
-		else if("toplayer".equals(mov)){
+		} else if ("toplayer".equals(mov)) {
 			movement = TOPLAYER;
-		}
-		else if("custom".equals(mov)){
+		} else if ("custom".equals(mov)) {
 			movement = CUSTOM;
-		}
-		else {
+		} else {
 			movement = FIXED;
 		}
-		
+
 		try {
 			period = Integer.parseInt(node.getAttribute("period"));
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			period = Integer.MAX_VALUE;
 		}
-		
+
 		try {
 			tileId = Integer.parseInt(node.getAttribute("tile"));
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			tileId = -1;
 		}
-		
+
 		try {
 			speed = Float.parseFloat(node.getAttribute("speed"));
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			speed = 1;
 		}
-		
+
 		try {
-			sprite = Database.instance().getSprites().get(node.getAttribute("sprite")).createSprite(movingspeed, spritespeed);
-		}
-		catch(Exception e) {
+			sprite = Database.instance().getSprites().get(node.getAttribute("sprite")).createSprite(movingspeed,
+					spritespeed);
+		} catch (Exception e) {
 			sprite = null;
 		}
-		
-		if("up".equals(direction)) {
+
+		if ("up".equals(direction)) {
 			setDirection(GameSprite.UP);
-		}
-		else if("down".equals(direction)) {
+		} else if ("down".equals(direction)) {
 			setDirection(GameSprite.DOWN);
-		}
-		else if("left".equals(direction)) {
+		} else if ("left".equals(direction)) {
 			setDirection(GameSprite.LEFT);
-		}
-		else if("right".equals(direction)) {
+		} else if ("right".equals(direction)) {
 			setDirection(GameSprite.RIGHT);
 		}
-		
+
 		animatedmovement = Boolean.parseBoolean(node.getAttribute("animatedmovement"));
 		animated = Boolean.parseBoolean(node.getAttribute("animated"));
 		fixeddirection = Boolean.parseBoolean(node.getAttribute("fixeddirection"));
 		ghost = Boolean.parseBoolean(node.getAttribute("ghost"));
-		
-		if(parent instanceof GameEvent) {
+
+		if (parent instanceof GameEvent) {
 			NodeList childs = node.getChildNodes();
-			
+
 			for (int i = 0; i < childs.getLength(); i++) {
 				Node n = childs.item(i);
 				if (n instanceof Element) {
-					if("conditions".equals(n.getNodeName())) {
-						loadConditions((Element)n,context);
-					}
-					else if("events".equals(n.getNodeName())) {
-						loadEvents((Element)n,context);
-					}
-					else if("route".equals(n.getNodeName())) {
-						customrouteobject = new Route((Element)n,true);
+					if ("conditions".equals(n.getNodeName())) {
+						loadConditions((Element) n, context);
+					} else if ("events".equals(n.getNodeName())) {
+						loadEvents((Element) n, context);
+					} else if ("route".equals(n.getNodeName())) {
+						customrouteobject = new Route((Element) n, true);
 					}
 				}
 			}
+		} else {
+			loadEvents(node, context);
 		}
-		else {
-			loadEvents(node,context);
-		}
-		
-		if(customrouteobject == null)
-			customrouteobject = new Route(null,true);
-		
-		movementrouteobject = new Route(null,false);
+
+		if (customrouteobject == null)
+			customrouteobject = new Route(null, true);
+
+		movementrouteobject = new Route(null, false);
 	}
-	
+
 	protected void loadEvents(Element node, Object context) throws SlickException {
 		super.loadEvent(node, context);
 		NodeList childs = node.getChildNodes();
 
 		GameCore game = GameCore.getInstance();
-		
+
 		for (int i = 0; i < childs.getLength(); i++) {
 			Node n = childs.item(i);
 			if ((n instanceof Element) && (n.getNodeName() != null)) {
 				try {
-					Event e = (Event) game.getSets().get(Event.class)
-							.get(n.getNodeName()).newInstance();
+					Event e = (Event) game.getSets().get(Event.class).get(n.getNodeName()).newInstance();
 					e.loadEvent((Element) n, this);
 					events.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
@@ -376,18 +348,17 @@ public class RPGMakerEvent extends FlowEventClass {
 			}
 		}
 	}
-	
+
 	protected void loadConditions(Element node, Object context) throws SlickException {
 		NodeList childs = node.getChildNodes();
 
 		GameCore game = GameCore.getInstance();
-		
+
 		for (int i = 0; i < childs.getLength(); i++) {
 			Node n = childs.item(i);
 			if ((n instanceof Element) && (n.getNodeName() != null)) {
 				try {
-					Condition e = (Condition) game.getSets().get(Condition.class)
-							.get(n.getNodeName()).newInstance();
+					Condition e = (Condition) game.getSets().get(Condition.class).get(n.getNodeName()).newInstance();
 					e.load((Element) n, context);
 					conditions.add(e);
 				} catch (InstantiationException | IllegalAccessException e) {
@@ -403,29 +374,25 @@ public class RPGMakerEvent extends FlowEventClass {
 	}
 
 	@Override
-	public void performAction(GameContainer container, SubTiledMap map, Event e)
-			throws SlickException {
+	public void performAction(GameContainer container, SubTiledMap map, Event e) throws SlickException {
 		working = true;
 		activator = e;
 		map.setMustupdate(false);
-		if(type != PARALEL) {
+		if (type != PARALEL) {
 			getState().getActiveEvents().add(this);
 		}
-		
+
 		Player player = getState().getPlayer();
-		
-		if(type != ONSTART && type != PARALEL) {
+
+		if (type != ONSTART && type != PARALEL) {
 			prevdirection = getDirection();
-			if(map.getEvents(getXPos(),getYPos()-1).contains(player)) {
+			if (map.getEvents(getXPos(), getYPos() - 1).contains(player)) {
 				setDirection(GameSprite.UP);
-			}
-			else if(map.getEvents(getXPos(),getYPos()+11).contains(player)) {
+			} else if (map.getEvents(getXPos(), getYPos() + 11).contains(player)) {
 				setDirection(GameSprite.DOWN);
-			}
-			else if(map.getEvents(getXPos()-1,getYPos()).contains(player)) {
+			} else if (map.getEvents(getXPos() - 1, getYPos()).contains(player)) {
 				setDirection(GameSprite.LEFT);
-			}
-			else if(map.getEvents(getXPos()+1,getYPos()).contains(player)) {
+			} else if (map.getEvents(getXPos() + 1, getYPos()).contains(player)) {
 				setDirection(GameSprite.RIGHT);
 			}
 		}
@@ -435,17 +402,17 @@ public class RPGMakerEvent extends FlowEventClass {
 	public void restart() {
 		working = false;
 		iterator = null;
-		if(prevdirection >= 0) {
+		if (prevdirection >= 0) {
 			setDirection(prevdirection);
 			prevdirection = -1;
 		}
-		try{
+		try {
 			getState().getActive().setMustupdate(true);
+		} catch (Exception e) {
 		}
-		catch (Exception e) {}
 		getState().getActiveEvents().remove(this);
 	}
-	
+
 	@Override
 	public String getLayerName() {
 		return layer;
@@ -454,27 +421,27 @@ public class RPGMakerEvent extends FlowEventClass {
 	@Override
 	protected void searchAndActiveLabel(String label) {
 		Iterator<Event> it = events.iterator();
-		
-		while(it.hasNext()) {
+
+		while (it.hasNext()) {
 			Event e = it.next();
-			
-			if((e instanceof FlowEventInterface) && (((FlowEventInterface)e).hasLabel(label))) {
+
+			if ((e instanceof FlowEventInterface) && (((FlowEventInterface) e).hasLabel(label))) {
 				iterator = it;
 				active = e;
 				working = true;
-				((FlowEventInterface)e).goToLabel(label);
+				((FlowEventInterface) e).goToLabel(label);
 				break;
 			}
 		}
 	}
-	
+
 	public boolean isActive(Event eval, GameContainer container, SubTiledMap map) {
 		boolean ret = true;
-		
-		for(Condition c : conditions){
-			ret = ret && c.eval(eval, container,map);
+
+		for (Condition c : conditions) {
+			ret = ret && c.eval(eval, container, map);
 		}
-		
+
 		return ret;
 	}
 
@@ -490,10 +457,9 @@ public class RPGMakerEvent extends FlowEventClass {
 
 	@Override
 	public int getDirection() {
-		if(sprite != null) {
+		if (sprite != null) {
 			return sprite.getDirection();
-		}
-		else {
+		} else {
 			return -1;
 		}
 	}
@@ -501,17 +467,16 @@ public class RPGMakerEvent extends FlowEventClass {
 	@Override
 	public void setDirection(int direction) {
 		movingdirection = direction;
-		if(sprite != null && !fixeddirection) {
+		if (sprite != null && !fixeddirection) {
 			sprite.setDirection(direction);
 		}
 	}
 
 	@Override
 	public int getWidth() {
-		if(sprite != null) {
+		if (sprite != null) {
 			return sprite.getWidth();
-		}
-		else if(tile != null) {
+		} else if (tile != null) {
 			return tile.getWidth();
 		}
 		return -1;
@@ -519,21 +484,20 @@ public class RPGMakerEvent extends FlowEventClass {
 
 	@Override
 	public int getHeight() {
-		if(sprite != null) {
+		if (sprite != null) {
 			return sprite.getHeight();
-		}
-		else if(tile != null) {
+		} else if (tile != null) {
 			return tile.getHeight();
 		}
 		return -1;
 	}
-	
-	@Override 
+
+	@Override
 	public boolean isBlocking() {
 		return !ghost;
 	}
-	
-	protected void work(GameContainer container, int delta, SubTiledMap map) throws SlickException{
+
+	protected void work(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		if (iterator == null) {
 			iterator = events.iterator();
 		}
@@ -547,36 +511,36 @@ public class RPGMakerEvent extends FlowEventClass {
 				return;
 			}
 		}
-		
+
 		if (active != null) {
 			if (!active.isWorking()) {
 				active = null;
-				paralelupdate(container,delta,map);
+				paralelupdate(container, delta, map);
 			} else {
 				active.paralelupdate(container, delta, map);
 				if (!active.isWorking()) {
 					active = null;
-					paralelupdate(container,delta,map);
+					paralelupdate(container, delta, map);
 				}
 			}
 		}
 	}
-	
-	protected void startmove(GameContainer container, int delta, SubTiledMap map)  throws SlickException{
+
+	protected void startmove(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		Player player = getState().getPlayer();
-		
-		switch(nextmove) {
+
+		switch (nextmove) {
 		case Moving.LOOKUP:
 			setDirection(GameSprite.UP);
-			
+
 			break;
 		case Moving.LOOKDOWN:
 			setDirection(GameSprite.DOWN);
-			
+
 			break;
 		case Moving.LOOKLEFT:
 			setDirection(GameSprite.LEFT);
-			
+
 			break;
 		case Moving.LOOKRIGHT:
 			setDirection(GameSprite.RIGHT);
@@ -590,7 +554,8 @@ public class RPGMakerEvent extends FlowEventClass {
 				yOff = 0.0f;
 			} else {
 				ignored = nextmove;
-				if((activeroute == null || activeroute.isCanactivate()) && !player.isMoving() && map.getEvents(getXPos(), getYPos() - 1).contains(player)) {
+				if ((activeroute == null || activeroute.isCanactivate()) && !player.isMoving()
+						&& map.getEvents(getXPos(), getYPos() - 1).contains(player)) {
 					player.setDirection(GameSprite.DOWN);
 					onEventTouch(container, map, player);
 				}
@@ -598,7 +563,7 @@ public class RPGMakerEvent extends FlowEventClass {
 			break;
 		case Moving.MOVEDOWN:
 			setDirection(GameSprite.DOWN);
-			if ((ghost && getYPos() < map.getHeight()-1) ||!map.isBlocked(getXPos(), getYPos() + 1)) {
+			if ((ghost && getYPos() < map.getHeight() - 1) || !map.isBlocked(getXPos(), getYPos() + 1)) {
 				map.getEvents(getXPos(), getYPos() + 1).add(getEvent());
 				moving = true;
 
@@ -606,7 +571,8 @@ public class RPGMakerEvent extends FlowEventClass {
 
 			} else {
 				ignored = nextmove;
-				if((activeroute == null || activeroute.isCanactivate()) && !player.isMoving() && map.getEvents(getXPos(), getYPos() + 1).contains(player)) {
+				if ((activeroute == null || activeroute.isCanactivate()) && !player.isMoving()
+						&& map.getEvents(getXPos(), getYPos() + 1).contains(player)) {
 					player.setDirection(GameSprite.UP);
 					onEventTouch(container, map, player);
 				}
@@ -621,7 +587,8 @@ public class RPGMakerEvent extends FlowEventClass {
 				xOff = 0.0f;
 			} else {
 				ignored = nextmove;
-				if((activeroute == null || activeroute.isCanactivate()) && !player.isMoving() && map.getEvents(getXPos()-1, getYPos()).contains(player)) {
+				if ((activeroute == null || activeroute.isCanactivate()) && !player.isMoving()
+						&& map.getEvents(getXPos() - 1, getYPos()).contains(player)) {
 					player.setDirection(GameSprite.RIGHT);
 					onEventTouch(container, map, player);
 				}
@@ -629,34 +596,35 @@ public class RPGMakerEvent extends FlowEventClass {
 			break;
 		case Moving.MOVERIGHT:
 			setDirection(GameSprite.RIGHT);
-			if ((ghost && getXPos() < map.getWidth()-1) || !map.isBlocked(getXPos() +1, getYPos())) {
+			if ((ghost && getXPos() < map.getWidth() - 1) || !map.isBlocked(getXPos() + 1, getYPos())) {
 				map.getEvents(getXPos() + 1, getYPos()).add(getEvent());
 				moving = true;
 
 				xOff = 0.0f;
 			} else {
 				ignored = nextmove;
-				if((activeroute == null || activeroute.isCanactivate()) && !player.isMoving() && map.getEvents(getXPos()+1, getYPos()).contains(player)) {
+				if ((activeroute == null || activeroute.isCanactivate()) && !player.isMoving()
+						&& map.getEvents(getXPos() + 1, getYPos()).contains(player)) {
 					player.setDirection(GameSprite.LEFT);
 					onEventTouch(container, map, player);
 				}
 			}
 			break;
 		}
-		
+
 		nextmove = Moving.NOTHING;
 	}
-	
-	protected void move(GameContainer container, int delta, SubTiledMap map)  throws SlickException{
-		float multiplier = 1/speed;
-		
+
+	protected void move(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+		float multiplier = 1 / speed;
+
 		switch (movingdirection) {
 		case GameSprite.UP:
 			yOff -= delta * movingspeed * multiplier;
 			if (-yOff >= map.getTileHeight()) {
 				yOff = 0.0f;
 				map.getEvents(getXPos(), getYPos()).remove(getEvent());
-				setYPos(getYPos()-1);
+				setYPos(getYPos() - 1);
 				moving = false;
 			}
 			break;
@@ -666,7 +634,7 @@ public class RPGMakerEvent extends FlowEventClass {
 			if (yOff >= map.getTileHeight()) {
 				yOff = 0.0f;
 				map.getEvents(getXPos(), getYPos()).remove(getEvent());
-				setYPos(getYPos()+1);
+				setYPos(getYPos() + 1);
 				moving = false;
 			}
 			break;
@@ -676,7 +644,7 @@ public class RPGMakerEvent extends FlowEventClass {
 			if (-xOff >= map.getTileWidth()) {
 				xOff = 0.0f;
 				map.getEvents(getXPos(), getYPos()).remove(getEvent());
-				setXPos(getXPos()-1);
+				setXPos(getXPos() - 1);
 				moving = false;
 			}
 			break;
@@ -685,123 +653,113 @@ public class RPGMakerEvent extends FlowEventClass {
 			if (xOff >= map.getTileWidth()) {
 				xOff = 0.0f;
 				map.getEvents(getXPos(), getYPos()).remove(getEvent());
-				setXPos(getXPos()+1);
+				setXPos(getXPos() + 1);
 				moving = false;
 			}
 			break;
 		}
 
 		if (moving == false) {
-			if(sprite != null)
+			if (sprite != null)
 				sprite.setStopped();
 		}
 	}
-	
-	protected void calcnextmove(GameContainer container, int delta, SubTiledMap map)  throws SlickException{
+
+	protected void calcnextmove(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		activeroute = null;
-		
-		if(movementrouteobject != null && movementrouteobject.getRoute().size() > 0) {
-			if(movementfirst || (movementiterator == null && customrouteobject.isLoop())){
+
+		if (movementrouteobject != null && movementrouteobject.getRoute().size() > 0) {
+			if (movementfirst || (movementiterator == null && customrouteobject.isLoop())) {
 				movementiterator = movementrouteobject.getRoute().iterator();
 				prevignored = ignored;
 				ignored = Moving.NOTHING;
 				movementfirst = false;
 			}
-			
-			if(!movementrouteobject.isMustignore() && ignored > Moving.NOTHING) {
+
+			if (!movementrouteobject.isMustignore() && ignored > Moving.NOTHING) {
 				nextmove = ignored;
-			}
-			else {
-				if(!movementiterator.hasNext()){
+			} else {
+				if (!movementiterator.hasNext()) {
 					movementrouteobject = null;
 					ignored = prevignored;
 					movementfirst = true;
 					movementiterator = null;
-					if(!working)
+					if (!working)
 						getState().getActiveEvents().remove(getEvent());
-				}
-				else {
+				} else {
 					nextmove = movementiterator.next();
 					activeiterator = movementiterator;
 					activeroute = movementrouteobject;
 				}
 			}
-		}
-		else if(!working && movement != FIXED) {
-			count+=delta;
-			if(count > period) {
+		} else if (!working && movement != FIXED) {
+			count += delta;
+			if (count > period) {
 				count = 0;
-				
-				if(movement == RANDOMMOVEMENT) {
+
+				if (movement == RANDOMMOVEMENT) {
 					Random r = new Random();
-					
-					nextmove = r.nextInt(4)+Moving.MOVEUP;
-				}
-				else if(movement == TOPLAYER) {
+
+					nextmove = r.nextInt(4) + Moving.MOVEUP;
+				} else if (movement == TOPLAYER) {
 					Player p = getState().getPlayer();
-					
-					int xDif = p.getXPos()-getXPos();
-					int yDif = p.getYPos()-getYPos();
-					
-					if(Math.abs(xDif) >= Math.abs(yDif)) {
-						if(xDif>0) {
+
+					int xDif = p.getXPos() - getXPos();
+					int yDif = p.getYPos() - getYPos();
+
+					if (Math.abs(xDif) >= Math.abs(yDif)) {
+						if (xDif > 0) {
 							nextmove = Moving.MOVERIGHT;
-						}
-						else {
+						} else {
 							nextmove = Moving.MOVELEFT;
 						}
-					}
-					else {
-						if(yDif>0) {
+					} else {
+						if (yDif > 0) {
 							nextmove = Moving.MOVEDOWN;
-						}
-						else {
+						} else {
 							nextmove = Moving.MOVEUP;
 						}
 					}
-				}
-				else if(movement == CUSTOM) {
-					if(customfirst){
+				} else if (movement == CUSTOM) {
+					if (customfirst) {
 						customiterator = customrouteobject.getRoute().iterator();
 						customfirst = false;
 					}
-					
-					if(!customrouteobject.isMustignore() && ignored > Moving.NOTHING) {
+
+					if (!customrouteobject.isMustignore() && ignored > Moving.NOTHING) {
 						nextmove = ignored;
-					}
-					else if(customiterator != null) {
-						if(!customiterator.hasNext()){
-							if(customrouteobject.isLoop()) {
+					} else if (customiterator != null) {
+						if (!customiterator.hasNext()) {
+							if (customrouteobject.isLoop()) {
 								customiterator = customrouteobject.getRoute().iterator();
-							}
-							else {
+							} else {
 								customiterator = null;
 							}
 						}
-						if(customiterator != null && customiterator.hasNext()){
+						if (customiterator != null && customiterator.hasNext()) {
 							nextmove = customiterator.next();
 							activeiterator = customiterator;
 							activeroute = customrouteobject;
 						}
 					}
-					
+
 				}
 			}
 		}
-		
+
 		ignored = Moving.NOTHING;
 	}
-	
+
 	public void setRoute(Route route) {
 		movementrouteobject = route;
 		movementiterator = null;
 		movementfirst = false;
 	}
-	
+
 	public Route getRoute() {
 		return movementrouteobject;
 	}
-	
+
 	@Override
 	public int getXPos() {
 		return x;
@@ -825,14 +783,13 @@ public class RPGMakerEvent extends FlowEventClass {
 		y = newPos;
 		map.add(getEvent());
 	}
-	
+
 	@Override
 	public void setBlocking(boolean blocking) {
 		ghost = !blocking;
 	}
-	
+
 	public void setRendersprite(boolean state) {
 		rendersprite = state;
 	}
 }
-

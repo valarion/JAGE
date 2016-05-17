@@ -11,17 +11,19 @@ import org.w3c.dom.Element;
 import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
+import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.gamestates.Database;
 
 public class PlayEmote extends FlowEventClass {
-	Image image;
-	int duration;
-	Animation animation;
-	int elapsed;
-	String objective;
-	SubTiledMap map;
+	protected Image image;
+	protected int duration;
+	protected Animation animation;
+	protected int elapsed;
+	protected String id = null;
+	protected boolean player;
+	protected SubTiledMap map;
 	
-	Renderable rendered;
+	protected Renderable rendered;
 	
 	@Override
 	public void loadEvent(Element node, Object context) throws SlickException {
@@ -34,7 +36,17 @@ public class PlayEmote extends FlowEventClass {
 			rendered = image = Database.instance().getImages().get(node.getAttribute("image"));
 		}
 		
-		objective = node.getAttribute("objective");
+		String ob = node.getAttribute("objetive");
+		
+		if("player".equals(ob)) {
+			player = true;
+		}
+		else if ("self".equals(ob)){
+			player = false;
+		}
+		else {
+			id = node.getAttribute("event");
+		}
 	}
 	
 	@Override
@@ -68,17 +80,26 @@ public class PlayEmote extends FlowEventClass {
 	public void render(GameContainer container, Graphics g, int tilewidth,
 			int tileheight) throws SlickException {
 		Event e;
-		if(objective != null && objective.length()>0) {
-			e = map.getEventsById().get(objective);
-			
+		try {
+			if(id != null) {
+				e = map.getEventsById().get(id);
+			}
+			else if(!player) {
+				e = getEvent();
+			}
+			else {
+				e = getState().getPlayer();
+			}
 		}
-		else {
-			e = getEvent();
+		catch(Exception ex) {
+			e = null;
 		}
 		
-		float x = e.getXDraw(map.getTileWidth()) + e.getWidth()/2.f - (animation != null?animation.getWidth():image.getWidth())/2.f;
-		float y = e.getYDraw(map.getTileWidth())-(animation != null?animation.getHeight():image.getHeight());
-		rendered.draw(x, y);
+		if(e != null && animation == null || animation.getCurrentFrame()!=null) {
+			float x = e.getXDraw(map.getTileWidth()) + e.getWidth()/2.f - (animation != null?animation.getWidth():image.getWidth())/2.f;
+			float y = e.getYDraw(map.getTileWidth())-(animation != null?animation.getHeight():image.getHeight());
+			rendered.draw(x, y);
+		}
 	}
 	
 	@Override

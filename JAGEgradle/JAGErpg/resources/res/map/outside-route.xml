@@ -8,11 +8,32 @@
 			</events>
 		</page>
 	</GameEvent>
+
+	<GameEvent id="routesoldier">
+		<page type="paralel" x="8" y="5" layer="player" sprite="SoldierSprite" direction="down" movement="fixed" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+
+		</page>
+	</GameEvent>
+
 	<GameEvent>
-		<page x="6" y="25" layer="effects" type="touch">
+		<page x="8" y="10" layer="effects" type="touch">
 			<events>
-				<PlayEmote spritesheet="Emotes" sprite="exclamation" time="500"></PlayEmote>
+				<PlayEmote spritesheet="Emotes" sprite="exclamation"
+					event="routesoldier" time="200"></PlayEmote>
+				<MoveEvent event="routesoldier" ignore="false" loop="false"
+					wait="true">
+					<movedown></movedown>
+					<movedown></movedown>
+					<movedown></movedown>
+					<movedown></movedown>
+				</MoveEvent>
+				<Interrupt interrupt="40" action="true"></Interrupt>
 			</events>
 		</page>
+		<page>
+				<conditions>
+					<InterruptCondition interrupt="40"></InterruptCondition>
+				</conditions>
+			</page>
 	</GameEvent>
 </mapevents>
