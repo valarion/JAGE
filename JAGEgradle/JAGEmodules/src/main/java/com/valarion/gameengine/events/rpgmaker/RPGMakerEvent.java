@@ -191,7 +191,7 @@ public class RPGMakerEvent extends FlowEventClass {
 			tile = tileset.tiles.getSubImage(tileset.getTileX(tileId), tileset.getTileY(tileId));
 		}
 
-		if (map.equals(this.map) && !working && !moving && type == ONSTART) {
+		if (map.equals(this.map) && !working && !moving && type == ONSTART && this.isActive(getEvent(), container, map) && getEvent() instanceof GameEvent && ((GameEvent)getEvent()).getActive() == this) {
 			performAction(container, map, null);
 		}
 
@@ -791,5 +791,11 @@ public class RPGMakerEvent extends FlowEventClass {
 
 	public void setRendersprite(boolean state) {
 		rendersprite = state;
+	}
+	
+	public void onGetActive(GameContainer container, SubTiledMap map) throws SlickException {
+		if (map.equals(this.map) && !working && !moving && type == ONSTART) {
+			performAction(container, map, null);
+		}
 	}
 }

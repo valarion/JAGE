@@ -4,13 +4,15 @@
 		<page x="9" y="28" layer="bot" type="touch">
 			<events>
 				<Teleport xDest="1" yDest="26" destMap="outsidefarm"
-					destDirection="left"></Teleport>
+					destDirection="right"></Teleport>
 			</events>
 		</page>
 	</GameEvent>
 
 	<GameEvent id="routesoldier">
-		<page type="paralel" x="8" y="5" layer="player" sprite="SoldierSprite" direction="down" movement="fixed" animatedmovement="true" animated="false" fixeddirection="false" ghost="false">
+		<page type="paralel" x="8" y="5" layer="player" sprite="SoldierSprite"
+			direction="down" movement="fixed" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false">
 
 		</page>
 	</GameEvent>
@@ -27,13 +29,68 @@
 					<movedown></movedown>
 					<movedown></movedown>
 				</MoveEvent>
-				<Interrupt interrupt="40" action="true"></Interrupt>
+				<Dialog position="bot">
+					<Text>Where do you think you are going?</Text>
+				</Dialog>
+				<Cicle>
+					<Selection>
+						<option>
+							<text>
+								<Text>I come from the farm on the east. I came to trade.</Text>
+							</text>
+							<events>
+								<Dialog position="bot">
+									<Text>To trade you need to go to the west, to the city.</Text>
+								</Dialog>
+							</events>
+						</option>
+						<option>
+							<text>
+								<Text>I came to save the princess</Text>
+							</text>
+							<events>
+								<BreakCicle></BreakCicle>
+							</events>
+						</option>
+						<option>
+							<text>
+								<Text>I'm just picking up mushrooms.</Text>
+							</text>
+							<events>
+								<Dialog position="bot">
+									<Text>With shield and sword? I don't believe you.</Text>
+								</Dialog>
+							</events>
+						</option>
+						<cancel>
+
+						</cancel>
+					</Selection>
+				</Cicle>
+				<Dialog position="bot">
+					<Text>I can't let that happen!</Text>
+				</Dialog>
+				<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+				<Battle enemyhp="100" playerhp="100" image="knight">
+					<win>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Interrupt interrupt="40" action="true"></Interrupt>
+					</win>
+					<loose>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Dialog position="bot">
+							<Text>You lost...</Text>
+						</Dialog>
+						<Teleport xDest="4" yDest="26" destMap="outsidefarm"
+							destDirection="left"></Teleport>
+					</loose>
+				</Battle>
 			</events>
 		</page>
-		<page>
-				<conditions>
-					<InterruptCondition interrupt="40"></InterruptCondition>
-				</conditions>
-			</page>
+		<page  x="0" y="0" layer="bot" type="paralel">
+			<conditions>
+				<InterruptCondition interrupt="40"></InterruptCondition>
+			</conditions>
+		</page>
 	</GameEvent>
 </mapevents>

@@ -6,7 +6,7 @@
 				<Interrupt interrupt="0" action="true"></Interrupt>
 			</events>
 		</page>
-		<page x="4" y="6" layer="player" type="paralel" tile="1678">
+		<page x="4" y="6" layer="player" type="start" tile="1678">
 			<conditions>
 				<InterruptCondition interrupt="0"></InterruptCondition>
 			</conditions>
@@ -21,7 +21,7 @@
 				<Dialog position="bot">
 					<Text>Help her...</Text>
 				</Dialog>
-				<Blink time="500" period="100"></Blink>
+				<Blink time="500" period="200"></Blink>
 				<Interrupt interrupt="1" action="true"></Interrupt>
 			</events>
 		</page>

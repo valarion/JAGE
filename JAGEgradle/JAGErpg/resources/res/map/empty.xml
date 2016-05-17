@@ -47,7 +47,7 @@
 					<Text>Valar went to open the door.</Text>
 				</Dialog>
 				<ChangeSprite sprite="TestSprite"></ChangeSprite>
-				<Teleport xDest="1" yDest="5" destMap="insidefarm"
+				<Teleport xDest="1" yDest="3" destMap="insidefarm"
 					destDirection="right"></Teleport>
 			</events>
 		</page>

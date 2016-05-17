@@ -342,16 +342,18 @@ public class GameEvent implements FlowEventInterface {
 
 	/**
 	 * Set this event active page.
+	 * @throws SlickException 
 	 */
-	protected void setActive(GameContainer container, SubTiledMap map) {
+	protected void setActive(GameContainer container, SubTiledMap map) throws SlickException {
 		if (active == null || !active.isWorking()) {
+			if(active != null) {
+				map.getEvents(active.getXPos(), active.getYPos()).remove(getEvent());
+			}
 			boolean found = false;
 			for (RPGMakerEvent page : pages) {
 				if (page.isActive(this, container, map)) {
-					if(active != null) {
-						map.getEvents(active.getXPos(), active.getYPos()).remove(getEvent());
-					}
 					active = page;
+					active.onGetActive(container, map);
 					found = true;
 					map.add(this);
 					//map.getEvents(active.getXPos(), active.getYPos()).add(getEvent());
