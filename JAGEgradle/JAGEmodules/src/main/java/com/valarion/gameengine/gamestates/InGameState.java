@@ -142,11 +142,21 @@ public class InGameState extends SubState {
 		Input input = container.getInput();
 
 		if (active != null) {
-			if (activeEvents.size() > 0)
-				for (Event e : activeEvents)
-					e.paralelupdate(container, delta, active);
-			else
+			if (activeEvents.size() > 0) {
+				// for (Event e : activeEvents)
+				// e.paralelupdate(container, delta, active);
+				for (Event e : activeEvents) {
+					if(!active.getEvents().contains(e)) {
+						e.paralelupdate(container, delta, active);
+					}
+				}
+				boolean mustupdate = active.isMustupdate();
+				active.setMustupdate(false);
 				active.update(container, delta);
+				active.setMustupdate(mustupdate);
+			} else {
+				active.update(container, delta);
+			}
 		}
 
 		input.clearKeyPressedRecord();
@@ -229,7 +239,7 @@ public class InGameState extends SubState {
 	 */
 	protected SubTiledMap loadMap(GameContainer container, String mapname) throws SlickException {
 		SubTiledMap map = new SubTiledMap(mapfiles.get(mapname).getAbsolutePath(), GameCore.getInstance(), this);
-		
+
 		loadedmaps.put(mapname, map);
 
 		Set<Event> deletions = new HashSet<Event>();
@@ -278,7 +288,7 @@ public class InGameState extends SubState {
 			}
 			Database.instance().getContext().getDeletedEvents().clear();
 		}
-		
+
 		active.add(player, 1);
 
 		active.addDeleteds();
