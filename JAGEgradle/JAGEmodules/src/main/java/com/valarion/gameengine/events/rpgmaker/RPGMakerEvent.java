@@ -377,8 +377,9 @@ public class RPGMakerEvent extends FlowEventClass {
 	public void performAction(GameContainer container, SubTiledMap map, Event e) throws SlickException {
 		working = true;
 		activator = e;
-		map.setMustupdate(false);
-		if (type != PARALEL) {
+		
+		if (type != PARALEL && type >= 0) {
+			map.setMustupdate(false);
 			getState().getActiveEvents().add(this);
 		}
 

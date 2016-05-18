@@ -266,6 +266,9 @@ public class SubTiledMap extends TiledMap implements Updatable {
 			if (eventblocked)
 				break;
 		}
+		if(eventblocked || blocked[x][y]) {
+			return true;
+		}
 		return eventblocked || blocked[x][y];
 	}
 

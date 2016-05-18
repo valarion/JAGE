@@ -86,7 +86,7 @@ public class Piece extends FlowEventClass {
 	}
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		switch(state) {
 		case 0:
 			newx = x;

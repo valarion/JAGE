@@ -69,7 +69,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 
 	}
 
@@ -113,7 +113,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 	public static final int replimit = 250;
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		Input input = container.getInput();
 		lastleft += delta;
 		lastright += delta;
@@ -440,7 +440,7 @@ public class Player extends com.valarion.gameengine.events.Player {
 
 	@Override
 	public boolean isBlocking() {
-		return true;
+		return false;
 	}
 
 	@Override
