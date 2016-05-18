@@ -33,11 +33,11 @@ public class Bullet implements Event {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
 	public static final float speed = 0.2f;
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		x += speed*delta;
 		
 		if(x+w > map.getWidth()*map.getTileWidth()) {

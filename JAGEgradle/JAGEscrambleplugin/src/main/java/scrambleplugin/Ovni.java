@@ -32,10 +32,10 @@ public class Ovni implements Enemy {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		if(direction) {
 			y+=delta*0.1;
 			

@@ -115,7 +115,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	}
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 
 	}
 
@@ -127,7 +127,7 @@ public class Player extends com.valarion.gameengine.events.Player implements Ene
 	
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		deltacount += delta;
 		if (deltacount > 1000) {
 			punctuation += 10;

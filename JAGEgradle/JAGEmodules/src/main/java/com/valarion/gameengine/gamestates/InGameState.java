@@ -289,6 +289,7 @@ public class InGameState extends SubState {
 			Database.instance().getContext().getDeletedEvents().clear();
 		}
 
+		active.remove(player);
 		active.add(player, 1);
 
 		active.addDeleteds();

@@ -27,16 +27,16 @@ public class Explosion implements Event {
 			l.add(img.getSubImage(i, 0, (int)w, (int)h));
 		}
 		
-		anim = new Animation(l.toArray(new Image[0]), 100);
+		anim = new Animation(l.toArray(new Image[0]), 100,false);
 		anim.setLooping(false);
 		anim.start();
 	}
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		if(anim.isStopped()) {
 			map.remove(this);
 		}

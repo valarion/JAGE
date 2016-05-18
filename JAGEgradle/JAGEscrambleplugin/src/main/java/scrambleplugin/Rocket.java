@@ -35,10 +35,10 @@ public class Rocket implements Enemy {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
+	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {}
 
 	@Override
-	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
+	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		if(active) {
 			y -= speed*(float)delta;
 			if(y + 2*h < 0) {
