@@ -311,7 +311,7 @@ public class Database {
 		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
-			m.play();
+			m.play(1.f,1.f);
 			return true;
 		} else {
 			return false;
@@ -345,7 +345,7 @@ public class Database {
 		music = name;
 		Music m = musics.get(name);
 		if (m != null) {
-			m.loop();
+			m.loop(1.f,1.f);
 			return true;
 		} else {
 			return false;
@@ -549,7 +549,7 @@ public class Database {
 	public boolean playSound(String name) {
 		Sound s = sounds.get(name);
 		if (s != null) {
-			s.play();
+			s.play(1.f,1.f);
 			return true;
 		} else {
 			return false;
@@ -581,7 +581,7 @@ public class Database {
 	public boolean loopSound(String name) {
 		Sound s = sounds.get(name);
 		if (s != null) {
-			s.loop();
+			s.loop(1.f,1.f);
 			return true;
 		} else {
 			return false;
@@ -637,5 +637,4 @@ public class Database {
 	public String getMusic() {
 		return music;
 	}
-
 }

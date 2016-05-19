@@ -13,7 +13,11 @@
 		<page x="8" y="5" layer="player" sprite="SoldierSprite"
 			direction="down" movement="fixed" animatedmovement="true" animated="false"
 			fixeddirection="false" ghost="false">
-
+		</page>
+		<page>
+			<conditions>
+				<InterruptCondition interrupt="40"></InterruptCondition>
+			</conditions>
 		</page>
 	</GameEvent>
 
@@ -80,14 +84,34 @@
 						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
 						<Dialog position="bot">
 							<Text>You lost...</Text>
+
 						</Dialog>
-						<Teleport xDest="4" yDest="26" destMap="outsidefarm"
-							destDirection="left"></Teleport>
+						<Selection>
+							<option>
+								<text>
+									<Text>Continue</Text>
+								</text>
+								<events>
+									<Teleport xDest="4" yDest="26" destMap="outsidefarm"
+										destDirection="left"></Teleport>
+								</events>
+							</option>
+							<option>
+								<text>
+									<Text>Quit to main menu</Text>
+								</text>
+								<events>
+									<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+									<StopSound sound="thunderstorm" />
+									<QuitToMainMenu />
+								</events>
+							</option>
+						</Selection>
 					</loose>
 				</Battle>
 			</events>
 		</page>
-		<page  x="0" y="0" layer="bot" type="paralel">
+		<page>
 			<conditions>
 				<InterruptCondition interrupt="40"></InterruptCondition>
 			</conditions>

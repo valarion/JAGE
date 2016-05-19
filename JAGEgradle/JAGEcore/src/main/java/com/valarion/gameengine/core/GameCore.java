@@ -108,7 +108,8 @@ public class GameCore extends BasicGame {
 			app.setDisplayMode(screenwidth, screenheight, fullscreen);
 			app.setShowFPS(false);
 			app.setMouseGrabbed(false);
-
+			app.setAlwaysRender(!fullscreen);
+			
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

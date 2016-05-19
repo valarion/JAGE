@@ -21,43 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.events.menu.ingamemenu;
+package com.valarion.gameengine.events.rpgmaker.flow;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
 import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.core.GameCore;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
+import com.valarion.gameengine.events.menu.ingamemenu.MenuExit;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
-import com.valarion.gameengine.gamestates.Database;
-import com.valarion.gameengine.gamestates.StartState;
 
 /**
- * Exit option of the ingame menu.
+ * Class that stops the execution of an event.
  * @author Rubén Tomás Gracia
  *
  */
-public class MenuExit extends FlowEventClass {
+public class QuitToMainMenu extends FlowEventClass {
 	@Override
-	public void paralelupdate(GameContainer container, int delta,
-			SubTiledMap map) throws SlickException {
-		getState().getActiveEvents().remove(this);
-		for (Event e : map.getEvents()) {
-			e.onMapSetAsInactive(container, map);
-		}
-		GameCore.getInstance()
-				.setActive(
-						new StartState());
+	public void performAction(GameContainer container, SubTiledMap map, Event e)
+			throws SlickException {
+		MenuExit exit = new MenuExit();
+		exit.loadEvent(null, this);
+		exit.paralelupdate(container, 0, map);
 	}
 
-	@Override
-	public String toString() {
-		return "Exit";
-	}
-
-	@Override
-	public boolean isWorking() {
-		return Database.instance().getContext().isSaveEnabled();
-	}
 }
