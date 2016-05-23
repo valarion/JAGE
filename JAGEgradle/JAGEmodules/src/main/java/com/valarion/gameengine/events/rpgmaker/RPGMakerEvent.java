@@ -288,6 +288,12 @@ public class RPGMakerEvent extends FlowEventClass {
 		} catch (Exception e) {
 			sprite = null;
 		}
+		
+		try {
+			tile = Database.instance().getImages().get(node.getAttribute("image"));
+		} catch (Exception e) {
+			sprite = null;
+		}
 
 		if ("up".equals(direction)) {
 			setDirection(GameSprite.UP);
@@ -448,12 +454,12 @@ public class RPGMakerEvent extends FlowEventClass {
 
 	@Override
 	public float getXDraw(int tileWidth) {
-		return (getXPos() * tileWidth + xOff);
+		return (getXPos() * tileWidth + tileWidth/2 - getWidth()/2 + xOff);
 	}
 
 	@Override
 	public float getYDraw(int tileHeight) {
-		return (getYPos() * tileHeight + yOff);
+		return (getYPos() * tileHeight + tileHeight - getHeight() + yOff);
 	}
 
 	@Override

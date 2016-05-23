@@ -117,4 +117,13 @@
 			</conditions>
 		</page>
 	</GameEvent>
+	
+	<GameEvent>
+		<page x="5" y="0" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="5" yDest="8" destMap="externcavern"
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
 </mapevents>

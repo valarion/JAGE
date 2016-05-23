@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="32" tileheight="32" backgroundcolor="#272828" nextobjectid="1">
  <tileset firstgid="1" name="massinnerchipset" tilewidth="32" tileheight="32" tilecount="1600">
   <image source="../tileset/massinnerchipset.png" width="256" height="6400"/>
  </tileset>

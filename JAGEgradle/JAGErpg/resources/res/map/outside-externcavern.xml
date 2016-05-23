@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="5" y="9" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="5" yDest="1" destMap="route"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent id="tomb">
+		<page x="5" y="5" layer="player" image="tomb" type="activation">
+			<events>
+				<Dialog position="bot">
+					<Text>An ancient tomb. You can see a big hole behind it.</Text>
+				</Dialog>
+			</events>
+		</page>
+
+		<page x="3" y="5" layer="player" image="tomb" type="activation">
+			<conditions>
+				<InterruptCondition interrupt="50"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog position="bot">
+					<Text>An ancient tomb. You can't read what's written.</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent id="tombl">
+		<page x="4" y="5" layer="player" type="activation">
+			<events>
+				<Dialog position="bot">
+					<Text>An ancient tomb. You can see a big hole behind it.</Text>
+				</Dialog>
+			</events>
+		</page>
+
+		<page x="2" y="5" layer="player" type="activation">
+			<conditions>
+				<InterruptCondition interrupt="51"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog position="bot">
+					<Text>An ancient tomb. You can't read what's written.</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent id="tombr">
+		<page x="6" y="5" layer="player" type="activation">
+			<events>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="left"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<Dialog position="bot">
+							<Text>There is an interrupt, do you want to push it?</Text>
+						</Dialog>
+						<Selection>
+							<option>
+								<text>
+									<Text>Yes</Text>
+								</text>
+								<events>
+									<Interrupt interrupt="51" action="true"></Interrupt>
+									<Dialog position="bot">
+										<Text>You feel the ground trembling</Text>
+									</Dialog>
+									<MoveEvent event="tomb" ignore="false" loop="false"
+										wait="true">
+										<moveleft />
+										<moveleft />
+									</MoveEvent>
+									<Interrupt interrupt="50" action="true"></Interrupt>
+								</events>
+							</option>
+							<option>
+								<text>
+									<Text>No</Text>
+								</text>
+								<events>
+
+								</events>
+							</option>
+						</Selection>
+					</true>
+					<false>
+						<Dialog position="bot">
+							<Text>An ancient tomb. You can see a big hole behind it.</Text>
+						</Dialog>
+					</false>
+				</Conditional>
+			</events>
+		</page>
+
+		<page x="4" y="5" layer="player" type="activation">
+			<conditions>
+				<InterruptCondition interrupt="50"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog position="bot">
+					<Text>An ancient tomb. You can't read what's written.</Text>
+				</Dialog>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page x="5" y="4" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="23" yDest="48" destMap="badcavern"
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

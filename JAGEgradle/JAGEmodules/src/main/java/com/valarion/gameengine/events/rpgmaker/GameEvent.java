@@ -346,6 +346,7 @@ public class GameEvent implements FlowEventInterface {
 	 */
 	protected void setActive(GameContainer container, SubTiledMap map) throws SlickException {
 		if (active == null || !active.isWorking()) {
+			map.setMustupdate(true);
 			if(active != null) {
 				map.getEvents(active.getXPos(), active.getYPos()).remove(getEvent());
 			}

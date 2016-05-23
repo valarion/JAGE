@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="23" y="49" layer="bot" type="touch">
+			<conditions></conditions>
+			<events>
+				<Teleport xDest="5" yDest="5" destMap="externcavern"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

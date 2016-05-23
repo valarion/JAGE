@@ -101,6 +101,7 @@
 	<image name="title" src="image/scene01.jpg"></image>
 	<image name="knight" src="image/knight.png"></image>
 	<image name="healthbar" src="image/healthbar.png"></image>
+	<image name="tomb" src="tileset/tilee.png" x="320" y="64" w="96" h="64"></image>
 	<sound name="menumove" src="Decision1.ogg"></sound>
 	<sound name="menuaccept" src="Miss.ogg"></sound>
 	<sound name="menucancel" src="Load.ogg"></sound>

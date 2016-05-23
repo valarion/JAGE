@@ -33,7 +33,7 @@
  </layer>
  <layer name="overfloor" width="10" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgwATFjFgEsYBqItU1E6mOEuABtMMVB3ZDsp8Fj1v8kOQCgOxQHDgMzYxYRuw4Dk1dKiN2nEal8HHB4l9swAcq70cndTB3uTNCwp+QeTDggaSPGIAvbkfB4Ab48i8yBgCY/iwcsAQAAA==
+   H4sIAAAAAAAAC2NgwATVjFgEKVDXTKQ6SoAH0A5XHNgNyX4WPG7xQ5ILALJDceAwNDNiGbHjODR1qYzYcRqVwscFi3+xAR+ovB+d1MHc5c4ICX9C5sGAB5I+YgC+uB0Fgxvgy7/IGACdLPzysAQAAA==
   </data>
  </layer>
  <layer name="obstacles" width="10" height="30">
