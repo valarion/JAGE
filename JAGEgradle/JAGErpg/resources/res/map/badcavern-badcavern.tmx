@@ -35,7 +35,7 @@
  </layer>
  <layer name="walltop" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAAODfAC7KO00QJwAA
+   H4sIAAAAAAAAC+2ZMVNDMQjHszwX99bJOqiTOtlO6qRO6vf/OLK8uxxCAgGS2Hu/O5a2D+5PCYE2pY2NMVyeSbwZdNyC3YHdK30tFb+RUPEewB7Bnpz9RkLFewY7gp2c/UZCxXsBewV7c/YbCRXvHewD7FPw/B7sSug3kjXeLnvtC+wb7Efw/AHspuC3F2u86yC/vbDEuwjy2wKOt5CfsvuN5pzv81byXjGTDq6ncuS9YiYdXE+1+o1gOx9j/EbHw/16lI7WnaPkt5flOrido3RnzwDW4bFztGDNE9Zh3TmouuzxXWIdmp2DwmMXXtGcVaxDs3NQSOtSMiNocoJ1WJHWpWRGoHLCzeHeOqx1maM5q946rHWZo8mJVMeu8r4E7W5WyknpHqReX/He261I60dTZ147sIYIHSNorSsLHmerhne/orCcLWkOsA7tLh4NzgE3q2Edll1ci+f82KOuelDSQc2bI3qshJKOlhl8n+RnrDaX13pnaa/NadkND0l+xmp5qtU8vjO4z3r8H1WCy5PkbqPeT4nW4TmDL+nv2eLyZOk51LOeMzgFl6fajCH5/acnXJ64Gvlvd0RJx6ict+CR9xnmKw8dPeerWfgF1XHbRhAnAAA=
   </data>
  </layer>
  <layer name="player" width="50" height="50">
@@ -45,7 +45,7 @@
  </layer>
  <layer name="types" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3asQ3AQAwDMef3HzpVRjBwH7BgLVyvMzMHFjyX09Gio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlr+1rH5I9re+Lw0gb5YECcAAA==
+   H4sIAAAAAAAAC+3XuRKAIAxF0cj/f7SVjQMSxmwwt3gN4sTjFmgi0ghxyDWJZo5lVuvhwIEDBw4cOHDgwIEDBw4/R+Te1MsR/Rxw1AgOHDhwVHV89cHeeGWHxTwcdo4T3qvRfd/tO8eBA8cZjtm/c5d97eza3j2jmkPT23rHKzqizo1wrKw9tOuQLIdm/G+tDId13QyHV62THF6JqPHkBvr9DrsQJwAA
   </data>
  </layer>
 </map>

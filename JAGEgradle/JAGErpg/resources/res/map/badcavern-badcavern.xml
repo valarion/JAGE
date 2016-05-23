@@ -9,4 +9,48 @@
 			</events>
 		</page>
 	</GameEvent>
+	
+	<GameEvent id="badcavesoldier1">
+		<page x="36" y="43" layer="player" sprite="SoldierSprite"
+			direction="left" period="200" movement="custom" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false">
+			<route ignore="false" loop="true" >
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<lookup></lookup>
+				<lookright></lookright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<lookdown></lookdown>
+				<lookleft></lookleft>
+			</route>
+		</page>
+		<page>
+			<conditions>
+				<CanDirectlySeeCondition objetive="player"></CanDirectlySeeCondition>
+			</conditions>
+		</page>
+	</GameEvent>
 </mapevents>

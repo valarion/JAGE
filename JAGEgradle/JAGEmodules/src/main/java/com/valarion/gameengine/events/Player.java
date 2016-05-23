@@ -78,7 +78,6 @@ public class Player implements Event, Serializable {
 
 	@Override
 	public void update(GameContainer container, int delta, SubTiledMap map) throws SlickException {
-		// TODO no se activa el teleport
 		if (sprite != null) {
 			Input input = container.getInput();
 			if (!isMoving() && GameCore.getInstance().getActive() instanceof SubState
@@ -458,19 +457,16 @@ public class Player implements Event, Serializable {
 
 	@Override
 	public void performAction(GameContainer container, SubTiledMap map, Event e) throws SlickException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onMapSetAsInactive(GameContainer container, SubTiledMap map) throws SlickException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

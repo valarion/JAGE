@@ -539,15 +539,12 @@ public class RPGMakerEvent extends FlowEventClass {
 		switch (nextmove) {
 		case Moving.LOOKUP:
 			setDirection(GameSprite.UP);
-
 			break;
 		case Moving.LOOKDOWN:
 			setDirection(GameSprite.DOWN);
-
 			break;
 		case Moving.LOOKLEFT:
 			setDirection(GameSprite.LEFT);
-
 			break;
 		case Moving.LOOKRIGHT:
 			setDirection(GameSprite.RIGHT);

@@ -51,9 +51,9 @@ public class Blink extends FlowEventClass {
 	public void paralelupdate(GameContainer container, int delta, SubTiledMap map) throws SlickException {
 		elapsed += delta;
 		FlowEventInterface event = getEvent();
+		System.out.println(delta);
 		if (event instanceof GameEvent) {
-			((GameEvent) event).getActive().setRendersprite(elapsed % period % 2 == 0);
-			;
+			((GameEvent) event).getActive().setRendersprite(elapsed / period % 2 == 0);
 		}
 	}
 
@@ -62,7 +62,6 @@ public class Blink extends FlowEventClass {
 		super.loadEvent(node, context);
 
 		time = Integer.parseInt(node.getAttribute("time"));
-
 		period = Integer.parseInt(node.getAttribute("period"));
 	}
 

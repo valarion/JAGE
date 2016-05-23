@@ -21,7 +21,7 @@
 				<Dialog position="bot">
 					<Text>Help her...</Text>
 				</Dialog>
-				<Blink time="500" period="200"></Blink>
+				<Blink time="500" period="100"></Blink>
 				<Interrupt interrupt="1" action="true"></Interrupt>
 			</events>
 		</page>
