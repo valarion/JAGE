@@ -66,7 +66,7 @@ public class CanDirectlySeeCondition implements Condition {
 				}
 				if (from.getDirection() == GameSprite.UP) {
 					for (int i = 0; i < limit; i++) {
-						if ( from.getYPos() - i == to.getYPos()) {
+						if (map.getEvents(from.getXPos(), from.getYPos() - i).contains(to)) {
 							return true;
 						}
 						if (map.isBlocked(from.getXPos(), from.getYPos() - i)) {
@@ -75,7 +75,7 @@ public class CanDirectlySeeCondition implements Condition {
 					}
 				} else if (from.getDirection() == GameSprite.DOWN) {
 					for (int i = 0; i < limit; i++) {
-						if (from.getYPos() + i == to.getYPos()) {
+						if (map.getEvents(from.getXPos(), from.getYPos() + i).contains(to)) {
 							return true;
 						}
 						if (map.isBlocked(from.getXPos(), from.getYPos() + i)) {
@@ -86,7 +86,7 @@ public class CanDirectlySeeCondition implements Condition {
 			} else if (to.getYPos() == from.getYPos()) {
 				if (from.getDirection() == GameSprite.LEFT) {
 					for (int i = 0; i < limit; i++) {
-						if (from.getXPos() - i == to.getXPos()) {
+						if (map.getEvents(from.getXPos() - i, from.getYPos()).contains(to)) {
 							return true;
 						}
 						if (map.isBlocked(from.getXPos() - i, from.getYPos())) {
@@ -95,7 +95,7 @@ public class CanDirectlySeeCondition implements Condition {
 					}
 				} else if (from.getDirection() == GameSprite.RIGHT) {
 					for (int i = 0; i < limit; i++) {
-						if (from.getXPos() + i == to.getXPos()) {
+						if (map.getEvents(from.getXPos() + i, from.getYPos()).contains(to)) {
 							return true;
 						}
 						if (map.isBlocked(from.getXPos() + i, from.getYPos())) {
