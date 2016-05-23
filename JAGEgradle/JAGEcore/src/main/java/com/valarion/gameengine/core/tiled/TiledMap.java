@@ -19,6 +19,7 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
@@ -90,6 +91,7 @@ public class TiledMap {
 	/** True if we want to load tilesets - including their image data */
 	private boolean loadTileSets = true;
 
+	protected Color background;
 	/**
 	 * Create a new tile map based on a given TMX file
 	 * 
@@ -629,6 +631,18 @@ public class TiledMap {
 			height = parseInt(docElement.getAttribute("height"));
 			tileWidth = parseInt(docElement.getAttribute("tilewidth"));
 			tileHeight = parseInt(docElement.getAttribute("tileheight"));
+			
+			try {
+				String f = docElement.getAttribute("backgroundcolor").replace("#", "");
+				int r = Integer.parseInt(f.substring(0, 2),16);
+				int g = Integer.parseInt(f.substring(2, 4),16);
+				int b = Integer.parseInt(f.substring(4, 6),16);
+				
+				background = new Color(r,g,b);
+			}
+			catch(Exception e) {
+				background = Color.gray;
+			}
 
 			// now read the map properties
 			Element propsElement = (Element) docElement.getElementsByTagName("properties").item(0);
