@@ -346,6 +346,12 @@ public class GameEvent implements FlowEventInterface {
 	 */
 	protected void setActive(GameContainer container, SubTiledMap map) throws SlickException {
 		if (active == null || !active.isWorking()) {
+			int x = -1, y = -1, dir = 0;
+			if(active != null) {
+				x = active.getXPos();
+				y = active.getYPos();
+				dir = active.getDirection();
+			}
 			map.setMustupdate(true);
 			if(active != null) {
 				map.getEvents(active.getXPos(), active.getYPos()).remove(getEvent());
@@ -356,6 +362,12 @@ public class GameEvent implements FlowEventInterface {
 					active = page;
 					active.onGetActive(container, map);
 					found = true;
+					if(active.isInheritX())
+						active.setXPos(x);
+					if(active.isInheritY())
+						active.setYPos(y);
+					if(active.isInheritDirection())
+						active.setDirection(dir);
 					map.add(this);
 					//map.getEvents(active.getXPos(), active.getYPos()).add(getEvent());
 					break;

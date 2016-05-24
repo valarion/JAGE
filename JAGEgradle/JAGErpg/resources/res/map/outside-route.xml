@@ -78,6 +78,7 @@
 				<Battle enemyhp="100" playerhp="100" image="knight">
 					<win>
 						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Blink time="500" period="100"></Blink>
 						<Interrupt interrupt="40" action="true"></Interrupt>
 					</win>
 					<loose>

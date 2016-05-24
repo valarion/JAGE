@@ -47,10 +47,257 @@
 				<lookleft></lookleft>
 			</route>
 		</page>
-		<page>
+		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite" type="start"
+			direction="inherit" period="200" movement="fixed" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false">
 			<conditions>
+			<Or>
 				<CanDirectlySeeCondition objetive="player"></CanDirectlySeeCondition>
+			</Or>
+				
 			</conditions>
+			<events>
+				<PlayEmote spritesheet="Emotes" sprite="exclamation"
+					objetive="self" time="200"></PlayEmote>
+				<MoveEvent objetive="self" ignore="true" loop="false"
+					wait="true">
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+				</MoveEvent>
+				<Dialog position="bot">
+					<Text>You can't be here!</Text>
+				</Dialog>
+				<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+				<Battle enemyhp="100" playerhp="100" image="knight">
+					<win>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Blink time="500" period="100"></Blink>
+						<TempMapDelete></TempMapDelete>
+					</win>
+					<loose>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Dialog position="bot">
+							<Text>You lost...</Text>
+
+						</Dialog>
+						<Selection>
+							<option>
+								<text>
+									<Text>Continue</Text>
+								</text>
+								<events>
+									<Teleport xDest="5" yDest="6" destMap="externcavern"
+										destDirection="up"></Teleport>
+								</events>
+							</option>
+							<option>
+								<text>
+									<Text>Quit to main menu</Text>
+								</text>
+								<events>
+									<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+									<StopSound sound="thunderstorm" />
+									<QuitToMainMenu />
+								</events>
+							</option>
+						</Selection>
+					</loose>
+				</Battle>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent id="badcavesoldier2">
+		<page x="40" y="31" layer="player" sprite="SoldierSprite"
+			direction="left" period="200" movement="custom" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false">
+			<route ignore="false" loop="true" >
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<lookup></lookup>
+				<lookright></lookright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<lookup></lookup>
+				<lookleft></lookleft>
+			</route>
+		</page>
+		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite" type="start"
+			direction="inherit" period="200" movement="fixed" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false">
+			<conditions>
+			<Or>
+				<CanDirectlySeeCondition objetive="player"></CanDirectlySeeCondition>
+			</Or>
+				
+			</conditions>
+			<events>
+				<PlayEmote spritesheet="Emotes" sprite="exclamation"
+					objetive="self" time="200"></PlayEmote>
+				<MoveEvent objetive="self" ignore="true" loop="false"
+					wait="true">
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+				</MoveEvent>
+				<Dialog position="bot">
+					<Text>You can't be here!</Text>
+				</Dialog>
+				<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+				<Battle enemyhp="100" playerhp="100" image="knight">
+					<win>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Blink time="500" period="100"></Blink>
+						<TempMapDelete></TempMapDelete>
+					</win>
+					<loose>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Dialog position="bot">
+							<Text>You lost...</Text>
+
+						</Dialog>
+						<Selection>
+							<option>
+								<text>
+									<Text>Continue</Text>
+								</text>
+								<events>
+									<Teleport xDest="5" yDest="6" destMap="externcavern"
+										destDirection="up"></Teleport>
+								</events>
+							</option>
+							<option>
+								<text>
+									<Text>Quit to main menu</Text>
+								</text>
+								<events>
+									<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+									<StopSound sound="thunderstorm" />
+									<QuitToMainMenu />
+								</events>
+							</option>
+						</Selection>
+					</loose>
+				</Battle>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent id="badcavesoldier2">
+		<page x="32" y="32" layer="player" sprite="SoldierSprite"
+			direction="right" period="200" movement="custom" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false">
+			<route ignore="false" loop="true" >
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<moveright></moveright>
+				<lookdown></lookdown>
+				<lookleft></lookleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<moveleft></moveleft>
+				<lookdown></lookdown>
+				<lookright></lookright>
+			</route>
+		</page>
+		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite" type="start"
+			direction="inherit" period="200" movement="fixed" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false">
+			<conditions>
+			<Or>
+				<CanDirectlySeeCondition objetive="player"></CanDirectlySeeCondition>
+			</Or>
+				
+			</conditions>
+			<events>
+				<PlayEmote spritesheet="Emotes" sprite="exclamation"
+					objetive="self" time="200"></PlayEmote>
+				<MoveEvent objetive="self" ignore="true" loop="false"
+					wait="true">
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+					<forward></forward>
+				</MoveEvent>
+				<Dialog position="bot">
+					<Text>You can't be here!</Text>
+				</Dialog>
+				<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+				<Battle enemyhp="100" playerhp="100" image="knight">
+					<win>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Blink time="500" period="100"></Blink>
+						<TempMapDelete></TempMapDelete>
+					</win>
+					<loose>
+						<FadeScreen from="0x000000FF" to="0x00000000" in="1000" />
+						<Dialog position="bot">
+							<Text>You lost...</Text>
+
+						</Dialog>
+						<Selection>
+							<option>
+								<text>
+									<Text>Continue</Text>
+								</text>
+								<events>
+									<Teleport xDest="5" yDest="6" destMap="externcavern"
+										destDirection="up"></Teleport>
+								</events>
+							</option>
+							<option>
+								<text>
+									<Text>Quit to main menu</Text>
+								</text>
+								<events>
+									<FadeScreen from="0x00000000" to="0x000000FF" in="1000" />
+									<StopSound sound="thunderstorm" />
+									<QuitToMainMenu />
+								</events>
+							</option>
+						</Selection>
+					</loose>
+				</Battle>
+			</events>
 		</page>
 	</GameEvent>
 </mapevents>

@@ -111,6 +111,10 @@ public class RPGMakerEvent extends FlowEventClass {
 
 	protected Iterator<Integer> activeiterator;
 	protected Route activeroute;
+	
+	protected boolean inheritx;
+	protected boolean inherity;
+	protected boolean inheritdirection;
 
 	public static final int FIXED = 0;
 	public static final int RANDOMMOVEMENT = 1;
@@ -226,7 +230,14 @@ public class RPGMakerEvent extends FlowEventClass {
 		super.loadEvent(node, context);
 
 		try {
+			inheritx = "inherit".equals(node.getAttribute("x"));
 			this.x = Integer.parseInt(node.getAttribute("x"));
+		} catch (Exception e) {
+
+		}
+		
+		try {
+			inherity = "inherit".equals(node.getAttribute("y"));
 			this.y = Integer.parseInt(node.getAttribute("y"));
 		} catch (Exception e) {
 
@@ -303,6 +314,8 @@ public class RPGMakerEvent extends FlowEventClass {
 			setDirection(GameSprite.LEFT);
 		} else if ("right".equals(direction)) {
 			setDirection(GameSprite.RIGHT);
+		} else if ("inherit".equals(direction)) {
+			inheritdirection = true;
 		}
 
 		animatedmovement = Boolean.parseBoolean(node.getAttribute("animatedmovement"));
@@ -614,6 +627,24 @@ public class RPGMakerEvent extends FlowEventClass {
 				}
 			}
 			break;
+		case Moving.FORWARD:
+			switch(getDirection()) {
+			case GameSprite.UP:
+				nextmove = Moving.MOVEUP;
+				break;
+			case GameSprite.DOWN:
+				nextmove = Moving.MOVEDOWN;
+				break;
+			case GameSprite.LEFT:
+				nextmove = Moving.MOVELEFT;
+				break;
+			case GameSprite.RIGHT:
+				nextmove = Moving.MOVERIGHT;
+				break;
+			default:
+				nextmove = Moving.NOTHING;
+			}
+			startmove(container, delta, map);
 		}
 
 		nextmove = Moving.NOTHING;
@@ -801,5 +832,17 @@ public class RPGMakerEvent extends FlowEventClass {
 		if (map.equals(this.map) && !working && !moving && type == ONSTART) {
 			performAction(container, map, null);
 		}
+	}
+	
+	public boolean isInheritX() {
+		return inheritx;
+	}
+	
+	public boolean isInheritY() {
+		return inherity;
+	}
+	
+	public boolean isInheritDirection() {
+		return inheritdirection;
 	}
 }

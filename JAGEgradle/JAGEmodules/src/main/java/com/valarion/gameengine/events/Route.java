@@ -63,7 +63,13 @@ public class Route {
 			if (n instanceof Element) {
 				Element e = (Element)n;
 				
-				if("lookup".equals(e.getNodeName())) {
+				try {
+					route.add((Integer) Moving.class.getDeclaredField(e.getNodeName().toUpperCase()).get(null));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				/*if("lookup".equals(e.getNodeName())) {
 					route.add(Moving.LOOKUP);
 				}
 				else if("lookdown".equals(e.getNodeName())) {
@@ -86,7 +92,7 @@ public class Route {
 				}
 				else if("moveright".equals(e.getNodeName())) {
 					route.add(Moving.MOVERIGHT);
-				}
+				}*/
 			}
 		}
 	}
