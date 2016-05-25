@@ -286,7 +286,8 @@ public class BattleState extends SubState {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-
+		g.setBackground(Color.black);
+		g.clear();
 		// Dialogs
 		menu.postrender(container, g, 0, 0);
 		text.postrender(container, g, 0, 0);
