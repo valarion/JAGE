@@ -641,7 +641,7 @@ public class TiledMap {
 				background = new Color(r,g,b);
 			}
 			catch(Exception e) {
-				background = Color.gray;
+				background = Color.black;
 			}
 
 			// now read the map properties

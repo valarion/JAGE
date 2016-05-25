@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="1" height="1" tilewidth="32" tileheight="32" backgroundcolor="#000000" nextobjectid="1">
+ <layer name="effects" width="1" height="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgYGAAABzfRCEEAAAA
+  </data>
+ </layer>
+</map>

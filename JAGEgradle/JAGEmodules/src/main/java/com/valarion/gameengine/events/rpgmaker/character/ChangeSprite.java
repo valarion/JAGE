@@ -72,7 +72,11 @@ public class ChangeSprite extends FlowEventClass {
 	public void performAction(GameContainer container, SubTiledMap map, Event e)
 			throws SlickException {
 		
+		try {
 		getState().getPlayer().setSprite(Database.instance().getSprites().get(sprite).createSprite(spritespeed, movingspeed));
+		}
+		catch(Exception ex) {
+			getState().getPlayer().setSprite(null);
+		}
 	}
-
 }

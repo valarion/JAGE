@@ -60,7 +60,7 @@
 	<GameEvent>
 		<page x="7" y="2" layer="player">
 		</page>
-		<page x="7" y="2" layer="door" tile="15898">
+		<page x="7" y="2" layer="door" tile="1524" type="touch">
 			<conditions>
 				<InterruptCondition interrupt="80"></InterruptCondition>
 			</conditions>
@@ -72,10 +72,104 @@
 	</GameEvent>
 
 	<GameEvent>
-		<page x="7" y="1" layer="door" tile="1572">
+		<page x="7" y="1" layer="door" tile="1508">
 			<conditions>
 				<InterruptCondition interrupt="80"></InterruptCondition>
 			</conditions>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="5" y="8" layer="player" sprite="PrincessSprite"
+			direction="down" movement="fixed" animatedmovement="true" animated="false"
+			fixeddirection="false" ghost="false" type="start">
+			<conditions>
+				<InterruptCondition interrupt="80"></InterruptCondition>
+			</conditions>
+			<events>
+				<Wait time="1000"></Wait>
+				<MoveEvent objetive="self" ignore="false" loop="false"
+					wait="true">
+					<lookup></lookup>
+				</MoveEvent>
+				<PlayEmote spritesheet="Emotes" sprite="exclamation"
+					objetive="self" time="200"></PlayEmote>
+
+				<MoveEvent objetive="self" ignore="false" loop="false"
+					wait="true">
+					<moveup></moveup>
+					<moveup></moveup>
+					<moveright></moveright>
+					<moveright></moveright>
+					<moveup></moveup>
+					<moveup></moveup>
+				</MoveEvent>
+
+				<Dialog image="princessface">
+					<Text>Who are you?</Text>
+				</Dialog>
+				<Dialog image="testface">
+					<Text>I came to save you!</Text>
+				</Dialog>
+				<Dialog image="princessface">
+					<Text>You? Really?</Text>
+				</Dialog>
+				<Dialog image="princessface">
+					<Text>You came too late.</Text>
+				</Dialog>
+				<Dialog image="princessface">
+					<Text>Well, at least you served as a distraction while i dig the
+						tunnel.
+					</Text>
+				</Dialog>
+				<Dialog image="princessface">
+					<Text>Thanks for that.</Text>
+				</Dialog>
+				<Dialog image="princessface">
+					<Text>I have to go now.</Text>
+				</Dialog>
+				<Dialog image="princessface">
+					<Text>Bye</Text>
+				</Dialog>
+
+				<MoveEvent objetive="self" ignore="false" loop="false"
+					wait="true">
+					<movedown></movedown>
+					<movedown></movedown>
+					<moveleft></moveleft>
+					<moveleft></moveleft>
+					<movedown></movedown>
+					<movedown></movedown>
+					<movedown></movedown>
+				</MoveEvent>
+
+				<Interrupt interrupt="90" action="true"></Interrupt>
+			</events>
+		</page>
+
+		<page type="start">
+			<conditions>
+				<InterruptCondition interrupt="90"></InterruptCondition>
+			</conditions>
+			<events>
+				<Dialog image="testface">
+					<Text>This princess is really ungrateful...</Text>
+				</Dialog>
+				<Dialog image="testface">
+					<Text>Well, i'll go back to sleep</Text>
+				</Dialog>
+				<MoveEvent objetive="player" ignore="false" loop="false"
+					wait="true">
+					<movedown></movedown>
+					<movedown></movedown>
+					<movedown></movedown>
+					<moveleft></moveleft>
+					<moveleft></moveleft>
+					<movedown></movedown>
+					<movedown></movedown>
+				</MoveEvent>
+				<Teleport xDest="0" yDest="0" destMap="end" destDirection="down"></Teleport>
+			</events>
 		</page>
 	</GameEvent>
 </mapevents>

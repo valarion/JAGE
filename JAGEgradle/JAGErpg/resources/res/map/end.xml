@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page x="0" y="0" layer="player" type="start">
+			<events>
+				<ChangeSprite sprite=""></ChangeSprite>
+				<StopSound sound="thunderstorm"></StopSound>
+				<Dialog position="mid">
+					<Text>Credits:
+					
+					Map and history: Valarion
+					Sprites and sounds: Borrowed from various sites</Text>
+				</Dialog>
+				<QuitToMainMenu />
+			</events>
+		</page>
+	</GameEvent>
+
+</mapevents>
