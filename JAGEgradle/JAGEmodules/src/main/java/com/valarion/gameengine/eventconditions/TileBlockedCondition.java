@@ -39,16 +39,44 @@ import com.valarion.gameengine.gamestates.Database;
  */
 public class TileBlockedCondition implements Condition{
 	protected int xvar, yvar;
+	protected int x, y;
 
 	@Override
 	public boolean eval(Event e, GameContainer container, SubTiledMap map) {
-		return map.isBlocked((int)Database.instance().getContext().getGlobalVars()[xvar], (int)Database.instance().getContext().getGlobalVars()[yvar]);
+		int xdir = (x!=-1?x:(int)Database.instance().getContext().getGlobalVars()[xvar]);
+		int ydir = (y!=-1?y:(int)Database.instance().getContext().getGlobalVars()[yvar]);
+		return map.isBlocked(xdir,ydir);
 	}
 
 	@Override
 	public void load(Element node, Object context) throws SlickException {
-		xvar = Integer.parseInt(node.getAttribute("xvar"));
-		yvar = Integer.parseInt(node.getAttribute("yvar"));
+		try {
+			xvar = Integer.parseInt(node.getAttribute("xvar"));
+		}catch(Exception e) {
+			xvar = -1;
+		}
+		
+		try {
+			yvar = Integer.parseInt(node.getAttribute("yvar"));
+		}catch(Exception e) {
+			yvar = -1;
+		}
+		
+		try {
+			x = Integer.parseInt(node.getAttribute("x"));
+		}catch(Exception e) {
+			x = -1;
+		}
+		
+		try {
+			y = Integer.parseInt(node.getAttribute("y"));
+		}catch(Exception e) {
+			y = -1;
+		}
+		
+		if((x == -1 && xvar == -1) || (y == -1 && yvar == -1)) {
+			throw new IndexOutOfBoundsException("(x and xvar not set) or (y and yvar not set)");
+		}
 	}
 
 }

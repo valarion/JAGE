@@ -9,12 +9,12 @@
 			</events>
 		</page>
 	</GameEvent>
-	
+
 	<GameEvent id="badcavesoldier1">
 		<page x="36" y="43" layer="player" sprite="SoldierSprite"
-			direction="left" period="200" movement="custom" animatedmovement="true" animated="false"
-			fixeddirection="false" ghost="false">
-			<route ignore="false" loop="true" >
+			direction="left" period="200" movement="custom" animatedmovement="true"
+			animated="false" fixeddirection="false" ghost="false">
+			<route ignore="false" loop="true">
 				<moveleft></moveleft>
 				<moveleft></moveleft>
 				<moveleft></moveleft>
@@ -47,14 +47,12 @@
 				<lookleft></lookleft>
 			</route>
 		</page>
-		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite" type="start"
-			direction="inherit" period="200" movement="fixed" animatedmovement="true" animated="false"
-			fixeddirection="false" ghost="false">
+		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite"
+			type="start" direction="inherit" period="200" movement="fixed"
+			animatedmovement="true" animated="false" fixeddirection="false"
+			ghost="false">
 			<conditions>
-			<Or>
 				<CanDirectlySeeCondition objetive="player"></CanDirectlySeeCondition>
-			</Or>
-				
 			</conditions>
 			<events>
 				<PlayEmote spritesheet="Emotes" sprite="exclamation"
@@ -116,12 +114,12 @@
 			</events>
 		</page>
 	</GameEvent>
-	
+
 	<GameEvent id="badcavesoldier2">
 		<page x="40" y="31" layer="player" sprite="SoldierSprite"
-			direction="left" period="200" movement="custom" animatedmovement="true" animated="false"
-			fixeddirection="false" ghost="false">
-			<route ignore="false" loop="true" >
+			direction="left" period="200" movement="custom" animatedmovement="true"
+			animated="false" fixeddirection="false" ghost="false">
+			<route ignore="false" loop="true">
 				<moveleft></moveleft>
 				<moveleft></moveleft>
 				<moveleft></moveleft>
@@ -144,14 +142,12 @@
 				<lookleft></lookleft>
 			</route>
 		</page>
-		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite" type="start"
-			direction="inherit" period="200" movement="fixed" animatedmovement="true" animated="false"
-			fixeddirection="false" ghost="false">
+		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite"
+			type="start" direction="inherit" period="200" movement="fixed"
+			animatedmovement="true" animated="false" fixeddirection="false"
+			ghost="false">
 			<conditions>
-			<Or>
 				<CanDirectlySeeCondition objetive="player"></CanDirectlySeeCondition>
-			</Or>
-				
 			</conditions>
 			<events>
 				<PlayEmote spritesheet="Emotes" sprite="exclamation"
@@ -208,12 +204,12 @@
 			</events>
 		</page>
 	</GameEvent>
-	
+
 	<GameEvent id="badcavesoldier2">
 		<page x="32" y="32" layer="player" sprite="SoldierSprite"
-			direction="right" period="200" movement="custom" animatedmovement="true" animated="false"
-			fixeddirection="false" ghost="false">
-			<route ignore="false" loop="true" >
+			direction="right" period="200" movement="custom" animatedmovement="true"
+			animated="false" fixeddirection="false" ghost="false">
+			<route ignore="false" loop="true">
 				<moveright></moveright>
 				<moveright></moveright>
 				<moveright></moveright>
@@ -236,14 +232,12 @@
 				<lookright></lookright>
 			</route>
 		</page>
-		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite" type="start"
-			direction="inherit" period="200" movement="fixed" animatedmovement="true" animated="false"
-			fixeddirection="false" ghost="false">
+		<page x="inherit" y="inherit" layer="player" sprite="SoldierSprite"
+			type="start" direction="inherit" period="200" movement="fixed"
+			animatedmovement="true" animated="false" fixeddirection="false"
+			ghost="false">
 			<conditions>
-			<Or>
 				<CanDirectlySeeCondition objetive="player"></CanDirectlySeeCondition>
-			</Or>
-				
 			</conditions>
 			<events>
 				<PlayEmote spritesheet="Emotes" sprite="exclamation"
@@ -298,6 +292,145 @@
 					</loose>
 				</Battle>
 			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="21" y="13" layer="player" type="start" tile="12">
+			<events>
+				<Interrupt interrupt="70" action="true"></Interrupt>
+			</events>
+		</page>
+		<page x="inherit" y="inherit" layer="player" type="touch" tile="12">
+			<conditions>
+				<InterruptCondition interrupt="70"></InterruptCondition>
+			</conditions>
+			<events>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="up"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<moveup></moveup>
+						</MoveEvent>
+					</true>
+				</Conditional>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="down"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<movedown></movedown>
+						</MoveEvent>
+					</true>
+				</Conditional>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="left"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<moveleft></moveleft>
+						</MoveEvent>
+					</true>
+				</Conditional>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="right"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<moveright></moveright>
+						</MoveEvent>
+					</true>
+				</Conditional>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="18" y="12" layer="player" type="start" tile="12">
+			<events>
+				<Interrupt interrupt="71" action="true"></Interrupt>
+			</events>
+		</page>
+		<page x="inherit" y="inherit" layer="player" type="touch" tile="12">
+			<conditions>
+				<InterruptCondition interrupt="71"></InterruptCondition>
+			</conditions>
+			<events>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="up"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<moveup></moveup>
+						</MoveEvent>
+					</true>
+				</Conditional>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="down"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<movedown></movedown>
+						</MoveEvent>
+					</true>
+				</Conditional>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="left"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<moveleft></moveleft>
+						</MoveEvent>
+					</true>
+				</Conditional>
+				<Conditional>
+					<conditions>
+						<PlayerDirectionCondition direction="right"></PlayerDirectionCondition>
+					</conditions>
+					<true>
+						<MoveEvent objetive="self" ignore="true" loop="false"
+							wait="true">
+							<moveright></moveright>
+						</MoveEvent>
+					</true>
+				</Conditional>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="27" y="13" layer="bot" type="touch">
+			<events>
+				<Interrupt interrupt="70" action="false"></Interrupt>
+				<Interrupt interrupt="71" action="false"></Interrupt>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="21" y="2" layer="player" image="closeddoor">
+
+		</page>
+		<page>
+			<conditions>
+				<TileBlockedCondition x="21" y="11"></TileBlockedCondition>
+				<TileBlockedCondition x="18" y="15"></TileBlockedCondition>
+			</conditions>
 		</page>
 	</GameEvent>
 </mapevents>
