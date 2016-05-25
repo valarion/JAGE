@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="027-Castle03" tilewidth="32" tileheight="32" tilecount="200">
+  <image source="../tileset/027-Castle03.png" width="256" height="800"/>
+ </tileset>
+ <tileset firstgid="201" name="043-Cave01" tilewidth="32" tileheight="32" tilecount="264">
+  <image source="../tileset/043-Cave01.png" width="256" height="1056"/>
+ </tileset>
+ <tileset firstgid="465" name="types" tilewidth="32" tileheight="32" tilecount="3">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="walkable"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="468" name="tilee" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../tileset/tilee.png" width="512" height="512"/>
+ </tileset>
+ <layer name="floor" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACzvJwMBwchQPGgwAh5yua5ABAAA=
+  </data>
+ </layer>
+ <layer name="walls" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC/vKwMDwiwD+AsSfgZiJET/+CFXHxYgfw9QRAjB1lkBshYQZkNjWSOocgdgJCTMgsZ0ZSLeXmureAvErKH6NJPcSSfwNEAMAOrPYepABAAA=
+  </data>
+ </layer>
+ <layer name="underplayer" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgoByIMqHy7wDxXTQ1t4FYlQlCw8ATIH6Kpu4xGj2QQBGIlYlQZwjExlSyEwCQLKiqkAEAAA==
+  </data>
+ </layer>
+ <layer name="player" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWDCQAADA0iRpABAAA=
+  </data>
+ </layer>
+ <layer name="overplayer" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGPzAEoitkDADEtsaSZ0jEDshYQYktjNdXEo5AAC7W6FekAEAAA==
+  </data>
+ </layer>
+ <layer name="types" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC7vEyMBwiU74Ih7xi0jy6OouEsCU2EeMeYTUkeM+XHIANFlcupABAAA=
+  </data>
+ </layer>
+</map>

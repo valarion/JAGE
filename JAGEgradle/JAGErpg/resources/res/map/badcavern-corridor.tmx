@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" backgroundcolor="#2d2d2d" nextobjectid="1">
+ <tileset firstgid="1" name="043-Cave01" tilewidth="32" tileheight="32" tilecount="264">
+  <image source="../tileset/043-Cave01.png" width="256" height="1056"/>
+ </tileset>
+ <tileset firstgid="265" name="types" tilewidth="32" tileheight="32" tilecount="3">
+  <image source="../tileset/types.png" width="96" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="walkable"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="floor" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NkYGBgHMWDBlMCRs2jvnkAPdgvPSADAAA=
+  </data>
+ </layer>
+ <layer name="wall" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC9NlYGAwohLWAWJtILaiEtaEmudEJQwzj1oAZJ4qECtD+YpArEQCVsZiHiUA3W+j5pEG0ONSBYgBzG/UUCADAAA=
+  </data>
+ </layer>
+ <layer name="player" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBTgAgDjoo9oIAMAAA==
+  </data>
+ </layer>
+ <layer name="types" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+NiZGDgGmGYk0oY3UxK3UJtv42aR76ZMDYACPox1SADAAA=
+  </data>
+ </layer>
+</map>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mapevents>
+	<GameEvent>
+		<page type="start">
+			<events>
+				<Interrupt interrupt="80" action="true"></Interrupt>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="4" y="9" layer="bot" type="touch">
+			<conditions></conditions>
+			<events>
+				<Teleport xDest="21" yDest="3" destMap="badcavern"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="5" y="9" layer="bot" type="touch">
+			<conditions></conditions>
+			<events>
+				<Teleport xDest="21" yDest="3" destMap="badcavern"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="2" y="7" layer="player" type="activation" tile="454">
+			<events>
+				<Interrupt interrupt="81" action="true"></Interrupt>
+				<Dialog position="bot">
+					<Text>You found the jail keys.</Text>
+				</Dialog>
+			</events>
+		</page>
+		<page>
+			<conditions>
+				<InterruptCondition interrupt="81"></InterruptCondition>
+			</conditions>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="5" y="5" layer="player" type="activation" tile="67">
+			<events>
+				<Conditional>
+					<conditions>
+						<InterruptCondition interrupt="81"></InterruptCondition>
+					</conditions>
+					<true>
+						<Dialog position="bot">
+							<Text>You opened the jail with the jail keys.</Text>
+						</Dialog>
+						<Interrupt interrupt="82" action="true"></Interrupt>
+					</true>
+					<false>
+						<Dialog position="bot">
+							<Text>The door is closed.</Text>
+						</Dialog>
+					</false>
+				</Conditional>
+			</events>
+		</page>
+		<page x="5" y="5" layer="underplayer"  tile="68">
+			<conditions>
+				<InterruptCondition interrupt="82"></InterruptCondition>
+			</conditions>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page x="5" y="4" layer="player" type="activation" tile="59">
+		</page>
+		<page x="5" y="4" layer="overplayer"  tile="60">
+			<conditions>
+				<InterruptCondition interrupt="82"></InterruptCondition>
+			</conditions>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page x="7" y="2" layer="bot" type="touch">
+			<conditions></conditions>
+			<events>
+				<Teleport xDest="2" yDest="3" destMap="corridor"
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

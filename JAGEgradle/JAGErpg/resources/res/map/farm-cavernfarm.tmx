@@ -38,6 +38,9 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="1444" name="tilee" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../tileset/tilee.png" width="512" height="512"/>
+ </tileset>
  <layer name="Capa de Patrones 1" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+NkZGDgHMWDBgMAmBsifZABAAA=
@@ -48,6 +51,11 @@
    H4sIAAAAAAAACzNlZGCwIoBNgNgYiJ0IYEOoOi8CGKaOEBhO6nSBWAsJa0P1aSKJ6QAxAC0zovCQAQAA
   </data>
  </layer>
+ <layer name="door" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWDCQAADA0iRpABAAA=
+  </data>
+ </layer>
  <layer name="player" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NgGAWDCQAADA0iRpABAAA=
@@ -55,7 +63,7 @@
  </layer>
  <layer name="types" width="10" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC1vEysCwaIDwQgJ4uKnD5n90MQBSo/RDkAEAAA==
+   H4sIAAAAAAAAC1vEysCwiE54IRY+Pjzc1BEKDxAGAKRz+8SQAQAA
   </data>
  </layer>
 </map>

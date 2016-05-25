@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapevents>
+	<GameEvent>
+		<page x="2" y="4" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="7" yDest="3" destMap="jail"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page x="17" y="9" layer="bot" type="touch">
+			<events>
+				<Teleport xDest="7" yDest="3" destMap="cavernfarm"
+					destDirection="down"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+</mapevents>

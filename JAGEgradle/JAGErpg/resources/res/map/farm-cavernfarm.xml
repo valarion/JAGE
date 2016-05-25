@@ -15,6 +15,7 @@
 			</conditions>
 		</page>
 	</GameEvent>
+
 	<GameEvent>
 		<page x="3" y="2" layer="player" type="activation" tile="1418">
 			<events>
@@ -30,6 +31,7 @@
 			</conditions>
 		</page>
 	</GameEvent>
+
 	<GameEvent>
 		<page x="5" y="2" layer="player" type="activation" tile="1420">
 			<events>
@@ -45,12 +47,35 @@
 			</conditions>
 		</page>
 	</GameEvent>
+
 	<GameEvent>
 		<page x="5" y="9" layer="bot" type="touch">
 			<events>
 				<Teleport xDest="13" yDest="4" destMap="outsidefarm"
 					destDirection="down"></Teleport>
 			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="7" y="2" layer="player">
+		</page>
+		<page x="7" y="2" layer="door" tile="15898">
+			<conditions>
+				<InterruptCondition interrupt="80"></InterruptCondition>
+			</conditions>
+			<events>
+				<Teleport xDest="17" yDest="8" destMap="corridor"
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+
+	<GameEvent>
+		<page x="7" y="1" layer="door" tile="1572">
+			<conditions>
+				<InterruptCondition interrupt="80"></InterruptCondition>
+			</conditions>
 		</page>
 	</GameEvent>
 </mapevents>

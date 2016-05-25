@@ -426,11 +426,23 @@
 		<page x="21" y="2" layer="player" image="closeddoor">
 
 		</page>
-		<page>
+		<page x="21" y="2" layer="bot" type="touch">
 			<conditions>
 				<TileBlockedCondition x="21" y="11"></TileBlockedCondition>
 				<TileBlockedCondition x="18" y="15"></TileBlockedCondition>
 			</conditions>
+			<events>
+				<Teleport xDest="5" yDest="8" destMap="jail"
+					destDirection="up"></Teleport>
+			</events>
+		</page>
+	</GameEvent>
+	
+	<GameEvent>
+		<page type="start">
+			<events>
+				<Interrupt interrupt="80" action="false"></Interrupt>
+			</events>
 		</page>
 	</GameEvent>
 </mapevents>

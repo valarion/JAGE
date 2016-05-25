@@ -191,8 +191,8 @@ public class RPGMakerEvent extends FlowEventClass {
 		}
 		if (tileId >= 0) {
 			TileSet tileset = map.getTileSetByGID(tileId);
-			tileId -= tileset.firstGID - 1;
-			tile = tileset.tiles.getSubImage(tileset.getTileX(tileId), tileset.getTileY(tileId));
+			int realtileid = tileId - tileset.firstGID + 1;
+			tile = tileset.tiles.getSubImage(tileset.getTileX(realtileid), tileset.getTileY(realtileid));
 		}
 
 		if (map.equals(this.map) && !working && !moving && type == ONSTART && this.isActive(getEvent(), container, map) && getEvent() instanceof GameEvent && ((GameEvent)getEvent()).getActive() == this) {
