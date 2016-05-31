@@ -111,16 +111,16 @@ public class Camera implements Renderable {
 					.getYDraw(instance.getActive().getTileHeight())
 					+ playerYPos;
 
-			g.translate(mapXOff, mapYOff);
+			g.translate((int)mapXOff, (int)mapYOff);
 		} 
 		else if(map != null) {
 			float xscale = (float)container.getWidth()/((float)map.getWidth()*map.getTileWidth());
 			float yscale = (float)container.getHeight()/((float)map.getHeight()*map.getTileHeight());
-			g.scale(xscale,yscale);
+			g.scale((int)xscale,(int)yscale);
 
 		}
 		else {
-			g.translate(x, y);
+			g.translate((int)x, (int)y);
 		}
 	}
 

@@ -171,12 +171,17 @@ task copyEditorLibs(type: Copy, dependsOn: ":JAGEeditor:installDist") {
 	into("build")
 }
 
-task releaseplayer(dependsOn: ['copyNatives','copyCoreLibs']) {}
+task copyCoreShortcuts(type: Copy) {
+	from projectDir.path + "/res"
+	into("build")
+}
 
-task releaserpg(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyRpgResources']) {}
+task releaseplayer(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs']) {}
 
-task releasetetris(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyTetrisPlugin','copyTetrisResources']) {}
+task releaserpg(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs','copyModules','copyRpgResources']) {}
 
-task releasescramble(dependsOn: ['copyNatives','copyCoreLibs','copyModules','copyScramblePlugin','copyScrambleResources']) {}
+task releasetetris(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs','copyModules','copyTetrisPlugin','copyTetrisResources']) {}
+
+task releasescramble(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs','copyModules','copyScramblePlugin','copyScrambleResources']) {}
 
 task releaseeditor(dependsOn: ['copyEditorLibs','copyModules']) {}

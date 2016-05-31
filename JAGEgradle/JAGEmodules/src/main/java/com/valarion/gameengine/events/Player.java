@@ -334,7 +334,7 @@ public class Player implements Event, Serializable {
 	@Override
 	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 		if (sprite != null) {
-			sprite.draw(getXDraw(tilewidth), getYDraw(tileheight));
+			sprite.draw((int)getXDraw(tilewidth), (int)getYDraw(tileheight));
 		}
 	}
 

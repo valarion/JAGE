@@ -26,6 +26,14 @@ package com.valarion.gameengine.core;
 //import java.awt.GraphicsDevice;
 //import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +45,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
 import com.valarion.gameengine.core.exceptions.StateNotFoundException;
+import com.valarion.gameengine.util.DuplicatedPrintStream;
 import com.valarion.pluginsystem.PluginUtil;
 
 /**
@@ -57,13 +66,14 @@ public class GameCore extends BasicGame {
 	protected Map<Class<?>, Map<String, Class<?>>> sets;
 
 	protected static GameCore instance;
-	
-	public static final String modulesDir = "./modules";
-	public static final Class<?>[] classes = new Class<?>[] { GameState.class, Event.class,
-		ColoredString.class, Condition.class, VarLong.class, Updatable.class, Renderable.class };
 
-	protected GameCore(String gameName, String startState, int screenwidth,
-			int screenheight, boolean fullscreen) {
+	protected static SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd HH-mm-ss");
+
+	public static final String modulesDir = "./modules";
+	public static final Class<?>[] classes = new Class<?>[] { GameState.class, Event.class, ColoredString.class,
+			Condition.class, VarLong.class, Updatable.class, Renderable.class };
+
+	protected GameCore(String gameName, String startState, int screenwidth, int screenheight, boolean fullscreen) {
 		super(gameName);
 		this.gameName = gameName;
 		this.startState = startState;
@@ -75,24 +85,39 @@ public class GameCore extends BasicGame {
 	}
 
 	public static void main(String[] arguments) {
+		System.out.println();
+		PrintStream out = System.out;
+		PrintStream err = System.err;
+		try {
+			System.out.println("Trying to create logging");
+			FileOutputStream fos = new FileOutputStream("lastlog.txt");
+			System.out.println("Log created");
+
+			System.setOut(new DuplicatedPrintStream(fos, out, "out - "));
+			System.setErr(new DuplicatedPrintStream(fos, err, "err - "));
+		} catch (IOException e1) {
+			System.err.println("Couldn't set logging");
+			e1.printStackTrace();
+		}
 		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
-		
+
 		int w = 1024;
 		int h = 768;
 		boolean fs = false;
-		
+
 		try {
 			w = Integer.parseInt(arguments[0]);
 			h = Integer.parseInt(arguments[1]);
 			fs = Boolean.parseBoolean(arguments[2]);
+		} catch (Exception e) {
 		}
-		catch(Exception e) {}
-
-		(instance = new GameCore("game","StartState",w,h,fs)).start();
+		
+		(instance = new GameCore("game", "StartState", w, h, fs)).start();
 	}
 
 	/**
 	 * Singleton method.
+	 * 
 	 * @return Singleton instance.
 	 */
 	public static GameCore getInstance() {
@@ -109,7 +134,7 @@ public class GameCore extends BasicGame {
 			app.setShowFPS(false);
 			app.setMouseGrabbed(false);
 			app.setAlwaysRender(!fullscreen);
-			
+
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -124,7 +149,7 @@ public class GameCore extends BasicGame {
 			for (Class<?> instanceClass : sets.get(GameState.class).values()) {
 				if (instanceClass.getSimpleName().equals(startState)) {
 					active = (GameState) instanceClass.getDeclaredConstructor(
-							/*GameCore.class*/).newInstance(/*this*/);
+					/* GameCore.class */).newInstance(/* this */);
 					break;
 				}
 			}
@@ -142,21 +167,20 @@ public class GameCore extends BasicGame {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta)
-			throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException {
 		active.update(container, delta);
 		container.getInput().clearKeyPressedRecord();
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g)
-			throws SlickException {
+	public void render(GameContainer container, Graphics g) throws SlickException {
 		active.render(container, g);
 	}
 
 	/**
 	 * Get the app container.
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public AppGameContainer getApp() {
 		return app;
@@ -164,6 +188,7 @@ public class GameCore extends BasicGame {
 
 	/**
 	 * Get active game state.
+	 * 
 	 * @return
 	 */
 	public GameState getActive() {
@@ -172,6 +197,7 @@ public class GameCore extends BasicGame {
 
 	/**
 	 * Set active game state.
+	 * 
 	 * @param active
 	 */
 	public void setActive(GameState active) {
@@ -180,6 +206,7 @@ public class GameCore extends BasicGame {
 
 	/**
 	 * Get the loaded plugin classes.
+	 * 
 	 * @return
 	 */
 	public Map<Class<?>, Map<String, Class<?>>> getSets() {

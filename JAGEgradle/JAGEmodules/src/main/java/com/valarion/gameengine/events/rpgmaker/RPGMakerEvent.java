@@ -163,9 +163,9 @@ public class RPGMakerEvent extends FlowEventClass {
 	public void render(GameContainer container, Graphics g, int tilewidth, int tileheight) throws SlickException {
 		if (rendersprite) {
 			if (sprite != null) {
-				sprite.draw(getXDraw(tilewidth), getYDraw(tileheight));
+				sprite.draw((int)getXDraw(tilewidth), (int)getYDraw(tileheight));
 			} else if (tile != null) {
-				g.drawImage(tile, getXDraw(tilewidth), getYDraw(tileheight));
+				g.drawImage(tile, (int)getXDraw(tilewidth), (int)getYDraw(tileheight));
 			}
 		}
 
