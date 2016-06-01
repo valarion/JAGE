@@ -176,6 +176,7 @@ task copyCoreShortcuts(type: Copy) {
 	into("build")
 }
 
+
 task releaseplayer(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs']) {}
 
 task releaserpg(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs','copyModules','copyRpgResources']) {}
@@ -185,3 +186,122 @@ task releasetetris(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs',
 task releasescramble(dependsOn: ['copyCoreShortcuts','copyNatives','copyCoreLibs','copyModules','copyScramblePlugin','copyScrambleResources']) {}
 
 task releaseeditor(dependsOn: ['copyEditorLibs','copyModules']) {}
+
+
+// All builds
+
+task copyCoreShortcutsRPG(type: Copy) {
+	from projectDir.path + "/res"
+	into("build/JAGErpg")
+}
+
+task copyCoreShortcutsTetris(type: Copy) {
+	from projectDir.path + "/res"
+	into("build/JAGEtetris")
+}
+
+task copyCoreShortcutsScramble(type: Copy) {
+	from projectDir.path + "/res"
+	into("build/JAGEscramble")
+}
+
+task copyNativesRPG(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
+	from project(":JAGEcore").projectDir.path + "/build/natives/windows"
+	from project(":JAGEcore").projectDir.path + "/build/natives/linux"
+	from project(":JAGEcore").projectDir.path + "/build/natives/osx"
+	into("build/JAGErpg/bin/natives")
+}
+
+task copyNativesTetris(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
+	from project(":JAGEcore").projectDir.path + "/build/natives/windows"
+	from project(":JAGEcore").projectDir.path + "/build/natives/linux"
+	from project(":JAGEcore").projectDir.path + "/build/natives/osx"
+	into("build/JAGEtetris/bin/natives")
+}
+
+task copyNativesScramble(type: Copy, dependsOn: ":JAGEcore:unpackNatives") {
+	from project(":JAGEcore").projectDir.path + "/build/natives/windows"
+	from project(":JAGEcore").projectDir.path + "/build/natives/linux"
+	from project(":JAGEcore").projectDir.path + "/build/natives/osx"
+	into("build/JAGEscramble/bin/natives")
+}
+
+task copyCoreLibsRPG(type: Copy, dependsOn: ":JAGEcore:installDist") {
+	from project(":JAGEcore").projectDir.path + "/build/install/JAGEcore"
+	into("build/JAGErpg")
+}
+
+task copyCoreLibsTetris(type: Copy, dependsOn: ":JAGEcore:installDist") {
+	from project(":JAGEcore").projectDir.path + "/build/install/JAGEcore"
+	into("build/JAGEtetris")
+}
+
+task copyCoreLibsScramble(type: Copy, dependsOn: ":JAGEcore:installDist") {
+	from project(":JAGEcore").projectDir.path + "/build/install/JAGEcore"
+	into("build/JAGEscramble")
+}
+
+task copyModulesRPG(type: Copy, dependsOn: ":JAGEmodules:jar") {
+	from project(":JAGEmodules").jar
+	into("build/JAGErpg/bin/modules")
+}
+
+task copyModulesTetris(type: Copy, dependsOn: ":JAGEmodules:jar") {
+	from project(":JAGEmodules").jar
+	into("build/JAGEtetris/bin/modules")
+}
+
+task copyModulesScramble(type: Copy, dependsOn: ":JAGEmodules:jar") {
+	from project(":JAGEmodules").jar
+	into("build/JAGEscramble/bin/modules")
+}
+
+task copyTetrisPluginAll(type: Copy, dependsOn: ":JAGEtetrisplugin:jar") {
+	from project(":JAGEtetrisplugin").jar
+	into("build/JAGEtetris/bin/modules")
+}
+
+task copyScramblePluginAll(type: Copy, dependsOn: ":JAGEscrambleplugin:jar") {
+	from project(":JAGEscrambleplugin").jar
+	into("build/JAGEscramble/bin/modules")
+}
+
+task copyRpgResourcesAll(type: Copy) {
+	from project(":JAGErpg").projectDir.path + "/resources"
+	into("build/JAGErpg/bin")
+}
+	
+task copyTetrisResourcesAll(type: Copy) {
+	from project(":JAGEtetris").projectDir.path + "/resources"
+	into("build/JAGEtetris/bin")
+}
+	
+task copyScrambleResourcesAll(type: Copy) {
+	from project(":JAGEscramble").projectDir.path + "/resources"
+	into("build/JAGEscramble/bin")
+}
+
+task RPGZip(type: Zip, dependsOn:['copyCoreShortcutsRPG','copyNativesRPG','copyCoreLibsRPG','copyModulesRPG','copyRpgResourcesAll']) {
+    from 'build/JAGErpg'
+    baseName = 'JAGErpg'
+}
+
+task TetrisZip(type: Zip, dependsOn:['copyCoreShortcutsTetris','copyNativesTetris','copyCoreLibsTetris','copyModulesTetris','copyTetrisResourcesAll','copyTetrisPluginAll']) {
+    from 'build/JAGEtetris'
+    baseName = 'JAGEtetris'
+}
+
+task ScrambleZip(type: Zip, dependsOn:['copyCoreShortcutsScramble','copyNativesScramble','copyCoreLibsScramble','copyModulesScramble','copyScrambleResourcesAll','copyScramblePluginAll']) {
+    from 'build/JAGEscramble'
+    baseName = 'JAGEscramble'
+}
+task releaseAll(dependsOn: ['RPGZip','TetrisZip','ScrambleZip'])
+/*
+task releaseAll(dependsOn: ['copyCoreShortcutsRPG','copyCoreShortcutsTetris','copyCoreShortcutsScramble',
+								'copyNativesRPG','copyNativesTetris','copyNativesScramble',
+								'copyCoreLibsRPG','copyCoreLibsTetris','copyCoreLibsScramble',
+								'copyModulesRPG','copyModulesTetris','copyModulesScramble',
+								'copyRpgResourcesAll',
+								'copyTetrisResourcesAll','copyTetrisPluginAll',
+								'copyScrambleResourcesAll','copyScramblePluginAll']) {}
+*/

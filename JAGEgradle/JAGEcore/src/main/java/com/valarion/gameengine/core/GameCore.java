@@ -26,14 +26,9 @@ package com.valarion.gameengine.core;
 //import java.awt.GraphicsDevice;
 //import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,8 +61,6 @@ public class GameCore extends BasicGame {
 	protected Map<Class<?>, Map<String, Class<?>>> sets;
 
 	protected static GameCore instance;
-
-	protected static SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd HH-mm-ss");
 
 	public static final String modulesDir = "./modules";
 	public static final Class<?>[] classes = new Class<?>[] { GameState.class, Event.class, ColoredString.class,
