@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.valarion.gameengine.editor;
 
-import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.interfaces.Event;
 import com.valarion.gameengine.editor.XML.DefinableXML;
 import com.valarion.gameengine.editor.XML.NodeDefinition;
 import com.valarion.gameengine.editor.XML.XMLDefinition;

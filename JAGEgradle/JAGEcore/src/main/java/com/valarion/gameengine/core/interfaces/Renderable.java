@@ -21,18 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.core;
+package com.valarion.gameengine.core.interfaces;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.w3c.dom.Element;
 
 /**
- * Class containing the mechanics of accessing to a long value.
+ * Renderable on a graphics.
  * @author Rubén Tomás Gracia
  *
  */
-public interface VarLong {
-	public long getLong();
-	
-	public void load(Element node, Object context) throws SlickException;
+public interface Renderable {
+	/**
+	 * Render this component to a graphics object.
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
+	public void render(GameContainer container, Graphics g)
+			throws SlickException;
 }

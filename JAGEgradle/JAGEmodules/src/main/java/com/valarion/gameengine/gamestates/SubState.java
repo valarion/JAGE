@@ -25,8 +25,8 @@ package com.valarion.gameengine.gamestates;
 
 import java.util.Set;
 
-import com.valarion.gameengine.core.Event;
-import com.valarion.gameengine.core.GameState;
+import com.valarion.gameengine.core.interfaces.Event;
+import com.valarion.gameengine.core.interfaces.GameState;
 
 /**
  * Class adding events to a state.

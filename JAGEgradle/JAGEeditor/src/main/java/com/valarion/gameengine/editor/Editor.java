@@ -32,11 +32,11 @@ import java.util.Set;
 
 import org.newdawn.slick.util.Log;
 
-import com.valarion.gameengine.core.ColoredString;
-import com.valarion.gameengine.core.Condition;
-import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.VarLong;
+import com.valarion.gameengine.core.interfaces.ColoredString;
+import com.valarion.gameengine.core.interfaces.Condition;
+import com.valarion.gameengine.core.interfaces.Event;
+import com.valarion.gameengine.core.interfaces.VarLong;
 import com.valarion.gameengine.editor.XML.DefinableXML;
 import com.valarion.pluginsystem.PluginUtil;
 

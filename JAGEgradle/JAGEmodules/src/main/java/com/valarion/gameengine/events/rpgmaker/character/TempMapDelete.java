@@ -26,7 +26,7 @@ package com.valarion.gameengine.events.rpgmaker.character;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
-import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.interfaces.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
 import com.valarion.gameengine.gamestates.Database;

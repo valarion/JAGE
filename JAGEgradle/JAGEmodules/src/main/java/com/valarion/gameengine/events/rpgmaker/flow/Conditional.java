@@ -32,12 +32,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.valarion.gameengine.core.Condition;
-import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
+import com.valarion.gameengine.core.interfaces.Condition;
+import com.valarion.gameengine.core.interfaces.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.FlowEventClass;
-import com.valarion.gameengine.events.rpgmaker.FlowEventInterface;
 import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
 
 /**
@@ -46,9 +45,9 @@ import com.valarion.gameengine.events.rpgmaker.RPGMakerEvent;
  *
  */
 public class Conditional extends FlowEventClass {
-	protected FlowEventInterface active;
+	protected RPGMakerEvent active;
 	
-	protected FlowEventInterface ways[] = new RPGMakerEvent[2];
+	protected RPGMakerEvent ways[] = new RPGMakerEvent[2];
 	
 	protected LinkedList<Condition> conditions = new LinkedList<Condition>();
 	
@@ -172,7 +171,7 @@ public class Conditional extends FlowEventClass {
 	
 	@Override
 	protected void searchAndActiveLabel(String label) {
-		for (FlowEventInterface events : ways) {
+		for (RPGMakerEvent events : ways) {
 			if (events != null && events.hasLabel(label)) {
 				active = events;
 				active.goToLabel(label);

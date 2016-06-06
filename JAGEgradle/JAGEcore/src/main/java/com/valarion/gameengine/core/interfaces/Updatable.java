@@ -21,21 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.core;
+package com.valarion.gameengine.core.interfaces;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
 
 /**
- * A game state defines a behavior.
- * Typical uses are having a game state for start menu, load screen and the actual game
+ * Updatable object.
  * @author Rubén Tomás Gracia
  *
  */
-public abstract class GameState implements Updatable, Renderable {
+public interface Updatable {
 	/**
-	 * Init game state.
+	 * Update the object by delta milliseconds.
 	 * @param container
-	 * @throws Exception
+	 * @param delta
+	 * @throws SlickException
 	 */
-	public abstract void init(GameContainer container) throws Exception;
+	public abstract void update(GameContainer container, int delta)
+			throws SlickException;
 }

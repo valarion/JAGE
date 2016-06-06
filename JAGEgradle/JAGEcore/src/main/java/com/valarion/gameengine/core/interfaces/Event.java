@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.core;
+package com.valarion.gameengine.core.interfaces;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

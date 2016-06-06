@@ -40,6 +40,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
 import com.valarion.gameengine.core.exceptions.StateNotFoundException;
+import com.valarion.gameengine.core.interfaces.ColoredString;
+import com.valarion.gameengine.core.interfaces.Condition;
+import com.valarion.gameengine.core.interfaces.Event;
+import com.valarion.gameengine.core.interfaces.GameState;
+import com.valarion.gameengine.core.interfaces.Renderable;
+import com.valarion.gameengine.core.interfaces.Updatable;
+import com.valarion.gameengine.core.interfaces.VarLong;
 import com.valarion.gameengine.util.DuplicatedPrintStream;
 import com.valarion.pluginsystem.PluginUtil;
 
@@ -66,7 +73,7 @@ public class GameCore extends BasicGame {
 	public static final Class<?>[] classes = new Class<?>[] { GameState.class, Event.class, ColoredString.class,
 			Condition.class, VarLong.class, Updatable.class, Renderable.class };
 
-	protected GameCore(String gameName, String startState, int screenwidth, int screenheight, boolean fullscreen) {
+	private GameCore(String gameName, String startState, int screenwidth, int screenheight, boolean fullscreen) {
 		super(gameName);
 		this.gameName = gameName;
 		this.startState = startState;
@@ -78,6 +85,9 @@ public class GameCore extends BasicGame {
 	}
 
 	public static void main(String[] arguments) {
+		if(instance != null) {
+			instance.getApp().exit();
+		}
 		System.out.println();
 		PrintStream out = System.out;
 		PrintStream err = System.err;
@@ -141,8 +151,7 @@ public class GameCore extends BasicGame {
 
 			for (Class<?> instanceClass : sets.get(GameState.class).values()) {
 				if (instanceClass.getSimpleName().equals(startState)) {
-					active = (GameState) instanceClass.getDeclaredConstructor(
-					/* GameCore.class */).newInstance(/* this */);
+					active = (GameState) instanceClass.getDeclaredConstructor().newInstance();
 					break;
 				}
 			}

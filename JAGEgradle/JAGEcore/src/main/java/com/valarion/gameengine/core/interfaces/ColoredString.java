@@ -21,59 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.events;
+package com.valarion.gameengine.core.interfaces;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
-import com.valarion.gameengine.core.Event;
-
 /**
- * Abstract class that describes an event in a position.
+ * A class that saves a string along with the color to print it.
  * @author Rubén Tomás Gracia
- *
+ * 
  */
-public abstract class PositionedEvent implements Event {
-	protected int x = -1, y = -1;
+public interface ColoredString {
+	/**
+	 * Get the color of the string.
+	 * @return Color of the string.
+	 */
+	public Color getColor();
 
-	@Override
-	public int getXPos() {
-		return x;
-	}
+	/**
+	 * Get the string.
+	 * @return String.
+	 */
+	public String getString();
 
-	@Override
-	public int getYPos() {
-		return y;
-	}
-
-	@Override
-	public void setXPos(int newPos) {
-		x = newPos;
-	}
-
-	@Override
-	public void setYPos(int newPos) {
-		y = newPos;
-	}
-
-	@Override
-	public int getWidth() {
-		return 1;
-	}
-
-	@Override
-	public int getHeight() {
-		return 1;
-	}
-
-	@Override
-	public void loadEvent(Element node, Object context) throws SlickException {
-		try {
-			this.x = Integer.parseInt(node.getAttribute("x"));
-			this.y = Integer.parseInt(node.getAttribute("y"));
-		} catch (Exception e) {
-
-		}
-	}
-
+	/**
+	 * Get the length of the string.
+	 * @return Length of the string.
+	 */
+	public int length();
+	
+	/**
+	 * Load the string and color from an xml node.
+	 * @param node Node to load.
+	 * @param context Object of context. Usually the parent event.
+	 * @throws SlickException
+	 */
+	public void load(Element node, Object context) throws SlickException;
 }

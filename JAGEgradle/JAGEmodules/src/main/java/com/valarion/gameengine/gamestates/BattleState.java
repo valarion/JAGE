@@ -11,9 +11,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.GameState;
+import com.valarion.gameengine.core.interfaces.Event;
+import com.valarion.gameengine.core.interfaces.GameState;
 import com.valarion.gameengine.events.menu.OptionsMenu.XPosition;
 import com.valarion.gameengine.events.menu.OptionsMenu.YPosition;
 import com.valarion.gameengine.events.menu.battlemenu.BattleMenu;

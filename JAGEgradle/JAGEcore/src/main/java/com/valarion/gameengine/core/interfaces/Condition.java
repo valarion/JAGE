@@ -21,23 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.core;
+package com.valarion.gameengine.core.interfaces;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.w3c.dom.Element;
+
+import com.valarion.gameengine.core.tiled.SubTiledMap;
 
 /**
- * Updatable object.
- * @author Rubén Tomás Gracia
+ * 
+ * @author Ruben Tomás Gracia
+ * A class that evaluates a condition.
  *
  */
-public interface Updatable {
+public interface Condition{
 	/**
-	 * Update the object by delta milliseconds.
-	 * @param container
-	 * @param delta
+	 * Evaluate condition
+	 * @param e Event in to which evaluate the condition.
+	 * @return true if condition checks, false otherwise.
+	 */
+	public boolean eval(Event e, GameContainer container, SubTiledMap map);
+
+	/**
+	 * Load the condition from an xml node.
+	 * @param node Node to load.
+	 * @param context Object of context. Usually the parent event.
 	 * @throws SlickException
 	 */
-	public abstract void update(GameContainer container, int delta)
-			throws SlickException;
+	public void load(Element node, Object context) throws SlickException;
 }

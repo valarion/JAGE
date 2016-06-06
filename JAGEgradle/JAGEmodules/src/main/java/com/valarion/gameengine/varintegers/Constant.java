@@ -26,7 +26,7 @@ package com.valarion.gameengine.varintegers;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
-import com.valarion.gameengine.core.VarLong;
+import com.valarion.gameengine.core.interfaces.VarLong;
 
 /**
  * Class containing a constant.

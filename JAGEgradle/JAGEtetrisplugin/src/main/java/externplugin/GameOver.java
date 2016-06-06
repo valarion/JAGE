@@ -11,7 +11,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.TextField;
 
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.GameState;
+import com.valarion.gameengine.core.interfaces.GameState;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.Database;
 

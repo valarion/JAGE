@@ -30,9 +30,9 @@ import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.valarion.gameengine.core.ColoredString;
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.VarLong;
+import com.valarion.gameengine.core.interfaces.ColoredString;
+import com.valarion.gameengine.core.interfaces.VarLong;
 
 /**
  * Wrapper class for a long value of the class VarLong.

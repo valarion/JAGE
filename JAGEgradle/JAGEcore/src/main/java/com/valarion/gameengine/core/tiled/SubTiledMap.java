@@ -49,9 +49,9 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.Updatable;
+import com.valarion.gameengine.core.interfaces.Event;
+import com.valarion.gameengine.core.interfaces.Updatable;
 import com.valarion.gameengine.util.OrderedLinkedList;
 import com.valarion.gameengine.util.Util;
 

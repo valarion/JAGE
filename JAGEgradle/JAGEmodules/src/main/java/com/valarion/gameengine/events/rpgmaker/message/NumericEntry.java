@@ -30,7 +30,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
-import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.interfaces.Event;
 import com.valarion.gameengine.core.tiled.SubTiledMap;
 import com.valarion.gameengine.events.rpgmaker.SubEventClass;
 import com.valarion.gameengine.gamestates.Controls;

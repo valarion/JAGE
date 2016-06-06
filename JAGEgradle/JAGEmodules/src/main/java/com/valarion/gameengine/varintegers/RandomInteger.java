@@ -28,7 +28,7 @@ import java.util.Random;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
-import com.valarion.gameengine.core.VarLong;
+import com.valarion.gameengine.core.interfaces.VarLong;
 
 /**
  * Class that generates a random integer between two numbers.

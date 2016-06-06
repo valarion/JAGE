@@ -70,7 +70,6 @@ public class GameSwingWindow {
 			if(! newresolution.equalsIgnoreCase(lastresolution)) {
 				comboBox.addItem(newresolution);
 				lastresolution = newresolution;
-				
 			}
 		}
 		

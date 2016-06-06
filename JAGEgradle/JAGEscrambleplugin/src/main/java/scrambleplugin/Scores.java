@@ -13,7 +13,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import com.valarion.gameengine.core.GameCore;
-import com.valarion.gameengine.core.GameState;
+import com.valarion.gameengine.core.interfaces.GameState;
 import com.valarion.gameengine.gamestates.Controls;
 import com.valarion.gameengine.gamestates.StartState;
 import com.valarion.gameengine.util.OrderedLinkedList;

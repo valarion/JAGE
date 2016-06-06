@@ -31,8 +31,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import com.valarion.gameengine.core.Event;
 import com.valarion.gameengine.core.GameCore;
+import com.valarion.gameengine.core.interfaces.Event;
 import com.valarion.gameengine.events.menu.startmenu.StartMenu;
 import com.valarion.gameengine.util.Util;
 import com.valarion.gameengine.util.WindowImage;

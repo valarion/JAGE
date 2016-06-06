@@ -27,7 +27,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.w3c.dom.Element;
 
-import com.valarion.gameengine.core.ColoredString;
+import com.valarion.gameengine.core.interfaces.ColoredString;
 import com.valarion.gameengine.gamestates.Database;
 
 /**

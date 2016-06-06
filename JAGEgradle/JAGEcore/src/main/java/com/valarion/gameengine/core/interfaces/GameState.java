@@ -21,24 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-package com.valarion.gameengine.core;
+package com.valarion.gameengine.core.interfaces;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 
 /**
- * Renderable on a graphics.
+ * A game state defines a behavior.
+ * Typical uses are having a game state for start menu, load screen and the actual game
  * @author Rubén Tomás Gracia
  *
  */
-public interface Renderable {
+public abstract class GameState implements Updatable, Renderable {
 	/**
-	 * Render this component to a graphics object.
+	 * Init game state.
 	 * @param container
-	 * @param g
-	 * @throws SlickException
+	 * @throws Exception
 	 */
-	public void render(GameContainer container, Graphics g)
-			throws SlickException;
+	public abstract void init(GameContainer container) throws Exception;
 }

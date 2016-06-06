@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.valarion.gameengine.events.rpgmaker;
 
-import com.valarion.gameengine.core.Event;
+import com.valarion.gameengine.core.interfaces.Event;
 import com.valarion.gameengine.events.Route;
 import com.valarion.gameengine.gamestates.InGameState;
 
