@@ -52,7 +52,7 @@ public class GameContext implements Serializable, Comparable<GameContext> {
 
 	protected boolean globalInterrupts[] = new boolean[100];
 
-	protected Map<String, Object> globalObjects = new HashMap<String, Object>();
+	protected Map<String, Serializable> globalObjects = new HashMap<String, Serializable>();
 
 	protected Set<String> deletedEvents = new HashSet<String>();
 
@@ -97,7 +97,7 @@ public class GameContext implements Serializable, Comparable<GameContext> {
 	 * Get global objects.
 	 * @return
 	 */
-	public Map<String, Object> getGlobalObjects() {
+	public Map<String, ? extends Serializable> getGlobalObjects() {
 		return globalObjects;
 	}
 

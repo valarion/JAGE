@@ -225,25 +225,31 @@ public class XMLDefinition {
 	 * Add attribute.
 	 * @param attribute
 	 */
-	public void addAttribute(AttributeDefinition attribute) {
+	public XMLDefinition addAttribute(AttributeDefinition attribute) {
 		attributes.add(attribute);
+		return this;
 	}
 
 	/**
 	 * Add shared node.
 	 * @param node
 	 */
-	public void addSharedNode(NodeDefinition node) {
+	public XMLDefinition addSharedNode(NodeDefinition node) {
 		sharednodes.add(node);
+		return this;
 	}
 
 	/**
 	 * Add custom node.
 	 * @param node
 	 */
-	public void addCustomNode(XMLDefinition node) {
+	public XMLDefinition addCustomNode(XMLDefinition node) {
+		if(node.parent != null) {
+			node.parent.customnodes.remove(node);
+		}
 		node.parent = this;
 		customnodes.add(node);
+		return this;
 	}
 	
 	@Override
