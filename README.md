@@ -1,6 +1,7 @@
+[![Stories in Ready](https://badge.waffle.io/valarion/JAGE.png?label=ready&title=Ready)](https://waffle.io/valarion/JAGE)
 # JAGE
 JustAnotherGameEngine repository.
-Final degree project by **RubÈn Tom·s Gracia** (valarion) about a 2D RPG game engine easily extensible with java for the University of Zaragoza.
+Final degree project by **Rub√©n Tom√°s Gracia** (valarion) about a 2D RPG game engine easily extensible with java for the University of Zaragoza.
 
 # Build instructions
 
